@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\IMMRequest.Domain\IMMRequest.Domain.csproj" />
     <ProjectReference Include="..\IMMRequest.DataAccess\IMMRequest.DataAccess.csproj" />
+    <ProjectReference Include="..\IMMRequest.Domain\IMMRequest.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
