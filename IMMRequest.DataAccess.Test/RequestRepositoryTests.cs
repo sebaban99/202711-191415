@@ -2,6 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IMMRequest.Domain;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess.Test
 {
@@ -78,6 +79,34 @@ namespace IMMRequest.DataAccess.Test
         }
 
         [TestMethod]
+        public void GetAllRequest_EmptyRequestsTable_ShouldReturnAnEmptyCollection()
+        {
+            Assert.AreEqual(requestRepositoryInMemory.GetAll().Count(), 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DataAccessException))]
+        public void UpdateRequest_InexistentRequest_ShouldReturnAnException()
+        {
+
+            requestRepositoryInMemory.Update(juanRequest);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DataAccessException))]
+        public void RemoveRequest_InexistentRequest_ShouldReturnAnException()
+        {
+            requestRepositoryInMemory.Remove(juanRequest);
+        }
+
+        [TestMethod]
+        public void GetRequest_InexistentRequest_ShouldReturnNull()
+        {
+            Request requestById = requestRepositoryInMemory.Get(juanRequest.Id);
+            Assert.AreEqual(null, requestById);
+        }
+
+        [TestMethod]
         public void GetRequest_ExistentRequest_ShouldReturnSpecificRequestFromDB()
         {
 
@@ -95,6 +124,13 @@ namespace IMMRequest.DataAccess.Test
 
             Assert.AreEqual(requestRepositoryInMemory.GetByCondition(
                 r => r.RequestNumber == pedroRequest.RequestNumber), pedroRequest);
+        }
+
+        [TestMethod]
+        public void GetRequestByCondition_InexistentRequest_ShouldReturnNull()
+        {
+            Request requestById = requestRepositoryInMemory.Get(juanRequest.Id);
+            Assert.AreEqual(null, requestById);
         }
 
         [TestMethod]
