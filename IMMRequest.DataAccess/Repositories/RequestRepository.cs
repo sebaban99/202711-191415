@@ -99,5 +99,19 @@ namespace IMMRequest.DataAccess
                 throw new DataAccessException("Error: Table could not be emptied");
             }
         }
+
+        public void Update(Request entity)
+        {
+            try
+            {
+                context.Entry(entity).State = EntityState.Modified;
+                context.Set<Request>().Update(entity);
+                context.SaveChanges();
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: Could not update Entity in DB");
+            }
+        }
     }
 }
