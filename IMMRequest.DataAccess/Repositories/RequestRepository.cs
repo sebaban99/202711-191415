@@ -1,14 +1,32 @@
 using System.Collections.Generic;
 using System;
 using Microsoft.EntityFrameworkCore;
+using IMMRequest.Domain;
+using System.Linq;
+using System.Data.Common;
 
 namespace IMMRequest.DataAccess
 {
-    public class RequestRepository<Request> : GenericRepository<Request> where Request : class
+    public class RequestRepository
     {
-        public Request GetByRequestNumber (int requestNumber)
+        private IMMRequestContext context;
+        public RequestRepository(IMMRequestContext context)
         {
-            throw new NotImplementedException();
+            this.context = context;
         }
+
+        public void Add(Request entity)
+        {
+            try
+            {
+                context.Set<Request>().Add(entity);
+                context.SaveChanges();
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: Could not add entity to DB");
+            }
+        }
+       
     }
 }
