@@ -42,6 +42,22 @@ namespace IMMRequest.DataAccess
             }
         }
 
+        public Request Get(Guid id)
+        {
+            try
+            {
+                return context.Requests.First(x => x.Id == id);
+            }
+            catch (System.InvalidOperationException)
+            {
+                return null;
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: could not get specific Entity");
+            }
+        }
+
         public IEnumerable<Request> GetAll()
         {
             try
@@ -51,6 +67,23 @@ namespace IMMRequest.DataAccess
             catch (DbException)
             {
                 throw new DataAccessException("Error: could not get Table's elements");
+            }
+        }
+
+        public void Empty()
+        {
+            try
+            {
+                foreach (Request entity in context.Set<Request>())
+                {
+                    context.Set<Request>().Attach(entity);
+                    context.Set<Request>().Remove(entity);
+                }
+                context.SaveChanges();
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: Table could not be emptied");
             }
         }
     }
