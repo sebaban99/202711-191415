@@ -52,5 +52,18 @@ namespace IMMRequest.DataAccess.Test
             Assert.AreEqual(requestRepositoryInMemory.GetAll().Count(), 1);
             Assert.IsTrue(requestRepositoryInMemory.GetAll().Contains(juanRequest));
         }
+
+        [TestMethod]
+        public void RemoveRequest_ExistentRequest_ShouldRemoveRequestFromDB()
+        {
+
+            requestRepositoryInMemory.Add(juanRequest);
+            requestRepositoryInMemory.Add(pedroRequest);
+            requestRepositoryInMemory.Remove(juanRequest);
+
+            Assert.AreEqual(requestRepositoryInMemory.GetAll().Count(), 1);
+            Assert.IsTrue(requestRepositoryInMemory.GetAll().Contains(pedroRequest));
+        }
+
     }
 }
