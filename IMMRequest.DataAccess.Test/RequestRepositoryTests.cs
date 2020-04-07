@@ -96,6 +96,17 @@ namespace IMMRequest.DataAccess.Test
             Assert.AreEqual(requestRepositoryInMemory.GetByCondition(
                 r => r.RequestNumber == pedroRequest.RequestNumber), pedroRequest);
         }
+
+        [TestMethod]
+        public void UpdateRequest_ExistentRequest_ShouldUpdateRequestFromDB()
+        {
+            requestRepositoryInMemory.Add(juanRequest);
+            requestRepositoryInMemory.Add(pedroRequest);
+
+            juanRequest.Status = Status.Revision;
+
+            requestRepositoryInMemory.Update(juanRequest);
+            Assert.AreEqual(requestRepositoryInMemory.Get(juanRequest.Id), juanRequest);
+        }
     }
-}
 }
