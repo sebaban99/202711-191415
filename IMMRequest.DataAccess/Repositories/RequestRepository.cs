@@ -8,46 +8,18 @@ using System.Linq.Expressions;
 
 namespace IMMRequest.DataAccess
 {
-    public class RequestRepository
+    public class RequestRepository : BaseRepository<Request>
     {
-        private IMMRequestContext context;
         public RequestRepository(IMMRequestContext context)
         {
-            this.context = context;
+            this.Context = context;
         }
 
-        public void Add(Request entity)
+        public override Request Get(Guid id)
         {
             try
             {
-                context.Set<Request>().Add(entity);
-                context.SaveChanges();
-            }
-            catch (DbException)
-            {
-                throw new DataAccessException("Error: Could not add entity to DB");
-            }
-        }
-
-        public void Remove(Request entity)
-        {
-            try
-            {
-                context.Set<Request>().Remove(entity);
-                context.SaveChanges();
-            }
-            catch (DbException)
-            {
-                throw new DataAccessException("Error: Entity could not be removed from DB");
-
-            }
-        }
-
-        public Request Get(Guid id)
-        {
-            try
-            {
-                return context.Requests.First(x => x.Id == id);
+                return Context.Requests.First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {
@@ -56,61 +28,6 @@ namespace IMMRequest.DataAccess
             catch (DbException)
             {
                 throw new DataAccessException("Error: could not get specific Entity");
-            }
-        }
-
-        public IEnumerable<Request> GetAll()
-        {
-            try
-            {
-                return context.Set<Request>().ToList();
-            }
-            catch (DbException)
-            {
-                throw new DataAccessException("Error: could not get Table's elements");
-            }
-        }
-
-        public Request GetByCondition(Expression<Func<Request, bool>> expression)
-        {
-            try
-            {
-                return context.Set<Request>().First(expression);
-            }
-            catch (DbException)
-            {
-                throw new DataAccessException("Error: could not retrieve Entity");
-            }
-        }
-
-        public void Empty()
-        {
-            try
-            {
-                foreach (Request entity in context.Set<Request>())
-                {
-                    context.Set<Request>().Attach(entity);
-                    context.Set<Request>().Remove(entity);
-                }
-                context.SaveChanges();
-            }
-            catch (DbException)
-            {
-                throw new DataAccessException("Error: Table could not be emptied");
-            }
-        }
-
-        public void Update(Request entity)
-        {
-            try
-            {
-                context.Entry(entity).State = EntityState.Modified;
-                context.Set<Request>().Update(entity);
-                context.SaveChanges();
-            }
-            catch (DbException)
-            {
-                throw new DataAccessException("Error: Could not update Entity in DB");
             }
         }
     }
