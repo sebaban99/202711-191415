@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using IMMRequest.Domain;
 using System.Linq;
 using System.Data.Common;
+using System.Linq.Expressions;
 
 namespace IMMRequest.DataAccess
 {
@@ -67,6 +68,18 @@ namespace IMMRequest.DataAccess
             catch (DbException)
             {
                 throw new DataAccessException("Error: could not get Table's elements");
+            }
+        }
+
+        public Request GetByCondition(Expression<Func<Request, bool>> expression)
+        {
+            try
+            {
+                return context.Set<Request>().First(expression);
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: could not retrieve Entity");
             }
         }
 
