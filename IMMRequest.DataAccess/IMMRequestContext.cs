@@ -12,7 +12,7 @@ namespace IMMRequest.DataAccess
         public  DbSet<Area> Areas { get; set; }
         public  DbSet<Topic> Topics { get; set; }
         public  DbSet<Type> Types { get; set; }
-        public  DbSet<AdditionalField> AdditionalField { get; set; }
+        public  DbSet<AdditionalField> AdditionalFields { get; set; }
 
 		public  IMMRequestContext(DbContextOptions  options) : base(options) { }
     }
