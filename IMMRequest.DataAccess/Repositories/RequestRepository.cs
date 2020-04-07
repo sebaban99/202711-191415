@@ -27,6 +27,31 @@ namespace IMMRequest.DataAccess
                 throw new DataAccessException("Error: Could not add entity to DB");
             }
         }
-       
+
+        public void Remove(Request entity)
+        {
+            try
+            {
+                context.Set<Request>().Remove(entity);
+                context.SaveChanges();
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: Entity could not be removed from DB");
+
+            }
+        }
+
+        public IEnumerable<Request> GetAll()
+        {
+            try
+            {
+                return context.Set<Request>().ToList();
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: could not get Table's elements");
+            }
+        }
     }
 }
