@@ -31,10 +31,13 @@ namespace IMMRequest.DataAccess
                 Context.Set<T>().Remove(entity);
                 Context.SaveChanges();
             }
+            catch (DbUpdateException)
+            {
+                throw new DataAccessException("Error: Entity to remove doesn't exist in the current context");
+            }
             catch (DbException)
             {
                 throw new DataAccessException("Error: Entity could not be removed from DB");
-
             }
         }
 
@@ -45,6 +48,10 @@ namespace IMMRequest.DataAccess
                 Context.Entry(entity).State = EntityState.Modified;
                 Context.Set<T>().Update(entity);
                 Context.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                throw new DataAccessException("Error: Entity to update doesn't exist in the current context");
             }
             catch (DbException)
             {
