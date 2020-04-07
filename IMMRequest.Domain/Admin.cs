@@ -11,6 +11,7 @@ namespace IMMRequest.Domain
 
         public Admin ()
         {
+            Id = Guid.Empty;
             this.Name = string.Empty;
             this.Email = string.Empty;
             this.Password = string.Empty;
