@@ -4,7 +4,7 @@ using IMMRequest.Domain;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace IMMRequest.DataAccess.Test
+namespace IMMRequest.DataAccess.Tests
 {
     [TestClass]
     public class RequestRepositoryTests
