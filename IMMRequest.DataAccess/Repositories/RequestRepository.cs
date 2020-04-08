@@ -27,7 +27,7 @@ namespace IMMRequest.DataAccess
             }
             catch (DbException)
             {
-                throw new DataAccessException("Error: could not get specific Entity");
+                throw new DataAccessException("Error: could not retrieve specific Entity");
             }
         }
     }

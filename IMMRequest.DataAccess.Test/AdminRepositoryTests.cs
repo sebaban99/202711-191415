@@ -35,10 +35,10 @@ namespace IMMRequest.DataAccess.Tests
         }
 
         [TestMethod]
-        public void GetAdmin_InexistenAdmin_ShouldReturnNull()
+        public void GetAdmin_InexistentAdmin_ShouldReturnNull()
         {
-            Admin requestById = adminRepositoryInMemory.Get(sebaAdmin.Id);
-            Assert.AreEqual(null, requestById);
+            Admin adminById = adminRepositoryInMemory.Get(sebaAdmin.Id);
+            Assert.AreEqual(null, adminById);
         }
 
         [TestMethod]
