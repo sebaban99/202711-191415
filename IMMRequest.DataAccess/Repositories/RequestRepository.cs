@@ -6,7 +6,7 @@ using System.Linq;
 using System.Data.Common;
 using System.Linq.Expressions;
 
-namespace IMMRequest.DataAccess
+namespace IMMRequest.DataAccess.Repositories
 {
     public class RequestRepository : BaseRepository<Request>
     {
@@ -27,7 +27,7 @@ namespace IMMRequest.DataAccess
             }
             catch (DbException)
             {
-                throw new DataAccessException("Error: could not get specific Entity");
+                throw new DataAccessException("Error: could not retrieve specific Entity");
             }
         }
     }

@@ -4,14 +4,16 @@ using IMMRequest.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IMMRequest.DataAccess.Migrations
 {
     [DbContext(typeof(IMMRequestContext))]
-    partial class IMMRequestContextModelSnapshot : ModelSnapshot
+    [Migration("20200409043647_CreateIMMRequestDB")]
+    partial class CreateIMMRequestDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

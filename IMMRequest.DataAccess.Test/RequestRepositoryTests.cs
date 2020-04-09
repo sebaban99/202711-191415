@@ -1,10 +1,11 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using IMMRequest.DataAccess.Repositories;
 using IMMRequest.Domain;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace IMMRequest.DataAccess.Test
+namespace IMMRequest.DataAccess.Tests
 {
     [TestClass]
     public class RequestRepositoryTests
