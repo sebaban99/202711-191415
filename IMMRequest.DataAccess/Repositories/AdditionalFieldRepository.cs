@@ -3,7 +3,7 @@ using System;
 using System.Data.Common;
 using System.Linq;
 
-namespace IMMRequest.DataAccess
+namespace IMMRequest.DataAccess.Repositories
 {
     public class AdditionalFieldRepository : BaseRepository<AdditionalField>
     {
