@@ -16,7 +16,6 @@ namespace IMMRequest.DataAccess.Repositories
             try
             {
                 Context.Set<T>().Add(entity);
-                Context.SaveChanges();
             }
             catch (DbException)
             {
@@ -29,7 +28,6 @@ namespace IMMRequest.DataAccess.Repositories
             try
             {
                 Context.Set<T>().Remove(entity);
-                Context.SaveChanges();
             }
             catch (DbUpdateException)
             {
@@ -47,7 +45,6 @@ namespace IMMRequest.DataAccess.Repositories
             {
                 Context.Entry(entity).State = EntityState.Modified;
                 Context.Set<T>().Update(entity);
-                Context.SaveChanges();
             }
             catch (DbUpdateException)
             {
@@ -85,11 +82,15 @@ namespace IMMRequest.DataAccess.Repositories
             }
         }
 
-        public void Save()
+        public void SaveChanges()
         {
             try
             {
                 this.Context.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                throw new DataAccessException("Error: changes could not be applied to DB");
             }
             catch (DbException)
             {

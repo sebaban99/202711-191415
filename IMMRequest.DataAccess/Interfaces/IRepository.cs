@@ -20,6 +20,6 @@ namespace IMMRequest.DataAccess
 
         T Get(Guid id);
 
-        void Save();
+        void SaveChanges();
     }
 }

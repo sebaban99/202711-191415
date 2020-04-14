@@ -42,7 +42,7 @@ namespace IMMRequest.DataAccess.Tests
         public void GetAddField_InexistentAddFields_ShouldReturnNull()
         {
             AdditionalField addFieldById = addfieldRepositoryInMemory.Get(stateOfContainer.Id);
-            Assert.AreEqual(null, addFieldById);
+            Assert.IsNull(addFieldById);
         }
 
         [TestMethod]
@@ -51,6 +51,7 @@ namespace IMMRequest.DataAccess.Tests
 
             addfieldRepositoryInMemory.Add(stateOfContainer);
             addfieldRepositoryInMemory.Add(stateOfStreetLight);
+            addfieldRepositoryInMemory.SaveChanges();
 
             Assert.AreEqual(addfieldRepositoryInMemory.Get(stateOfContainer.Id), stateOfContainer);
         }

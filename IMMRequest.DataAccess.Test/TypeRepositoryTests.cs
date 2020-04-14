@@ -40,7 +40,7 @@ namespace IMMRequest.DataAccess.Tests
         public void GetType_InexistentType_ShouldReturnNull()
         {
             Type typeById = typeRepositoryInMemory.Get(brokenContainer.Id);
-            Assert.AreEqual(null, typeById);
+            Assert.IsNull(typeById);
         }
 
         [TestMethod]
@@ -49,6 +49,7 @@ namespace IMMRequest.DataAccess.Tests
 
             typeRepositoryInMemory.Add(brokenContainer);
             typeRepositoryInMemory.Add(brokenLight);
+            typeRepositoryInMemory.SaveChanges();
 
             Assert.AreEqual(typeRepositoryInMemory.Get(brokenContainer.Id), brokenContainer);
         }

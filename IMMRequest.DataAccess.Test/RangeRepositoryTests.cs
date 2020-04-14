@@ -39,7 +39,7 @@ namespace IMMRequest.DataAccess.Tests
         public void GetRange_InexistentRange_ShouldReturnNull()
         {
             Range rangeById = rangeRepositoryInMemory.Get(oneRangeAddField.Id);
-            Assert.AreEqual(null, rangeById);
+            Assert.IsNull(rangeById);
         }
 
         [TestMethod]
@@ -47,6 +47,7 @@ namespace IMMRequest.DataAccess.Tests
         {
             rangeRepositoryInMemory.Add(oneRangeAddField);
             rangeRepositoryInMemory.Add(anotherRangeAddField);
+            rangeRepositoryInMemory.SaveChanges();
 
             Assert.AreEqual(rangeRepositoryInMemory.Get(oneRangeAddField.Id),
                 oneRangeAddField);

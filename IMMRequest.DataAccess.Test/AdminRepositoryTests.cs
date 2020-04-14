@@ -39,7 +39,7 @@ namespace IMMRequest.DataAccess.Tests
         public void GetAdmin_InexistentAdmin_ShouldReturnNull()
         {
             Admin adminById = adminRepositoryInMemory.Get(sebaAdmin.Id);
-            Assert.AreEqual(null, adminById);
+            Assert.IsNull(adminById);
         }
 
         [TestMethod]
@@ -48,6 +48,7 @@ namespace IMMRequest.DataAccess.Tests
 
             adminRepositoryInMemory.Add(sebaAdmin);
             adminRepositoryInMemory.Add(marcosAdmin);
+            adminRepositoryInMemory.SaveChanges();
 
             Assert.AreEqual(adminRepositoryInMemory.Get(sebaAdmin.Id), sebaAdmin);
         }

@@ -35,7 +35,7 @@ namespace IMMRequest.DataAccess.Tests
         public void GetArea_InexistentArea_ShouldReturnNull()
         {
             Area areaById = areaRepositoryInMemory.Get(cleaningArea.Id);
-            Assert.AreEqual(null, areaById);
+            Assert.IsNull(areaById);
         }
 
         [TestMethod]
@@ -43,6 +43,7 @@ namespace IMMRequest.DataAccess.Tests
         {
             areaRepositoryInMemory.Add(cleaningArea);
             areaRepositoryInMemory.Add(transportArea);
+            areaRepositoryInMemory.SaveChanges();
 
             Assert.AreEqual(areaRepositoryInMemory.Get(cleaningArea.Id),
                 cleaningArea);

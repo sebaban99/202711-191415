@@ -50,8 +50,8 @@ namespace IMMRequest.DataAccess.Tests
         public void AddRequest_ValidRequest_ShouldAddRequestToDB()
         {
             requestRepositoryInMemory.Add(juanRequest);
+            requestRepositoryInMemory.SaveChanges();
 
-            Assert.AreEqual(requestRepositoryInMemory.GetAll().Count(), 1);
             Assert.IsTrue(requestRepositoryInMemory.GetAll().Contains(juanRequest));
         }
 
@@ -62,9 +62,9 @@ namespace IMMRequest.DataAccess.Tests
             requestRepositoryInMemory.Add(juanRequest);
             requestRepositoryInMemory.Add(pedroRequest);
             requestRepositoryInMemory.Remove(juanRequest);
+            requestRepositoryInMemory.SaveChanges();
 
-            Assert.AreEqual(requestRepositoryInMemory.GetAll().Count(), 1);
-            Assert.IsTrue(requestRepositoryInMemory.GetAll().Contains(pedroRequest));
+            Assert.IsFalse(requestRepositoryInMemory.GetAll().Contains(juanRequest));
         }
 
         [TestMethod]
@@ -73,9 +73,8 @@ namespace IMMRequest.DataAccess.Tests
 
             requestRepositoryInMemory.Add(juanRequest);
             requestRepositoryInMemory.Add(pedroRequest);
+            requestRepositoryInMemory.SaveChanges();
 
-            Assert.IsTrue(requestRepositoryInMemory.GetAll().Contains(pedroRequest));
-            Assert.IsTrue(requestRepositoryInMemory.GetAll().Contains(juanRequest));
             Assert.AreEqual(requestRepositoryInMemory.GetAll().Count(), 2);
         }
 
@@ -89,8 +88,8 @@ namespace IMMRequest.DataAccess.Tests
         [ExpectedException(typeof(DataAccessException))]
         public void UpdateRequest_InexistentRequest_ShouldReturnAnException()
         {
-
             requestRepositoryInMemory.Update(juanRequest);
+            requestRepositoryInMemory.SaveChanges();
         }
 
         [TestMethod]
@@ -98,13 +97,14 @@ namespace IMMRequest.DataAccess.Tests
         public void RemoveRequest_InexistentRequest_ShouldReturnAnException()
         {
             requestRepositoryInMemory.Remove(juanRequest);
+            requestRepositoryInMemory.SaveChanges();
         }
 
         [TestMethod]
         public void GetRequest_InexistentRequest_ShouldReturnNull()
         {
             Request requestById = requestRepositoryInMemory.Get(juanRequest.Id);
-            Assert.AreEqual(null, requestById);
+            Assert.IsNull(requestById);
         }
 
         [TestMethod]
@@ -113,6 +113,7 @@ namespace IMMRequest.DataAccess.Tests
 
             requestRepositoryInMemory.Add(juanRequest);
             requestRepositoryInMemory.Add(pedroRequest);
+            requestRepositoryInMemory.SaveChanges();
 
             Assert.AreEqual(requestRepositoryInMemory.Get(pedroRequest.Id), pedroRequest);
         }
@@ -122,6 +123,7 @@ namespace IMMRequest.DataAccess.Tests
         {
             requestRepositoryInMemory.Add(juanRequest);
             requestRepositoryInMemory.Add(pedroRequest);
+            requestRepositoryInMemory.SaveChanges();
 
             Assert.AreEqual(requestRepositoryInMemory.GetByCondition(
                 r => r.RequestNumber == pedroRequest.RequestNumber), pedroRequest);
@@ -131,7 +133,7 @@ namespace IMMRequest.DataAccess.Tests
         public void GetRequestByCondition_InexistentRequest_ShouldReturnNull()
         {
             Request requestById = requestRepositoryInMemory.Get(juanRequest.Id);
-            Assert.AreEqual(null, requestById);
+            Assert.IsNull(requestById);
         }
 
         [TestMethod]
@@ -139,10 +141,13 @@ namespace IMMRequest.DataAccess.Tests
         {
             requestRepositoryInMemory.Add(juanRequest);
             requestRepositoryInMemory.Add(pedroRequest);
+            requestRepositoryInMemory.SaveChanges();
 
             juanRequest.Status = Status.Revision;
 
             requestRepositoryInMemory.Update(juanRequest);
+            requestRepositoryInMemory.SaveChanges();
+
             Assert.AreEqual(requestRepositoryInMemory.Get(juanRequest.Id), juanRequest);
         }
     }

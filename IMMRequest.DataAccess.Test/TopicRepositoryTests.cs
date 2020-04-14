@@ -39,7 +39,7 @@ namespace IMMRequest.DataAccess.Tests
         public void GetTopic_InexistentTopic_ShouldReturnNull()
         {
             Topic topicById = topicRepositoryInMemory.Get(oneTopic.Id);
-            Assert.AreEqual(null, topicById);
+            Assert.IsNull(topicById);
         }
 
         [TestMethod]
@@ -47,6 +47,7 @@ namespace IMMRequest.DataAccess.Tests
         {
             topicRepositoryInMemory.Add(oneTopic);
             topicRepositoryInMemory.Add(anotherTopic);
+            topicRepositoryInMemory.SaveChanges();
 
             Assert.AreEqual(topicRepositoryInMemory.Get(oneTopic.Id),
                 oneTopic);
