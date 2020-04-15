@@ -15,8 +15,7 @@ namespace IMMRequest.BusinessLogic
 
         public Admin Create(Admin admin)
         {
-            if(admin.Name == "" || admin.Password == "" ||
-                admin.Email == "")
+            if(!AreEmptyFields(admin))
             {
                 throw new BusinessLogicException("Error: Admin had empty fields");
             }
@@ -26,6 +25,17 @@ namespace IMMRequest.BusinessLogic
                 adminRepository.SaveChanges();
                 return admin;
             }
+        }
+
+        private bool AreEmptyFields(Admin admin)
+        {
+            return IsStringValid(admin.Email) && IsStringValid(admin.Name) &&
+                IsStringValid(admin.Password);
+        }
+
+        public bool IsStringValid(string str)
+        {
+            return str != null && str != string.Empty;
         }
     }
 }
