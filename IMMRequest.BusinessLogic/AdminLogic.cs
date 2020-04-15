@@ -15,7 +15,15 @@ namespace IMMRequest.BusinessLogic
 
         public Admin Create(Admin admin)
         {
-            if(!AreEmptyFields(admin))
+            ValidateAdd(admin);
+            adminRepository.Add(admin);
+            adminRepository.SaveChanges();
+            return admin;
+        }
+
+        private void ValidateAdd(Admin admin)
+        {
+            if (!AreEmptyFields(admin))
             {
                 throw new BusinessLogicException("Error: Admin had empty fields");
             }
@@ -27,18 +35,12 @@ namespace IMMRequest.BusinessLogic
             {
                 throw new BusinessLogicException("Error: Admin with same email already registered");
             }
-            else
-            {
-                adminRepository.Add(admin);
-                adminRepository.SaveChanges();
-                return admin;
-            }
         }
 
         private bool ExistsAdmin(Admin admin)
         {
             var adminById = adminRepository.GetByCondition(a => a.Email == admin.Email);
-            if(adminById != null)
+            if (adminById != null)
             {
                 return true;
             }
@@ -48,7 +50,7 @@ namespace IMMRequest.BusinessLogic
         private bool AreEmptyFields(Admin admin)
         {
             return IsValidString(admin.Email) && IsValidString(admin.Name) &&
-                IsValidString(admin.Password);
+            IsValidString(admin.Password);
         }
 
         public bool IsValidString(string str)
