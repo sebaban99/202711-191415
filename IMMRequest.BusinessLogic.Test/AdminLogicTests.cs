@@ -16,7 +16,7 @@ namespace IMMRequest.BusinessLogic.Tests
         private AdminLogic adminLogic;
 
         [TestMethod]
-        public void CreateAdminCaseValidAdminNotExist()
+        public void CreateAdminCaseValidAdminNotExistsInDB()
         {
             admin = new Admin()
             {
@@ -123,6 +123,29 @@ namespace IMMRequest.BusinessLogic.Tests
             var result = adminLogic.Create(admin);
 
             mock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Invalid email format")]
+        public void CreateAdminCaseValidAdminCaseExistsInDB()
+        {
+            admin = new Admin()
+            {
+                Email = "seba@gmail.com",
+                Password = "Pass",
+                Name = "Sebastian Perez",
+                Id = Guid.NewGuid()
+            };
+
+            var mock = new Mock<IRepository<Admin>>(MockBehavior.Strict);
+            mock.Setup(m => m.Add(admin));
+            mock.Setup(m => m.SaveChanges());
+
+            adminLogic = new AdminLogic(mock.Object);
+            var result = adminLogic.Create(admin);
+
+            mock.VerifyAll();
+            Assert.AreEqual(result, admin);
         }
 
     }
