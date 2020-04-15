@@ -35,7 +35,7 @@ namespace IMMRequest.BusinessLogic
 
         public bool IsStringValid(string str)
         {
-            return str != null && str != string.Empty;
+            return str != null && str.Trim() != string.Empty;
         }
     }
 }
