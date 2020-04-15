@@ -57,7 +57,6 @@ namespace IMMRequest.BusinessLogic.Tests
             var result = adminLogic.Create(admin);
 
             mock.VerifyAll();
-            Assert.AreEqual(result, admin);
         }
 
         [TestMethod]
@@ -80,7 +79,6 @@ namespace IMMRequest.BusinessLogic.Tests
             var result = adminLogic.Create(admin);
 
             mock.VerifyAll();
-            Assert.AreEqual(result, admin);
         }
 
         [TestMethod]
@@ -103,15 +101,15 @@ namespace IMMRequest.BusinessLogic.Tests
             var result = adminLogic.Create(admin);
 
             mock.VerifyAll();
-            Assert.AreEqual(result, admin);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Invalid email format")]
         public void CreateAdminCaseInvalidAdminInvalidEmail()
         {
             admin = new Admin()
             {
-                Email = "seba@gmail.com",
+                Email = "sebagmail.com",
                 Password = "Pass",
                 Name = "Sebastian Perez",
                 Id = Guid.NewGuid()
@@ -125,7 +123,6 @@ namespace IMMRequest.BusinessLogic.Tests
             var result = adminLogic.Create(admin);
 
             mock.VerifyAll();
-            Assert.AreEqual(result, admin);
         }
 
     }

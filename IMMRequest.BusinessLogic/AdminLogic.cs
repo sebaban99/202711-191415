@@ -19,6 +19,10 @@ namespace IMMRequest.BusinessLogic
             {
                 throw new BusinessLogicException("Error: Admin had empty fields");
             }
+            else if (!IsValidEmail(admin.Email))
+            {
+                throw new BusinessLogicException("Error: Invalid email format");
+            }
             else
             {
                 adminRepository.Add(admin);
@@ -29,13 +33,26 @@ namespace IMMRequest.BusinessLogic
 
         private bool AreEmptyFields(Admin admin)
         {
-            return IsStringValid(admin.Email) && IsStringValid(admin.Name) &&
-                IsStringValid(admin.Password);
+            return IsValidString(admin.Email) && IsValidString(admin.Name) &&
+                IsValidString(admin.Password);
         }
 
-        public bool IsStringValid(string str)
+        public bool IsValidString(string str)
         {
             return str != null && str.Trim() != string.Empty;
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
