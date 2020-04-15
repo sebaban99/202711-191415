@@ -28,6 +28,8 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var mock = new Mock<IRepository<Admin>>(MockBehavior.Strict);
             mock.Setup(m => m.Add(admin));
+            mock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Admin, bool>>>())).Returns((Admin)null);
             mock.Setup(m => m.SaveChanges());
 
             adminLogic = new AdminLogic(mock.Object);
@@ -139,6 +141,8 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var mock = new Mock<IRepository<Admin>>(MockBehavior.Strict);
             mock.Setup(m => m.Add(admin));
+            mock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Admin, bool>>>())).Returns(admin);
             mock.Setup(m => m.SaveChanges());
 
             adminLogic = new AdminLogic(mock.Object);

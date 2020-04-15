@@ -23,12 +23,26 @@ namespace IMMRequest.BusinessLogic
             {
                 throw new BusinessLogicException("Error: Invalid email format");
             }
+            else if (ExistsAdmin(admin))
+            {
+                throw new BusinessLogicException("Error: Admin with same email already registered");
+            }
             else
             {
                 adminRepository.Add(admin);
                 adminRepository.SaveChanges();
                 return admin;
             }
+        }
+
+        private bool ExistsAdmin(Admin admin)
+        {
+            var adminById = adminRepository.GetByCondition(a => a.Email == admin.Email);
+            if(adminById != null)
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool AreEmptyFields(Admin admin)

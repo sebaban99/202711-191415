@@ -132,7 +132,8 @@ namespace IMMRequest.DataAccess.Tests
         [TestMethod]
         public void GetRequestByCondition_InexistentRequest_ShouldReturnNull()
         {
-            Request requestById = requestRepositoryInMemory.Get(juanRequest.Id);
+            Request requestById = requestRepositoryInMemory.GetByCondition(
+                r => r.RequestNumber == pedroRequest.RequestNumber);
             Assert.IsNull(requestById);
         }
 
