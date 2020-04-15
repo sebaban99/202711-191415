@@ -152,5 +152,82 @@ namespace IMMRequest.BusinessLogic.Tests
             Assert.AreEqual(result, admin);
         }
 
+        [TestMethod]
+        public void UpdateAdminCaseValidNameUpdate()
+        {
+            admin = new Admin()
+            {
+                Email = "seba@gmail.com",
+                Password = "Pass",
+                Name = "Sebastian Perez",
+                Id = Guid.NewGuid()
+            };
+
+            var mock = new Mock<IRepository<Admin>>(MockBehavior.Strict);
+            mock.Setup(m => m.Add(admin));
+            mock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Admin, bool>>>())).Returns(admin);
+            mock.Setup(m => m.SaveChanges());
+            adminLogic = new AdminLogic(mock.Object);
+            var adminCreted = adminLogic.Create(admin);
+            adminCreted.Name = "SebaP";
+
+            var result = adminLogic.Update(adminCreted);
+
+            mock.VerifyAll();
+            Assert.AreEqual(result, admin);
+        }
+
+        [TestMethod]
+        public void UpdateAdminCaseValidEmailUpdate()
+        {
+            admin = new Admin()
+            {
+                Email = "seba@gmail.com",
+                Password = "Pass",
+                Name = "Sebastian Perez",
+                Id = Guid.NewGuid()
+            };
+
+            var mock = new Mock<IRepository<Admin>>(MockBehavior.Strict);
+            mock.Setup(m => m.Add(admin));
+            mock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Admin, bool>>>())).Returns(admin);
+            mock.Setup(m => m.SaveChanges());
+            adminLogic = new AdminLogic(mock.Object);
+            var adminCreted = adminLogic.Create(admin);
+            adminCreted.Email = "seba2@outlook.com";
+
+            var result = adminLogic.Update(adminCreted);
+
+            mock.VerifyAll();
+            Assert.AreEqual(result, admin);
+        }
+
+        [TestMethod]
+        public void UpdateAdminCaseValidPasswordUpdate()
+        {
+            admin = new Admin()
+            {
+                Email = "seba@gmail.com",
+                Password = "Pass",
+                Name = "Sebastian Perez",
+                Id = Guid.NewGuid()
+            };
+
+            var mock = new Mock<IRepository<Admin>>(MockBehavior.Strict);
+            mock.Setup(m => m.Add(admin));
+            mock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Admin, bool>>>())).Returns(admin);
+            mock.Setup(m => m.SaveChanges());
+            adminLogic = new AdminLogic(mock.Object);
+            var adminCreted = adminLogic.Create(admin);
+            adminCreted.Email = "Password";
+
+            var result = adminLogic.Update(adminCreted);
+
+            mock.VerifyAll();
+            Assert.AreEqual(result, admin);
+        }
     }
 }
