@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMMRequest.Domain", "IMMReq
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMMRequest.DataAccess.Tests", "IMMRequest.DataAccess.Test\IMMRequest.DataAccess.Tests.csproj", "{A6166233-A6D5-4CF8-838C-D8FFAE0B22C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMMRequest.BusinessLogic.Test", "IMMRequest.BusinessLogic.Test\IMMRequest.BusinessLogic.Test.csproj", "{509F389C-55D6-425B-A7D1-6DD9492C3A82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMMRequest.BusinessLogic.Tests", "IMMRequest.BusinessLogic.Test\IMMRequest.BusinessLogic.Tests.csproj", "{509F389C-55D6-425B-A7D1-6DD9492C3A82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

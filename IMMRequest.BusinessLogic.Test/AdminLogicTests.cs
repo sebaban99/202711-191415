@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace IMMRequest.BusinessLogic.Test
+namespace IMMRequest.BusinessLogic.Tests
 {
     [TestClass]
     public class AdminLogicTests
@@ -16,7 +16,7 @@ namespace IMMRequest.BusinessLogic.Test
         private AdminLogic adminLogic;
 
         [TestMethod]
-        public void CreateAdmin_()
+        public void CreateAdminCaseValidAdminNotExist()
         {
             admin = new Admin()
             {
@@ -28,14 +28,13 @@ namespace IMMRequest.BusinessLogic.Test
 
             var mock = new Mock<IRepository<Admin>>(MockBehavior.Strict);
             mock.Setup(m => m.Add(admin));
-            mock.Setup(m => m.GetByCondition(It.IsAny<Expression<Func<Admin, bool>>>())).Returns((Admin)null);
             mock.Setup(m => m.SaveChanges());
 
             adminLogic = new AdminLogic(mock.Object);
             var result = adminLogic.Create(admin);
 
             mock.VerifyAll();
-            Assert.AreEqual(result, admin.Id);
+            Assert.AreEqual(result, admin);
         }
 
     }

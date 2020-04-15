@@ -33,6 +33,9 @@ namespace IMMRequest.DataAccess
                .HasMany(r => r.Range);
             modelBuilder.Entity<Request>()
                .HasOne(t => t.Type);
+            modelBuilder.Entity<Admin>()
+                .HasIndex(a => a.Email)
+                .IsUnique();
         }
     }
 }
