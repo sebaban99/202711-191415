@@ -166,7 +166,10 @@ namespace IMMRequest.BusinessLogic.Tests
             var mock = new Mock<IRepository<Admin>>(MockBehavior.Strict);
             mock.Setup(m => m.Add(admin));
             mock.Setup(m => m.GetByCondition(
-                It.IsAny<Expression<Func<Admin, bool>>>())).Returns(admin);
+                It.IsAny<Expression<Func<Admin, bool>>>())).Returns((Admin)null);
+            mock.Setup(m => m.Get(
+               It.IsAny<Guid>())).Returns(admin);
+            mock.Setup(m => m.Update(admin));
             mock.Setup(m => m.SaveChanges());
             adminLogic = new AdminLogic(mock.Object);
             var adminCreted = adminLogic.Create(admin);
@@ -175,7 +178,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var result = adminLogic.Update(adminCreted);
 
             mock.VerifyAll();
-            Assert.AreEqual(result, admin);
+            Assert.AreEqual(result.Name, admin.Name);
         }
 
         [TestMethod]
@@ -192,7 +195,10 @@ namespace IMMRequest.BusinessLogic.Tests
             var mock = new Mock<IRepository<Admin>>(MockBehavior.Strict);
             mock.Setup(m => m.Add(admin));
             mock.Setup(m => m.GetByCondition(
-                It.IsAny<Expression<Func<Admin, bool>>>())).Returns(admin);
+                It.IsAny<Expression<Func<Admin, bool>>>())).Returns((Admin)null);
+            mock.Setup(m => m.Get(
+               It.IsAny<Guid>())).Returns(admin);
+            mock.Setup(m => m.Update(admin));
             mock.Setup(m => m.SaveChanges());
             adminLogic = new AdminLogic(mock.Object);
             var adminCreted = adminLogic.Create(admin);
@@ -201,7 +207,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var result = adminLogic.Update(adminCreted);
 
             mock.VerifyAll();
-            Assert.AreEqual(result, admin);
+            Assert.AreEqual(result.Email, admin.Email);
         }
 
         [TestMethod]
@@ -218,16 +224,19 @@ namespace IMMRequest.BusinessLogic.Tests
             var mock = new Mock<IRepository<Admin>>(MockBehavior.Strict);
             mock.Setup(m => m.Add(admin));
             mock.Setup(m => m.GetByCondition(
-                It.IsAny<Expression<Func<Admin, bool>>>())).Returns(admin);
+                It.IsAny<Expression<Func<Admin, bool>>>())).Returns((Admin)null);
+            mock.Setup(m => m.Get(
+               It.IsAny<Guid>())).Returns(admin);
+            mock.Setup(m => m.Update(admin));
             mock.Setup(m => m.SaveChanges());
             adminLogic = new AdminLogic(mock.Object);
             var adminCreted = adminLogic.Create(admin);
-            adminCreted.Email = "Password";
+            adminCreted.Password = "Password";
 
             var result = adminLogic.Update(adminCreted);
 
             mock.VerifyAll();
-            Assert.AreEqual(result, admin);
+            Assert.AreEqual(result.Password, admin.Password);
         }
     }
 }

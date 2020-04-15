@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using IMMRequest.DataAccess;
 using IMMRequest.Domain;
 
@@ -13,15 +14,7 @@ namespace IMMRequest.BusinessLogic
             this.adminRepository = adminRepository;
         }
 
-        public Admin Create(Admin admin)
-        {
-            ValidateAdd(admin);
-            adminRepository.Add(admin);
-            adminRepository.SaveChanges();
-            return admin;
-        }
-
-        private void ValidateAdd(Admin admin)
+        private void ValidateAdminObject(Admin admin)
         {
             if (!AreEmptyFields(admin))
             {
@@ -31,7 +24,12 @@ namespace IMMRequest.BusinessLogic
             {
                 throw new BusinessLogicException("Error: Invalid email format");
             }
-            else if (ExistsAdmin(admin))
+        }
+
+        private void ValidateAdd(Admin admin)
+        {
+            ValidateAdminObject(admin);
+            if (ExistsAdmin(admin))
             {
                 throw new BusinessLogicException("Error: Admin with same email already registered");
             }
@@ -68,6 +66,43 @@ namespace IMMRequest.BusinessLogic
             catch
             {
                 return false;
+            }
+        }
+
+        public Admin Create(Admin admin)
+        {
+            ValidateAdd(admin);
+            adminRepository.Add(admin);
+            adminRepository.SaveChanges();
+            return admin;
+        }
+
+        public Admin Get(Guid id)
+        {
+            return adminRepository.Get(id);
+        }
+
+        public IEnumerable<Admin> GetAll()
+        {
+            return adminRepository.GetAll();
+        }
+
+        public Admin Update(Admin admin)
+        {
+            Admin adminToUpdate = adminRepository.Get(admin.Id);
+            if (adminToUpdate == null)
+            {
+                throw new BusinessLogicException("Error: Admin to update doesn't exist");
+            }
+            else
+            {
+                adminToUpdate.Name = admin.Name;
+                adminToUpdate.Email = admin.Email;
+                adminToUpdate.Password = admin.Password;
+                ValidateAdminObject(adminToUpdate);
+                adminRepository.Update(adminToUpdate);
+                adminRepository.SaveChanges();
+                return adminToUpdate;
             }
         }
     }
