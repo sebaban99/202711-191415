@@ -29,13 +29,13 @@ namespace IMMRequest.BusinessLogic
         private void ValidateAdd(Admin admin)
         {
             ValidateAdminObject(admin);
-            if (ExistsAdmin(admin))
+            if (IsEmailRegistered(admin))
             {
                 throw new BusinessLogicException("Error: Admin with same email already registered");
             }
         }
 
-        private bool ExistsAdmin(Admin admin)
+        private bool IsEmailRegistered(Admin admin)
         {
             var adminById = adminRepository.GetByCondition(a => a.Email == admin.Email);
             if (adminById != null)
@@ -89,20 +89,38 @@ namespace IMMRequest.BusinessLogic
 
         public Admin Update(Admin admin)
         {
-            Admin adminToUpdate = adminRepository.Get(admin.Id);
-            if (adminToUpdate == null)
+            ValidateUpdate(admin);
+            var adminToUpdate = Get(admin.Id);
+            adminToUpdate.Name = admin.Name;
+            adminToUpdate.Email = admin.Email;
+            adminToUpdate.Password = admin.Password;
+            ValidateAdminObject(adminToUpdate);
+            adminRepository.Update(adminToUpdate);
+            adminRepository.SaveChanges();
+            return adminToUpdate;
+        }
+
+        private void ValidateUpdate(Admin admin)
+        {
+            var adminById = Get(admin.Id);
+            if (adminById == null)
             {
                 throw new BusinessLogicException("Error: Admin to update doesn't exist");
             }
-            else
+        }
+        public void Remove(Admin admin)
+        {
+            ValidateDelete(admin);
+            adminRepository.Remove(admin);
+            adminRepository.SaveChanges();
+        }
+
+        private void ValidateDelete(Admin admin)
+        {
+            var adminById = Get(admin.Id);
+            if (adminById == null)
             {
-                adminToUpdate.Name = admin.Name;
-                adminToUpdate.Email = admin.Email;
-                adminToUpdate.Password = admin.Password;
-                ValidateAdminObject(adminToUpdate);
-                adminRepository.Update(adminToUpdate);
-                adminRepository.SaveChanges();
-                return adminToUpdate;
+                throw new BusinessLogicException("Error: Admin to delete doesn't exist");
             }
         }
     }
