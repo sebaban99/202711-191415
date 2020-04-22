@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using IMMRequest.DataAccess;
+using IMMRequest.DataAccess.Interfaces;
 using IMMRequest.Domain;
 
 namespace IMMRequest.BusinessLogic

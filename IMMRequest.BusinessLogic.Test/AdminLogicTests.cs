@@ -1,4 +1,4 @@
-﻿using IMMRequest.DataAccess;
+﻿using IMMRequest.DataAccess.Interfaces;
 using IMMRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -128,7 +128,7 @@ namespace IMMRequest.BusinessLogic.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(BusinessLogicException), "Error: Invalid email format")]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Admin with same email already registered")]
         public void CreateAdminCaseValidAdminCaseExistsInDB()
         {
             admin = new Admin()
