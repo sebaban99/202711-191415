@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using IMMRequest.DataAccess.Interfaces;
 using IMMRequest.Domain;
 using Type = IMMRequest.Domain.Type;
@@ -124,6 +125,11 @@ namespace IMMRequest.BusinessLogic
 
             }
             return typeById;
+        }
+
+        public IEnumerable<Type> GetAll()
+        {
+            return typeRepository.GetAll();
         }
     }
 }
