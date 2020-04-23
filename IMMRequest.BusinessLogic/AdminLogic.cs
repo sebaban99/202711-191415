@@ -51,7 +51,7 @@ namespace IMMRequest.BusinessLogic
             IsValidString(admin.Password);
         }
 
-        public bool IsValidString(string str)
+        private bool IsValidString(string str)
         {
             return str != null && str.Trim() != string.Empty;
         }
