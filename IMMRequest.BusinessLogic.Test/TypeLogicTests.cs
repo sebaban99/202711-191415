@@ -539,5 +539,104 @@ namespace IMMRequest.BusinessLogic.Tests
 
             Assert.AreEqual(result, types);
         }
+
+        [TestMethod]
+        public void DeleteTypeCaseExistsType()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                FieldType = FieldType.Entero,
+                Type = type,
+                Name = "Matricula",
+                Range = new List<Range>()
+            };
+
+            af.Type = type;
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
+            typeRepositoryMock.Setup(m => m.Remove(type));
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            typeLogic.Remove(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Type to delete doesn't exist")]
+        public void DeleteTypeCaseNotExistsType()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                FieldType = FieldType.Entero,
+                Type = type,
+                Name = "Matricula",
+                Range = new List<Range>()
+            };
+
+            af.Type = type;
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.Remove(type));
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            typeLogic.Remove(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
     }
 }
