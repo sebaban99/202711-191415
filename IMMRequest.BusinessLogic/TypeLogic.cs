@@ -131,5 +131,16 @@ namespace IMMRequest.BusinessLogic
         {
             return typeRepository.GetAll();
         }
+
+        public void Remove(Type type)
+        {
+            Type typeById = typeRepository.Get(type.Id);
+            if (typeById == null)
+            {
+                throw new BusinessLogicException("Error: Type to delete doesn't exist");
+            }
+            typeRepository.Remove(type);
+            typeRepository.SaveChanges();
+        }
     }
 }
