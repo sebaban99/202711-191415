@@ -389,5 +389,102 @@ namespace IMMRequest.BusinessLogic.Tests
             topicRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
         }
+
+        [TestMethod]
+        public void GetTypeCaseExistsType()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                FieldType = FieldType.Entero,
+                Type = type,
+                Name = "Matricula",
+                Range = new List<Range>()
+            };
+
+            af.Type = type;
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Get(type.Id);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+
+            Assert.AreEqual(result, type);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Invalid ID, Type does not exist")]
+        public void GetTypeCaseNotExistsType()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                FieldType = FieldType.Entero,
+                Type = type,
+                Name = "Matricula",
+                Range = new List<Range>()
+            };
+
+            af.Type = type;
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Type)null);
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Get(type.Id);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
     }
 }
