@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using IMMRequest.DataAccess;
+using IMMRequest.DataAccess.Interfaces;
 using IMMRequest.Domain;
 
 namespace IMMRequest.BusinessLogic
@@ -51,7 +51,7 @@ namespace IMMRequest.BusinessLogic
             IsValidString(admin.Password);
         }
 
-        public bool IsValidString(string str)
+        private bool IsValidString(string str)
         {
             return str != null && str.Trim() != string.Empty;
         }
