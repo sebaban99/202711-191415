@@ -114,5 +114,16 @@ namespace IMMRequest.BusinessLogic
             typeRepository.SaveChanges();
             return type;
         }
+
+        public Type Get(Guid id)
+        {
+            Type typeById = typeRepository.Get(id);
+            if(typeById == null)
+            {
+                throw new BusinessLogicException("Error: Invalid ID, Type does not exist");
+
+            }
+            return typeById;
+        }
     }
 }
