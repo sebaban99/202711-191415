@@ -486,5 +486,58 @@ namespace IMMRequest.BusinessLogic.Tests
             topicRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
         }
+
+
+        [TestMethod]
+        public void GetAllTypes()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                FieldType = FieldType.Entero,
+                Type = type,
+                Name = "Matricula",
+                Range = new List<Range>()
+            };
+
+            af.Type = type;
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            List<Type> types = new List<Type>();
+            types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            typeRepositoryMock.Setup(m => m.GetAll()).Returns(types);
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.GetAll();
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+
+            Assert.AreEqual(result, types);
+        }
     }
 }
