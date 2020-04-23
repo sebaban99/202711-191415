@@ -43,13 +43,11 @@ namespace IMMRequest.BusinessLogic.Tests
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
-            addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
             typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
                 addFieldRepositoryMock.Object);
@@ -98,12 +96,12 @@ namespace IMMRequest.BusinessLogic.Tests
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -155,12 +153,12 @@ namespace IMMRequest.BusinessLogic.Tests
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Topic)null);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(a => a.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -210,12 +208,12 @@ namespace IMMRequest.BusinessLogic.Tests
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns(type);
             typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(a => a.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -265,12 +263,12 @@ namespace IMMRequest.BusinessLogic.Tests
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(a => a.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -320,12 +318,12 @@ namespace IMMRequest.BusinessLogic.Tests
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -363,7 +361,7 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Id = Guid.NewGuid(),
                 Type = null,
-                Name = "Matricula",
+                Name = "",
                 Range = null
             };
 
@@ -374,12 +372,12 @@ namespace IMMRequest.BusinessLogic.Tests
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
