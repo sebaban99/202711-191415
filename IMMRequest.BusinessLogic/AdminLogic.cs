@@ -79,7 +79,12 @@ namespace IMMRequest.BusinessLogic
 
         public Admin Get(Guid id)
         {
-            return adminRepository.Get(id);
+            Admin adminById = adminRepository.Get(id);
+            if(adminById == null)
+            {
+                throw new BusinessLogicException("Error: Invalid ID, Type does not exist");
+            }
+            return adminById;
         }
 
         public IEnumerable<Admin> GetAll()

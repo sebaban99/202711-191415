@@ -15,6 +15,7 @@ namespace IMMRequest.DataAccess
         public DbSet<Type> Types { get; set; }
         public DbSet<AdditionalField> AdditionalFields { get; set; }
         public DbSet<Range> RangeValues { get; set; }
+        public DbSet<AFValue> AFValues { get; set; }
 
         public IMMRequestContext(DbContextOptions options) : base(options) { }
 
@@ -36,6 +37,8 @@ namespace IMMRequest.DataAccess
             modelBuilder.Entity<Admin>()
                 .HasIndex(a => a.Email)
                 .IsUnique();
+            modelBuilder.Entity<AFValue>()
+                .HasKey((a => new { a.RequestId, a.AddFieldId }));
         }
     }
 }
