@@ -17,7 +17,6 @@ namespace IMMRequest.DataAccess.Tests
             Name = "Estado del contenedor",
             Type = new Domain.Type(),
             Range = new List<Domain.Range>(),
-            Value = "Conetendor roto"
         };
 
         AdditionalField stateOfStreetLight = new AdditionalField()
@@ -26,7 +25,6 @@ namespace IMMRequest.DataAccess.Tests
             Name = "Estado del poste de luz",
             Type = new Domain.Type(),
             Range = new List<Domain.Range>(),
-            Value = "Poste de luz roto"
         };
 
         private AdditionalFieldRepository addfieldRepositoryInMemory = new AdditionalFieldRepository(

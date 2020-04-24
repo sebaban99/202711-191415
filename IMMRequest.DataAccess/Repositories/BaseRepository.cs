@@ -75,7 +75,7 @@ namespace IMMRequest.DataAccess.Repositories
         {
             try
             {
-                return Context.Set<T>().First(expression);
+                return Context.Set<T>().FirstOrDefault(expression);
             }
             catch (DbException)
             {
