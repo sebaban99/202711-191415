@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using IMMRequest.DataAccess.Interfaces;
 using IMMRequest.Domain;
 using Type = IMMRequest.Domain.Type;
@@ -22,18 +23,20 @@ namespace IMMRequest.BusinessLogic
 
         private bool IsValidString(string str)
         {
-            return str != null && str.Trim() != string.Empty;
+            return str != null && str.Trim() != string.Empty &&
+                (!Regex.IsMatch(str, @"^[0-9]$") &&
+                Regex.IsMatch(str, @"^[A-Za-z0-9!()'/.,\s-]{1,}$"));
         }
 
         private bool AreEmptyFields(Type type)
         {
-            return IsValidString(type.Name) && type.Topic != null &&
-                type.AdditionalFields != null;
+            return !IsValidString(type.Name) || type.Topic == null ||
+                type.AdditionalFields == null;
         }
 
         private void ValidateTypeObject(Type type)
         {
-            if (!AreEmptyFields(type))
+            if (AreEmptyFields(type))
             {
                 throw new BusinessLogicException("Error: Type had empty fields");
             }
@@ -68,6 +71,93 @@ namespace IMMRequest.BusinessLogic
             }
         }
 
+        private void ValidateTextRange(AdditionalField af)
+        {
+            bool areTextsValid = true;
+            for (int i = 0; i < af.Range.Count && areTextsValid; i++)
+            {
+                try
+                {
+                    if (!IsValidString(af.Range[i].Value))
+                    {
+                        areTextsValid = false;
+                    }
+                }
+                catch (Exception)
+                {
+                    areTextsValid = false;
+                }
+            }
+            if (!areTextsValid)
+            {
+                throw new BusinessLogicException($"Error: {af.Name}'s range has invalid text values");
+            }
+        }
+
+        private static void ValidateIntegerRange(AdditionalField af)
+        {
+            bool areIntsValid = true;
+            try
+            {
+                int minValue = Int32.Parse(af.Range[0].Value);
+                int maxValue = Int32.Parse(af.Range[1].Value);
+                areIntsValid = minValue < maxValue;
+            }
+            catch (Exception)
+            {
+                areIntsValid = false;
+            }
+            if (!areIntsValid)
+            {
+                throw new BusinessLogicException($"Error: {af.Name}'s range has invalid integer values");
+            }
+        }
+
+        private static void ValidateDateRange(AdditionalField af)
+        {
+            bool areDatesValid = true;
+            try
+            {
+                DateTime minDate = DateTime.Parse(af.Range[0].Value);
+                DateTime maxDate = DateTime.Parse(af.Range[1].Value);
+                areDatesValid = minDate.Day < maxDate.Day;
+            }
+            catch (Exception)
+            {
+                areDatesValid = false;
+            }
+            if (!areDatesValid)
+            {
+                throw new BusinessLogicException($"Error: {af.Name}'s range has invalid date values");
+            }
+        }
+
+        private void ValidateAFRange(AdditionalField af)
+        {
+            if (af.Range.Count != 0)
+            {
+                if (af.FieldType == FieldType.Texto)
+                {
+                    ValidateTextRange(af);
+                }
+                else if (af.Range.Count == 2)
+                {
+                    if (af.FieldType == FieldType.Fecha)
+                    {
+                        ValidateDateRange(af);
+                    }
+                    else
+                    {
+                        ValidateIntegerRange(af);
+                    }
+                }
+                else
+                {
+                    throw new BusinessLogicException($"Error: {af.Name}'s range has too many date or integer values");
+                }
+            }
+        }
+
         private bool IsAFValid(AdditionalField af, Type type)
         {
             return af.Range != null && af.Type == type && IsValidString(af.Name);
@@ -83,6 +173,7 @@ namespace IMMRequest.BusinessLogic
                     {
                         throw new BusinessLogicException("Error: AdditionalField had empty fields");
                     }
+                    ValidateAFRange(af);
                 }
             }
         }
@@ -119,7 +210,7 @@ namespace IMMRequest.BusinessLogic
         public Type Get(Guid id)
         {
             Type typeById = typeRepository.Get(id);
-            if(typeById == null)
+            if (typeById == null)
             {
                 throw new BusinessLogicException("Error: Invalid ID, Type does not exist");
 
