@@ -6,6 +6,6 @@ namespace IMMRequest.Domain
     {
         public Guid Id {get; set;}  
         public Guid AdditionalFieldId { get; set; }
-        public string Name {get; set;}
+        public string Value {get; set;}
     }
 }

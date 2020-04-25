@@ -30,7 +30,7 @@ namespace IMMRequest.DataAccess.Migrations
                     b.Property<int>("FieldType")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("TypeId")
@@ -55,7 +55,7 @@ namespace IMMRequest.DataAccess.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
@@ -72,7 +72,7 @@ namespace IMMRequest.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -89,7 +89,7 @@ namespace IMMRequest.DataAccess.Migrations
                     b.Property<Guid>("AdditionalFieldId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -114,7 +114,7 @@ namespace IMMRequest.DataAccess.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
@@ -145,7 +145,7 @@ namespace IMMRequest.DataAccess.Migrations
                     b.Property<Guid?>("AreaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -161,7 +161,7 @@ namespace IMMRequest.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("TopicId")

@@ -16,14 +16,14 @@ namespace IMMRequest.DataAccess.Tests
         {
             Id = Guid.NewGuid(),
             AdditionalFieldId = additionalFieldId,
-            Name = "Fono taxi"
+            Value = "Fono taxi"
         };
 
         Range anotherRangeAddField = new Range()
         {
             Id = Guid.NewGuid(),
             AdditionalFieldId = additionalFieldId,
-            Name = "Taxi aeropuerto"
+            Value = "Taxi aeropuerto"
         };
 
         private RangeRepository rangeRepositoryInMemory = new RangeRepository(

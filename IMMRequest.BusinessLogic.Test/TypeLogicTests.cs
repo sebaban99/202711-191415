@@ -32,10 +32,9 @@ namespace IMMRequest.BusinessLogic.Tests
             type = new Type()
             {
                 Id = Guid.NewGuid(),
-                Name = "Taxi-Acoso",
+                Name = "Taxi Acoso",
                 Topic = topic,
                 AdditionalFields = new List<AdditionalField>()
-                
             };
 
             topic.Types.Add(type);
@@ -637,6 +636,949 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.VerifyAll();
             topicRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Taxi-Acoso's range has invalid text values")]
+        public void CreateTypeCaseInvalidAFRangeTextScenario1()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Texto,
+                Range = new List<Range>()
+            };
+
+            Range option1 = new Range()
+            {
+                Value = "Radio Taxi",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option2 = new Range()
+            {
+                Value = "Fono Taxi",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option3 = new Range()
+            {
+                Value = "1",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            af.Range.Add(option3);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void CreateTypeCaseValidAFRangeTextScenario2()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Texto,
+                Range = new List<Range>()
+            };
+
+            Range option1 = new Range()
+            {
+                Value = "Radio Taxi",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option2 = new Range()
+            {
+                Value = "Fono Taxi",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option3 = new Range()
+            {
+                Value = "Taxi aeropuerto",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            af.Range.Add(option3);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Taxi-Acoso's range has invalid integer values")]
+        public void CreateTypeCaseInvalidAFRangeIntegerScenario1()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Entero,
+                Range = new List<Range>()
+            };
+
+            Range option2 = new Range()
+            {
+                Value = "3",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option1 = new Range()
+            {
+                Value = "1",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option3 = new Range()
+            {
+                Value = "5",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            af.Range.Add(option3);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Taxi-Acoso's range has invalid integer values")]
+        public void CreateTypeCaseInvalidAFRangeIntegerScenario2()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Entero,
+                Range = new List<Range>()
+            };
+
+            Range option2 = new Range()
+            {
+                Value = "1",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option1 = new Range()
+            {
+                Value = "1",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Taxi-Acoso's range has invalid integer values")]
+        public void CreateTypeCaseInvalidAFRangeIntegerScenario3()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Entero,
+                Range = new List<Range>()
+            };
+
+            Range option1 = new Range()
+            {
+                Value = "1",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Taxi-Acoso's range has invalid integer values")]
+        public void CreateTypeCaseInvalidAFRangeIntegerScenario4()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Entero,
+                Range = new List<Range>()
+            };
+
+            Range option2 = new Range()
+            {
+                Value = "1",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option1 = new Range()
+            {
+                Value = "4",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void CreateTypeCaseValidAFRangeIntegerScenario5()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Entero,
+                Range = new List<Range>()
+            };
+
+            Range option1 = new Range()
+            {
+                Value = "1",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option2 = new Range()
+            {
+                Value = "4",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+
+            Assert.AreEqual(result, type);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Taxi-Acoso's range has invalid date values")]
+        public void CreateTypeCaseInvalidAFRangeDateScenario1()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Fecha,
+                Range = new List<Range>()
+            };
+
+            DateTime date = DateTime.Today;
+
+            Range option1 = new Range()
+            {
+                Value = date.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option2 = new Range()
+            {
+                Value = date.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Taxi-Acoso's range has invalid date values")]
+        public void CreateTypeCaseInvalidAFRangeDateScenario2()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Fecha,
+                Range = new List<Range>()
+            };
+
+            DateTime date = DateTime.Today;
+            Range option1 = new Range()
+            {
+                Value = date.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Taxi-Acoso's range has invalid date values")]
+        public void CreateTypeCaseInvalidAFRangeDateScenario3()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Fecha,
+                Range = new List<Range>()
+            };
+
+            DateTime date1 = DateTime.Today;
+            DateTime date2 = date1.AddDays(+1);
+            DateTime date3 = date2.AddDays(+1);
+
+            Range option1 = new Range()
+            {
+                Value = date1.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option2 = new Range()
+            {
+                Value = date2.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option3 = new Range()
+            {
+                Value = date3.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            af.Range.Add(option3);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Taxi-Acoso's range has invalid date values")]
+        public void CreateTypeCaseInvalidAFRangeDateScenario4()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Fecha,
+                Range = new List<Range>()
+            };
+
+            DateTime date1 = DateTime.Today;
+            DateTime date2 = date1.AddDays(-1);
+
+            Range option1 = new Range()
+            {
+                Value = date1.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option2 = new Range()
+            {
+                Value = date2.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Taxi-Acoso's range has invalid date values")]
+        public void CreateTypeCaseInvalidAFRangeDateScenario5()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Fecha,
+                Range = new List<Range>()
+            };
+
+            DateTime date1 = DateTime.Today;
+
+            Range option1 = new Range()
+            {
+                Value = date1.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option2 = new Range()
+            {
+                Value = "3 de mayo",
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void CreateTypeCaseValidAFRangeDateScenario6()
+        {
+            topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            type = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                Type = type,
+                Name = "Empresa de taxi",
+                FieldType = FieldType.Fecha,
+                Range = new List<Range>()
+            };
+
+            DateTime date1 = DateTime.Today;
+            DateTime date2 = date1.AddDays(+1);
+
+            Range option1 = new Range()
+            {
+                Value = date1.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            Range option2 = new Range()
+            {
+                Value = date2.ToShortDateString(),
+                Id = Guid.NewGuid(),
+                AdditionalFieldId = af.Id
+            };
+
+            af.Range.Add(option1);
+            af.Range.Add(option2);
+            type.AdditionalFields.Add(af);
+            topic.Types.Add(type);
+
+            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
+            var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
+            typeRepositoryMock.Setup(m => m.Add(type));
+            typeRepositoryMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
+            typeRepositoryMock.Setup(m => m.SaveChanges());
+            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
+            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
+                addFieldRepositoryMock.Object);
+            var result = typeLogic.Create(type);
+
+            addFieldRepositoryMock.VerifyAll();
+            topicRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+
+            Assert.AreEqual(result, type);
         }
     }
 }
