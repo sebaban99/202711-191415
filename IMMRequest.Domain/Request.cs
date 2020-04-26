@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace IMMRequest.Domain
@@ -23,6 +24,6 @@ namespace IMMRequest.Domain
         public string Phone {get; set;}
         public Status Status {get; set;}
         public string Description {get; set;}
-
+        public List<AFValue> AddFieldValues {get; set;}
     }
 }

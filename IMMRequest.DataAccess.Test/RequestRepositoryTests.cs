@@ -4,6 +4,7 @@ using IMMRequest.DataAccess.Repositories;
 using IMMRequest.Domain;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace IMMRequest.DataAccess.Tests
 {
@@ -21,7 +22,8 @@ namespace IMMRequest.DataAccess.Tests
             Email = "juan@perez.com.uy",
             Phone = "099 123 456",
             Status = Status.Creada,
-            Description = "Creada"
+            Description = "Creada",
+            AddFieldValues = new List<AFValue>()
         };
 
         private Request pedroRequest = new Request()
@@ -34,7 +36,8 @@ namespace IMMRequest.DataAccess.Tests
             Email = "pedro@perez.com.uy",
             Phone = "099 999 999",
             Status = Status.Creada,
-            Description = "Creada"
+            Description = "Creada",
+            AddFieldValues = new List<AFValue>()
         };
 
         private RequestRepository requestRepositoryInMemory = new RequestRepository(
