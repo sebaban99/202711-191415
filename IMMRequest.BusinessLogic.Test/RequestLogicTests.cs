@@ -565,13 +565,11 @@ namespace IMMRequest.BusinessLogic.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(BusinessLogicException), "Error: One Request's additional field value was invalid, check fields's range")]
         public void GetRequestCaseRequestExist()
         {
             var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
             var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
-            typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(request);
 
             requestLogic = new RequestLogic(requestRepositoryMock.Object,
@@ -592,7 +590,6 @@ namespace IMMRequest.BusinessLogic.Tests
             var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
             var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
-            typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Request)null);
 
             requestLogic = new RequestLogic(requestRepositoryMock.Object,
@@ -602,6 +599,28 @@ namespace IMMRequest.BusinessLogic.Tests
             requestRepositoryMock.VerifyAll();
             aFValueRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetAllRequests()
+        {
+            var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
+            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+
+            List<Request> requests = new List<Request>();
+            requests.Add(request);
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requests);
+
+            requestLogic = new RequestLogic(requestRepositoryMock.Object,
+                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
+            var result = requestLogic.GetAll();
+
+            requestRepositoryMock.VerifyAll();
+            aFValueRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+
+            Assert.AreEqual(result, requests);
         }
     }
 }
