@@ -296,5 +296,15 @@ namespace IMMRequest.BusinessLogic
             requestRepository.SaveChanges();
             return request.RequestNumber;
         }
+
+        public Request Get(Guid id)
+        {
+            Request requestById = requestRepository.Get(id);
+            if (requestById == null)
+            {
+                throw new BusinessLogicException("Error: Invalid ID, Request does not exist");
+            }
+            return requestById;
+        }
     }
 }
