@@ -563,5 +563,45 @@ namespace IMMRequest.BusinessLogic.Tests
             aFValueRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: One Request's additional field value was invalid, check fields's range")]
+        public void GetRequestCaseRequestExist()
+        {
+            var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
+            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
+            requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(request);
+
+            requestLogic = new RequestLogic(requestRepositoryMock.Object,
+                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
+            var result = requestLogic.Get(request.Id);
+
+            requestRepositoryMock.VerifyAll();
+            aFValueRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+
+            Assert.AreEqual(result, request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Invalid ID, Request does not exist")]
+        public void GetRequestCaseRequestNotExist()
+        {
+            var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
+            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
+            requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Request)null);
+
+            requestLogic = new RequestLogic(requestRepositoryMock.Object,
+                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
+            var result = requestLogic.Get(request.Id);
+
+            requestRepositoryMock.VerifyAll();
+            aFValueRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
     }
 }
