@@ -57,7 +57,7 @@ namespace IMMRequest.BusinessLogic
 
         private bool IsValidString(string str)
         {
-            return str != null && str.Trim() != string.Empty 
+            return str != null && str.Trim() != string.Empty
                 && AreValidCharacters(str);
         }
 
@@ -228,7 +228,7 @@ namespace IMMRequest.BusinessLogic
 
         private void ValidateDateAFV(AdditionalField addFieldById, AFValue afv)
         {
-            if(!IsDateAFV(afv.Value))
+            if (!IsDateAFV(afv.Value))
             {
                 throw new BusinessLogicException("Error: One Request's additional field value was invalid, check data type");
             }
@@ -299,17 +299,17 @@ namespace IMMRequest.BusinessLogic
 
         private bool IsStatusUpdateValid(Status oldStatus, Status newStatus)
         {
-            if(newStatus == oldStatus)
+            if (newStatus == oldStatus)
             {
                 return true;
             }
-            else if(oldStatus == Status.Creada)
+            else if (oldStatus == Status.Creada)
             {
                 return newStatus == Status.Revision;
             }
-            else if(oldStatus == Status.Revision)
+            else if (oldStatus == Status.Revision)
             {
-                return newStatus == Status.Creada || 
+                return newStatus == Status.Creada ||
                     newStatus == Status.Aceptada || newStatus == Status.Denegada;
             }
             else if (oldStatus == Status.Aceptada || oldStatus == Status.Denegada)
@@ -323,22 +323,25 @@ namespace IMMRequest.BusinessLogic
             }
         }
 
-        public Request Update(Request request)
+        private void ValidateUpdate(Request request, Request requestToUpdate)
         {
-            Request requestToUpdate = Get(request.Id);
-            if(!IsStatusUpdateValid(requestToUpdate.Status, request.Status))
+            if (!IsStatusUpdateValid(requestToUpdate.Status, request.Status))
             {
                 throw new BusinessLogicException("Error: Invalid Status update, Request's new status must be next or prior to old status");
             }
-            requestToUpdate.Status = request.Status;
-            if(request.Description != requestToUpdate.Description)
+            if (request.Description != requestToUpdate.Description &&
+                !IsValidString(request.Description))
             {
-                if (!IsValidString(request.Description))
-                {
-                    throw new BusinessLogicException("Error: Invalid Description update, Request's new description was empty");
-                }
-                requestToUpdate.Description = request.Description;
+                throw new BusinessLogicException("Error: Invalid Description update, Request's new description was empty");
             }
+        }
+
+        public Request Update(Request request)
+        {
+            Request requestToUpdate = Get(request.Id);
+            ValidateUpdate(request, requestToUpdate);
+            requestToUpdate.Status = request.Status;
+            requestToUpdate.Description = request.Description;
             requestRepository.Update(requestToUpdate);
             requestRepository.SaveChanges();
             return requestToUpdate;
