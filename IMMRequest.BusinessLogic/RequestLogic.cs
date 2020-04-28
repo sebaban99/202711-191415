@@ -306,5 +306,10 @@ namespace IMMRequest.BusinessLogic
             }
             return requestById;
         }
+
+        public IEnumerable<Request> GetAll()
+        {
+            return requestRepository.GetAll();
+        }
     }
 }
