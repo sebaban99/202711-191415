@@ -622,5 +622,206 @@ namespace IMMRequest.BusinessLogic.Tests
 
             Assert.AreEqual(result, requests);
         }
+
+        [TestMethod]
+        public void UpdateRequestCaseValidRequest()
+        {
+            var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
+            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(request);
+            requestRepositoryMock.Setup(m => m.Update(request));
+            requestRepositoryMock.Setup(m => m.SaveChanges());
+
+            requestLogic = new RequestLogic(requestRepositoryMock.Object,
+                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
+            
+            Request stubRequest = new Request()
+            {
+                Id = request.Id,
+                Status = Status.Revision,
+                Description = "Descripcion en proceso de revision comienza 13/4/20"
+            };
+
+            var result = requestLogic.Update(stubRequest);
+
+            requestRepositoryMock.VerifyAll();
+            aFValueRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+
+            Assert.AreEqual(result, request);
+        }
+
+        [TestMethod]
+        public void UpdateRequestCaseValidRequestNewDescriptionOnly()
+        {
+            var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
+            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(request);
+            requestRepositoryMock.Setup(m => m.Update(request));
+            requestRepositoryMock.Setup(m => m.SaveChanges());
+            
+            requestLogic = new RequestLogic(requestRepositoryMock.Object,
+                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
+            
+            Request stubRequest = new Request()
+            {
+                Id = request.Id,
+                Description = "Descripcion en proceso de revision comienza 13/4/20"
+            };
+
+            var result = requestLogic.Update(stubRequest);
+
+            requestRepositoryMock.VerifyAll();
+            aFValueRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+
+            Assert.AreEqual(result, request);
+        }
+
+        [TestMethod]
+        public void UpdateRequestCaseValidRequestNewStatusScenario1()
+        {
+            request.Status = Status.Finalizada;
+            var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
+            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(request);
+            requestRepositoryMock.Setup(m => m.Update(request));
+            requestRepositoryMock.Setup(m => m.SaveChanges());
+            
+            requestLogic = new RequestLogic(requestRepositoryMock.Object,
+                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
+            
+            Request stubRequest = new Request()
+            {
+                Id = request.Id,
+                Status = Status.Aceptada,
+                Description = request.Description
+            };
+
+            var result = requestLogic.Update(stubRequest);
+
+            requestRepositoryMock.VerifyAll();
+            aFValueRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+
+            Assert.AreEqual(result, request);
+        }
+
+        [TestMethod]
+        public void UpdateRequestCaseValidRequestNewStatusScenario2()
+        {
+            request.Status = Status.Finalizada;
+            var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
+            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(request);
+            requestRepositoryMock.Setup(m => m.Update(request));
+            requestRepositoryMock.Setup(m => m.SaveChanges());
+
+            requestLogic = new RequestLogic(requestRepositoryMock.Object,
+                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
+
+            Request stubRequest = new Request()
+            {
+                Id = request.Id,
+                Status = Status.Denegada,
+                Description = request.Description
+            };
+
+            var result = requestLogic.Update(stubRequest);
+
+            requestRepositoryMock.VerifyAll();
+            aFValueRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+
+            Assert.AreEqual(result, request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Invalid Description update, Request's new description was empty")]
+        public void UpdateRequestCaseInvalidRequestEmptyNewDescription()
+        {
+            var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
+            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(request);
+            requestRepositoryMock.Setup(m => m.Update(request));
+            requestRepositoryMock.Setup(m => m.SaveChanges());
+
+            requestLogic = new RequestLogic(requestRepositoryMock.Object,
+                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
+
+            Request stubRequest = new Request()
+            {
+                Id = request.Id,
+                Status = Status.Revision,
+                Description = ""
+            };
+            
+            var result = requestLogic.Update(stubRequest);
+
+            requestRepositoryMock.VerifyAll();
+            aFValueRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Invalid ID, Request does not exist")]
+        public void UpdateRequestCaseInvalidRequestNotExists()
+        {
+            var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
+            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Request)null);
+            requestRepositoryMock.Setup(m => m.Update(request));
+            requestRepositoryMock.Setup(m => m.SaveChanges());
+
+            requestLogic = new RequestLogic(requestRepositoryMock.Object,
+                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
+
+            Request stubRequest = new Request()
+            {
+                Id = request.Id,
+                Status = Status.Revision,
+                Description = "Descripcion en proceso de revision comienza 13/4/20"
+            };
+
+            var result = requestLogic.Update(stubRequest);
+
+            requestRepositoryMock.VerifyAll();
+            aFValueRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
+  
+        [TestMethod]
+        [ExpectedException(typeof(BusinessLogicException), "Error: Invalid Status update, Request's new status must be next or prior to old status")]
+        public void UpdateRequestCaseInvalidRequestStatus()
+        {
+            var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
+            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            requestRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(request);
+            requestRepositoryMock.Setup(m => m.Update(request));
+            requestRepositoryMock.Setup(m => m.SaveChanges());
+
+            requestLogic = new RequestLogic(requestRepositoryMock.Object,
+                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
+
+            Request stubRequest = new Request()
+            {
+                Id = request.Id,
+                Status = Status.Aceptada,
+                Description = "Descripcion en proceso de revision comienza 13/4/20"
+            };
+
+            var result = requestLogic.Update(stubRequest);
+
+            requestRepositoryMock.VerifyAll();
+            aFValueRepositoryMock.VerifyAll();
+            typeRepositoryMock.VerifyAll();
+        }
     }
 }
