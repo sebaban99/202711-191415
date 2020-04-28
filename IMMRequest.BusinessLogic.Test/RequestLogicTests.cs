@@ -59,11 +59,12 @@ namespace IMMRequest.BusinessLogic.Tests
             Id = Guid.NewGuid(),
             RequestNumber = 1,
             Type = type,
-            Details = "El contenedor de la esquina Av Gral Rivera y" +
-               " Eduardo Mac Eachen fue incendiado en la madrugada del sábado 21 de marzo",
+            Details = "El contenedor de la esquina Av Gral Rivera" +
+            " y Eduardo Mac Eachen fue incendiado en la madrugada del sábado 21 de marzo",
             Name = "Juan Perez",
             Email = "juan@perez.com.uy",
             Phone = "099 123 456",
+            AddFieldValues = new List<AFValue>()
         };
 
         AFValue stateOfContainerValue = new AFValue()
@@ -80,6 +81,7 @@ namespace IMMRequest.BusinessLogic.Tests
             AddFieldId = dateOfDiscovery.Id
         };
 
+        List<Request> requestsInDB = new List<Request>();
         private RequestLogic requestLogic;
 
         [TestInitialize]
@@ -96,6 +98,8 @@ namespace IMMRequest.BusinessLogic.Tests
         [TestCleanup]
         public void CleanUp()
         {
+            requestsInDB.Clear();
+            request.Type = type;
             foreach (AdditionalField af in request.Type.AdditionalFields)
             {
                 af.Range.Clear();
@@ -103,9 +107,8 @@ namespace IMMRequest.BusinessLogic.Tests
             request.Type.AdditionalFields.Clear();
             topic.Types.Clear();
             request.AddFieldValues.Clear();
-            request.Type = type;
-            request.Details = "El contenedor de la esquina Av Gral Rivera y" +
-               " Eduardo Mac Eachen fue incendiado en la madrugada del sábado 21 de marzo";
+            request.Details = "El contenedor de la esquina Av Gral Rivera" +
+                " y Eduardo Mac Eachen fue incendiado en la madrugada del sábado 21 de marzo";
             request.Name = "Juan Perez";
             request.Email = "juan@perez.com.uy";
             request.Phone = "099 123 456";
@@ -119,6 +122,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -160,11 +164,11 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 RequestNumber = 1,
                 Type = brokenContainer,
-                Details = "El contenedor de la esquina Av Gral Rivera y" +
-                " Eduardo Mac Eachen fue incendiado en la madrugada del sábado 21 de marzo",
+                Details = "El contenedor de",
                 Name = "Juan Perez",
                 Email = "juan@perez.com.uy",
                 Phone = "099 123 456",
+                AddFieldValues = new List<AFValue>()
             };
 
             var requestRepositoryMock = new Mock<IRepository<Request>>(MockBehavior.Strict);
@@ -172,9 +176,8 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(aRequest));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(brokenContainer);
-            aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
-            aFValueRepositoryMock.Setup(m => m.SaveChanges());
 
             requestLogic = new RequestLogic(requestRepositoryMock.Object,
                 aFValueRepositoryMock.Object, typeRepositoryMock.Object);
@@ -198,6 +201,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -222,6 +226,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -244,6 +249,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Type)null);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -268,6 +274,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -293,6 +300,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Type)null);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -317,6 +325,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -341,6 +350,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -365,6 +375,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -389,6 +400,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -413,6 +425,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -454,6 +467,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -478,6 +492,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
@@ -535,6 +550,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
             requestRepositoryMock.Setup(m => m.Add(request));
             requestRepositoryMock.Setup(m => m.SaveChanges());
+            requestRepositoryMock.Setup(m => m.GetAll()).Returns(requestsInDB);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
             aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
             aFValueRepositoryMock.Setup(m => m.SaveChanges());
