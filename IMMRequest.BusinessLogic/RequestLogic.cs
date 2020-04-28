@@ -297,6 +297,53 @@ namespace IMMRequest.BusinessLogic
             return request.RequestNumber;
         }
 
+        private bool IsStatusUpdateValid(Status oldStatus, Status newStatus)
+        {
+            if(newStatus == oldStatus)
+            {
+                return true;
+            }
+            else if(oldStatus == Status.Creada)
+            {
+                return newStatus == Status.Revision;
+            }
+            else if(oldStatus == Status.Revision)
+            {
+                return newStatus == Status.Creada || 
+                    newStatus == Status.Aceptada || newStatus == Status.Denegada;
+            }
+            else if (oldStatus == Status.Aceptada || oldStatus == Status.Denegada)
+            {
+                return newStatus == Status.Aceptada || newStatus == Status.Revision ||
+                    newStatus == Status.Denegada || newStatus == Status.Finalizada;
+            }
+            else
+            {
+                return newStatus == Status.Aceptada || newStatus == Status.Denegada;
+            }
+        }
+
+        public Request Update(Request request)
+        {
+            Request requestToUpdate = Get(request.Id);
+            if(!IsStatusUpdateValid(requestToUpdate.Status, request.Status))
+            {
+                throw new BusinessLogicException("Error: Invalid Status update, Request's new status must be next or prior to old status");
+            }
+            requestToUpdate.Status = request.Status;
+            if(request.Description != requestToUpdate.Description)
+            {
+                if (!IsValidString(request.Description))
+                {
+                    throw new BusinessLogicException("Error: Invalid Description update, Request's new description was empty");
+                }
+                requestToUpdate.Description = request.Description;
+            }
+            requestRepository.Update(requestToUpdate);
+            requestRepository.SaveChanges();
+            return requestToUpdate;
+        }
+
         public Request Get(Guid id)
         {
             Request requestById = requestRepository.Get(id);
