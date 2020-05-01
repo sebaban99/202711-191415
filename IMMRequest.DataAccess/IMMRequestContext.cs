@@ -15,6 +15,9 @@ namespace IMMRequest.DataAccess
         public DbSet<Type> Types { get; set; }
         public DbSet<AdditionalField> AdditionalFields { get; set; }
         public DbSet<Range> RangeValues { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<Log> Logs { get; set; }
+        public object Session { get; internal set; }
 
         public IMMRequestContext(DbContextOptions options) : base(options) { }
 
