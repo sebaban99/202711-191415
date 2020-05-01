@@ -1,4 +1,4 @@
-﻿using IMMRequest.DataAccess.Interfaces;
+﻿using IMMRequest.DataAccess;
 using IMMRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

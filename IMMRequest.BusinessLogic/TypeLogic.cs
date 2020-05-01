@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using IMMRequest.DataAccess.Interfaces;
+using IMMRequest.DataAccess;
 using IMMRequest.Domain;
 using Type = IMMRequest.Domain.Type;
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
-using IMMRequest.DataAccess.Interfaces;
+using IMMRequest.DataAccess;
 
 namespace IMMRequest.DataAccess.Repositories
 {

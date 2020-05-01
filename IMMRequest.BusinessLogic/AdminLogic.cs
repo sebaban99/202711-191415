@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using IMMRequest.DataAccess.Interfaces;
+using IMMRequest.DataAccess;
 using System.Linq.Expressions;
 using IMMRequest.Domain;
 

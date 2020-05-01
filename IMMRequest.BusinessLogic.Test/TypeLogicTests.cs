@@ -5,7 +5,7 @@ using System.Text;
 using Type = IMMRequest.Domain.Type;
 using Range = IMMRequest.Domain.Range;
 using IMMRequest.Domain;
-using IMMRequest.DataAccess.Interfaces;
+using IMMRequest.DataAccess;
 using Moq;
 using System.Linq.Expressions;
 

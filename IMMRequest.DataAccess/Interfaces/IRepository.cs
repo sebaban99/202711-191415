@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
-namespace IMMRequest.DataAccess.Interfaces
+namespace IMMRequest.DataAccess
 {
     public interface IRepository<T>
     {
