@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using IMMRequest.DataAccess;
 using IMMRequest.Domain;
 
@@ -23,6 +24,18 @@ namespace IMMRequest.BusinessLogic
             else if (!IsValidEmail(admin.Email))
             {
                 throw new BusinessLogicException("Error: Invalid email format");
+            }
+        }
+
+        public Admin GetByCondition(Expression<Func<Admin, bool>> expression)
+        {
+            try
+            {
+                return adminRepository.GetByCondition(expression);
+            }
+            catch (BusinessLogicException)
+            {
+                throw new BusinessLogicException("Error: could not retrieve the specific Admin");
             }
         }
 
