@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace IMMRequest.BusinessLogic
 {
-    public abstract class Validator<T>
+    public abstract class BaseValidator<T>
     {
         public abstract void ValidateAdd(T entity);
 

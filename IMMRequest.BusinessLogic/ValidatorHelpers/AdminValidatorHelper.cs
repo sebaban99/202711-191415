@@ -6,7 +6,7 @@ using IMMRequest.Domain;
 
 namespace IMMRequest.BusinessLogic
 {
-    public class AdminValidatorHelper : Validator<Admin>
+    public class AdminValidatorHelper : BaseValidator<Admin>
     {
         private IRepository<Admin> adminRepository;
 
@@ -39,7 +39,7 @@ namespace IMMRequest.BusinessLogic
 
         public override void ValidateAdd(Admin admin)
         {
-            ValidateAdminObject(admin);
+            ValidateEntityObject(admin);
             if (IsEmailRegistered(admin))
             {
                 throw new BusinessLogicException("Error: Admin with same email already registered");

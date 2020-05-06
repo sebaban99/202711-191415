@@ -9,7 +9,7 @@ namespace IMMRequest.BusinessLogic
     public class AdminLogic
     {
         private IRepository<Admin> adminRepository;
-        private Validator<Admin> adminValidator; 
+        private BaseValidator<Admin> adminValidator; 
 
         public AdminLogic(IRepository<Admin> adminRepository)
         {
