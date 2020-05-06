@@ -20,6 +20,7 @@ namespace IMMRequest.BusinessLogic
             this.typeRepository = typeRepository;
             this.topicRespository = topicRespository;
             this.additionalFieldRespository = additionalFieldRespository;
+            typeValidator = new TypeValidatorHelper(typeRepository, topicRespository);
         }
 
         private void AddAdditionalFields(Type type)

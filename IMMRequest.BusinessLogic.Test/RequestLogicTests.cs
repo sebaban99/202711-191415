@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using IMMRequest.DataAccess;
 using Type = IMMRequest.Domain.Type;
 using Range = IMMRequest.Domain.Range;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IMMRequest.Domain;
 using Moq;
-using IMMRequest.DataAccess.Interfaces;
 
 namespace IMMRequest.BusinessLogic.Tests
 {
