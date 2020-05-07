@@ -6,7 +6,7 @@ using IMMRequest.Domain;
 
 namespace IMMRequest.BusinessLogic
 {
-    public class AdminLogic
+    public class AdminLogic : IAdminLogic
     {
         private IRepository<Admin> adminRepository;
         private IAdminValidatorHelper adminValidator; 
