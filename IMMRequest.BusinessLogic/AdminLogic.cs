@@ -9,7 +9,7 @@ namespace IMMRequest.BusinessLogic
     public class AdminLogic
     {
         private IRepository<Admin> adminRepository;
-        private BaseValidator<Admin> adminValidator; 
+        private IAdminValidatorHelper adminValidator; 
 
         public AdminLogic(IRepository<Admin> adminRepository)
         {
@@ -59,7 +59,7 @@ namespace IMMRequest.BusinessLogic
             adminToUpdate.Name = admin.Name;
             adminToUpdate.Email = admin.Email;
             adminToUpdate.Password = admin.Password;
-            adminValidator.ValidateEntityObject(adminToUpdate);
+            adminValidator.ValidateAdminObject(adminToUpdate);
             adminRepository.Update(adminToUpdate);
             adminRepository.SaveChanges();
             return adminToUpdate;

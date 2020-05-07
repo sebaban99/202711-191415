@@ -12,7 +12,7 @@ namespace IMMRequest.BusinessLogic
         private IRepository<Type> typeRepository;
         private IRepository<Topic> topicRespository;
         private IRepository<AdditionalField> additionalFieldRespository;
-        private BaseValidator<Type> typeValidator;
+        private ITypeValidatorHelper typeValidator;
 
         public TypeLogic(IRepository<Type> typeRepository, IRepository<Topic> topicRespository,
             IRepository<AdditionalField> additionalFieldRespository)
