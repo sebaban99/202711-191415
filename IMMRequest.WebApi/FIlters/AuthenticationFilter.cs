@@ -8,7 +8,7 @@ namespace IMMRequest.WebApi
 {
     public class AutenticadorFilter : Attribute, IActionFilter
     {
-
+        private const string NULL_TOKEN_FORMAT = "00000000-0000-0000-0000-000000000000"; 
         public AutenticadorFilter()
         {
 
@@ -18,7 +18,7 @@ namespace IMMRequest.WebApi
             // OBTENEMOS EL TOKEN DEL HEADER
             string token = controlToken.HttpContext.Request.Headers["token"];
             // SI EL TOKEN ES NULL CORTAMOS LA PIPELINE Y RETORNAMOS UN RESULTADO
-            if (string.IsNullOrEmpty(token) || token == "00000000-0000-0000-0000-000000000000")
+            if (string.IsNullOrEmpty(token) || token == NULL_TOKEN_FORMAT)
             {
                 controlToken.Result = new ContentResult()
                 {
