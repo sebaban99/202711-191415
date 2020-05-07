@@ -6,7 +6,7 @@ using IMMRequest.Domain;
 
 namespace IMMRequest.BusinessLogic
 {
-    public class AdminValidatorHelper : BaseValidator<Admin>
+    public class AdminValidatorHelper : IAdminValidatorHelper
     {
         private IRepository<Admin> adminRepository;
 
@@ -15,7 +15,7 @@ namespace IMMRequest.BusinessLogic
             this.adminRepository = adminRepository;
         }
 
-        public override void ValidateEntityObject(Admin admin)
+        public void ValidateAdminObject(Admin admin)
         {
             if (!AreEmptyFields(admin))
             {
@@ -24,6 +24,19 @@ namespace IMMRequest.BusinessLogic
             else if (!IsValidEmail(admin.Email))
             {
                 throw new BusinessLogicException("Error: Invalid email format");
+            }
+        }
+
+        public bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
             }
         }
 
@@ -37,9 +50,9 @@ namespace IMMRequest.BusinessLogic
             return false;
         }
 
-        public override void ValidateAdd(Admin admin)
+        public void ValidateAdd(Admin admin)
         {
-            ValidateEntityObject(admin);
+            ValidateAdminObject(admin);
             if (IsEmailRegistered(admin))
             {
                 throw new BusinessLogicException("Error: Admin with same email already registered");
@@ -51,13 +64,13 @@ namespace IMMRequest.BusinessLogic
             return str != null && str.Trim() != string.Empty;
         }
 
-        public override bool AreEmptyFields(Admin admin)
+        public bool AreEmptyFields(Admin admin)
         {
             return IsValidString(admin.Email) && IsValidString(admin.Name) &&
            IsValidString(admin.Password);
         }
 
-        public override void ValidateDelete(Admin admin)
+        public void ValidateDelete(Admin admin)
         {
             Admin adminById = adminRepository.Get(admin.Id);
             if (adminById == null)
@@ -66,7 +79,7 @@ namespace IMMRequest.BusinessLogic
             }
         }
 
-        public override void ValidateUpdate(Admin admin)
+        public void ValidateUpdate(Admin admin)
         {
             Admin adminById = adminRepository.Get(admin.Id);
             if (adminById == null)
