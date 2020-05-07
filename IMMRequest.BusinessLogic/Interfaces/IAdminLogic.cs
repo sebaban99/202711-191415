@@ -7,6 +7,8 @@ namespace IMMRequest.BusinessLogic
 {
     public interface IAdminLogic : ILogic<Admin>
     {
+        Admin Create(Admin admin);
+
         void Remove(Admin admin);
 
         Admin Update(Admin admin);

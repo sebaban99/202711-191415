@@ -23,7 +23,7 @@ namespace IMMRequest.BusinessLogic
             {
                 return adminRepository.GetByCondition(expression);
             }
-            catch (BusinessLogicException)
+            catch (DataAccessException)
             {
                 throw new BusinessLogicException("Error: could not retrieve the specific Admin");
             }

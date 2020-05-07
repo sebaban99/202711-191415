@@ -7,8 +7,6 @@ namespace IMMRequest.BusinessLogic
 {
     public interface ILogic<T>
     {
-        T Create(T entity);
-
         IEnumerable<T> GetAll();
 
         T GetByCondition(Expression<Func<T, bool>> expression);
