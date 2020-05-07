@@ -6,7 +6,7 @@ using IMMRequest.Domain;
 
 namespace IMMRequest.BusinessLogic
 {
-    public class AdminLogic
+    public class AdminLogic : IAdminLogic
     {
         private IRepository<Admin> adminRepository;
         private IAdminValidatorHelper adminValidator; 
@@ -23,7 +23,7 @@ namespace IMMRequest.BusinessLogic
             {
                 return adminRepository.GetByCondition(expression);
             }
-            catch (BusinessLogicException)
+            catch (DataAccessException)
             {
                 throw new BusinessLogicException("Error: could not retrieve the specific Admin");
             }

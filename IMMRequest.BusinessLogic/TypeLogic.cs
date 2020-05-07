@@ -7,7 +7,7 @@ using Type = IMMRequest.Domain.Type;
 
 namespace IMMRequest.BusinessLogic
 {
-    public class TypeLogic
+    public class TypeLogic : ITypeLogic
     {
         private IRepository<Type> typeRepository;
         private IRepository<Topic> topicRespository;

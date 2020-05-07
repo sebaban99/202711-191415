@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using IMMRequest.DataAccess;
 using IMMRequest.Domain;
@@ -9,7 +10,7 @@ using Type = IMMRequest.Domain.Type;
 
 namespace IMMRequest.BusinessLogic
 {
-    public class RequestLogic
+    public class RequestLogic : IRequestLogic
     {
         private IRepository<Request> requestRepository;
         private IRepository<AFValue> aFValueRepository;
@@ -79,6 +80,19 @@ namespace IMMRequest.BusinessLogic
         public IEnumerable<Request> GetAll()
         {
             return requestRepository.GetAll();
+        }
+
+
+        public Request GetByCondition(Expression<Func<Request, bool>> expression)
+        {
+            try
+            {
+                return requestRepository.GetByCondition(expression);
+            }
+            catch (DataAccessException)
+            {
+                throw new BusinessLogicException("Error: could not retrieve the specific Request");
+            }
         }
     }
 }
