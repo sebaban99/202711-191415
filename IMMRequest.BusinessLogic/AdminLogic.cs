@@ -9,22 +9,12 @@ namespace IMMRequest.BusinessLogic
     public class AdminLogic
     {
         private IRepository<Admin> adminRepository;
+        private IAdminValidatorHelper adminValidator; 
 
         public AdminLogic(IRepository<Admin> adminRepository)
         {
             this.adminRepository = adminRepository;
-        }
-
-        private void ValidateAdminObject(Admin admin)
-        {
-            if (!AreEmptyFields(admin))
-            {
-                throw new BusinessLogicException("Error: Admin had empty fields");
-            }
-            else if (!IsValidEmail(admin.Email))
-            {
-                throw new BusinessLogicException("Error: Invalid email format");
-            }
+            this.adminValidator = new AdminValidatorHelper(adminRepository);
         }
 
         public Admin GetByCondition(Expression<Func<Admin, bool>> expression)
@@ -39,52 +29,9 @@ namespace IMMRequest.BusinessLogic
             }
         }
 
-        private void ValidateAdd(Admin admin)
-        {
-            ValidateAdminObject(admin);
-            if (IsEmailRegistered(admin))
-            {
-                throw new BusinessLogicException("Error: Admin with same email already registered");
-            }
-        }
-
-        private bool IsEmailRegistered(Admin admin)
-        {
-            var adminById = adminRepository.GetByCondition(a => a.Email == admin.Email);
-            if (adminById != null)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool AreEmptyFields(Admin admin)
-        {
-            return IsValidString(admin.Email) && IsValidString(admin.Name) &&
-            IsValidString(admin.Password);
-        }
-
-        private bool IsValidString(string str)
-        {
-            return str != null && str.Trim() != string.Empty;
-        }
-
-        private bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         public Admin Create(Admin admin)
         {
-            ValidateAdd(admin);
+            adminValidator.ValidateAdd(admin);
             adminRepository.Add(admin);
             adminRepository.SaveChanges();
             return admin;
@@ -107,39 +54,22 @@ namespace IMMRequest.BusinessLogic
 
         public Admin Update(Admin admin)
         {
-            ValidateUpdate(admin);
+            adminValidator.ValidateUpdate(admin);
             var adminToUpdate = Get(admin.Id);
             adminToUpdate.Name = admin.Name;
             adminToUpdate.Email = admin.Email;
             adminToUpdate.Password = admin.Password;
-            ValidateAdminObject(adminToUpdate);
+            adminValidator.ValidateAdminObject(adminToUpdate);
             adminRepository.Update(adminToUpdate);
             adminRepository.SaveChanges();
             return adminToUpdate;
         }
 
-        private void ValidateUpdate(Admin admin)
-        {
-            var adminById = Get(admin.Id);
-            if (adminById == null)
-            {
-                throw new BusinessLogicException("Error: Admin to update doesn't exist");
-            }
-        }
         public void Remove(Admin admin)
         {
-            ValidateDelete(admin);
+            adminValidator.ValidateDelete(admin);
             adminRepository.Remove(admin);
             adminRepository.SaveChanges();
-        }
-
-        private void ValidateDelete(Admin admin)
-        {
-            var adminById = Get(admin.Id);
-            if (adminById == null)
-            {
-                throw new BusinessLogicException("Error: Admin to delete doesn't exist");
-            }
         }
     }
 }

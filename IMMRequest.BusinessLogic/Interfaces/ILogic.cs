@@ -7,7 +7,7 @@ namespace IMMRequest.BusinessLogic
 {
     public interface ILogic<T>
     {
-        void Add(T entity);
+        void Create(T entity);
 
         void Remove(T entity);
 
