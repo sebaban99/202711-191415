@@ -8,7 +8,7 @@ using IMMRequest.Domain;
 
 namespace IMMRequest.BusinessLogic
 {
-    public class TypeValidatorHelper : BaseValidator<Type>
+    public class TypeValidatorHelper : ITypeValidatorHelper
     {
         private IRepository<Type> typeRepository;
         private IRepository<Topic> topicRespository;
@@ -32,13 +32,13 @@ namespace IMMRequest.BusinessLogic
                 Regex.IsMatch(str, @"^[A-Za-z0-9!()'/.,\s-]{1,}$"));
         }
 
-        public override bool AreEmptyFields(Type type)
+        public bool AreEmptyFields(Type type)
         {
             return !IsValidString(type.Name) || type.Topic == null ||
                type.AdditionalFields == null;
         }
 
-        public override void ValidateAdd(Type type)
+        public void ValidateAdd(Type type)
         {
             ValidateEntityObject(type);
             ValidateTopic(type);
@@ -46,7 +46,7 @@ namespace IMMRequest.BusinessLogic
             ValidateAdditionalFields(type);
         }
 
-        public override void ValidateDelete(Type type)
+        public void ValidateDelete(Type type)
         {
             Type typeById = typeRepository.Get(type.Id);
             if (typeById == null)
@@ -55,7 +55,7 @@ namespace IMMRequest.BusinessLogic
             }
         }
 
-        public override void ValidateEntityObject(Type type)
+        public void ValidateEntityObject(Type type)
         {
             if (AreEmptyFields(type))
             {
@@ -191,11 +191,6 @@ namespace IMMRequest.BusinessLogic
                     ValidateAFRange(af);
                 }
             }
-        }
-
-        public override void ValidateUpdate(Type entity)
-        {
-            throw new NotImplementedException();
         }
     }
 }
