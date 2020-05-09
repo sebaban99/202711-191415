@@ -65,7 +65,7 @@ namespace IMMRequest.BusinessLogic
 
         private void ValidateTopic(Type type)
         {
-            if (!IsTopicRegistered(type.Id))
+            if (!IsTopicRegistered(type.Topic.Id))
             {
                 throw new BusinessLogicException("Error: Topic does not exist");
             }
@@ -73,6 +73,7 @@ namespace IMMRequest.BusinessLogic
 
         private bool IsTypeRegistered(Type type)
         {
+            type.Topic = topicRespository.Get(type.Topic.Id);
             Type typeInDB = typeRepository.GetByCondition(t => t.Name == type.Name &&
             t.Topic == type.Topic);
             return typeInDB != null;
@@ -82,7 +83,7 @@ namespace IMMRequest.BusinessLogic
         {
             if (IsTypeRegistered(type))
             {
-                throw new BusinessLogicException("Error: Type with same name already registered");
+                throw new BusinessLogicException("Error: Type with same name associated to this topic already registered");
             }
         }
 

@@ -35,5 +35,17 @@ namespace IMMRequest.WebApi
                 return this.Id == afm.Id;
             }
         }
+
+        public AdditionalField ToEntity()
+        {
+            AdditionalField afAsEntity = new AdditionalField()
+            {
+                Id = this.Id,
+                Name = this.Name,
+                FieldType = this.FieldType,
+                Range = this.Range
+            };
+            return afAsEntity;
+        }
     }
 }

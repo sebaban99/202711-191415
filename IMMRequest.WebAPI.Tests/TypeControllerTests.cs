@@ -14,6 +14,56 @@ namespace IMMRequest.WebApi.Tests
     [TestClass]
     public class TypeControllerTests
     {
+        private static Topic topic = new Topic()
+        {
+            Id = Guid.NewGuid(),
+            Types = new List<Type>(),
+            Area = new Area(),
+            Name = "Acoso sexual"
+        };
+
+        private static Type oneType = new Type()
+        {
+            Id = Guid.NewGuid(),
+            Name = "Taxi-Acoso",
+            Topic = topic,
+            AdditionalFields = new List<AdditionalField>()
+        };
+
+        private static Type anotherType = new Type()
+        {
+            Id = Guid.NewGuid(),
+            Name = "Espacio publico-Acoso",
+            Topic = topic,
+            AdditionalFields = new List<AdditionalField>()
+        };
+
+        private static AdditionalField af = new AdditionalField()
+        {
+            Id = Guid.NewGuid(),
+            FieldType = FieldType.Entero,
+            Type = oneType,
+            Name = "Matricula",
+            Range = new List<Range>()
+        };
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            af.Type = oneType;
+            oneType.AdditionalFields.Add(af);
+            topic.Types.Add(oneType);
+            topic.Types.Add(anotherType);
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            oneType.Id = Guid.NewGuid();
+            oneType.Name = "Taxi-Acoso";
+            oneType.Topic = topic;
+        }
+
         [TestMethod]
         public void GetAllTypesCaseEmpty()
         {
@@ -37,44 +87,6 @@ namespace IMMRequest.WebApi.Tests
         [TestMethod]
         public void GetAllTypesCaseNotEmpty()
         {
-            Topic topic = new Topic()
-            {
-                Id = Guid.NewGuid(),
-                Types = new List<Type>(),
-                Area = new Area(),
-                Name = "Acoso sexual"
-            };
-
-            Type oneType = new Type()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Taxi-Acoso",
-                Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-            };
-
-            Type anotherType = new Type()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Espacio publico-Acoso",
-                Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-            };
-
-            AdditionalField af = new AdditionalField()
-            {
-                Id = Guid.NewGuid(),
-                FieldType = FieldType.Entero,
-                Type = oneType,
-                Name = "Matricula",
-                Range = new List<Range>()
-            };
-
-            af.Type = oneType;
-            oneType.AdditionalFields.Add(af);
-            topic.Types.Add(oneType);
-            topic.Types.Add(anotherType);
-
             var types = new List<Type>();
             types.Add(oneType);
             types.Add(anotherType);
@@ -103,34 +115,6 @@ namespace IMMRequest.WebApi.Tests
         [TestMethod]
         public void GetTypeByIdCaseExist()
         {
-            Topic topic = new Topic()
-            {
-                Id = Guid.NewGuid(),
-                Types = new List<Type>(),
-                Area = new Area(),
-                Name = "Acoso sexual"
-            };
-
-            Type oneType = new Type()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Taxi-Acoso",
-                Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-            };
-
-            AdditionalField af = new AdditionalField()
-            {
-                Id = Guid.NewGuid(),
-                FieldType = FieldType.Entero,
-                Type = oneType,
-                Name = "Matricula",
-                Range = new List<Range>()
-            };
-
-            af.Type = oneType;
-            oneType.AdditionalFields.Add(af);
-            topic.Types.Add(oneType);
             var typeDTO = new TypeDTO(oneType);
 
             var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
@@ -150,35 +134,6 @@ namespace IMMRequest.WebApi.Tests
         [TestMethod]
         public void GetTypeByIdCaseNotExist()
         {
-            Topic topic = new Topic()
-            {
-                Id = Guid.NewGuid(),
-                Types = new List<Type>(),
-                Area = new Area(),
-                Name = "Acoso sexual"
-            };
-
-            Type oneType = new Type()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Taxi-Acoso",
-                Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-            };
-
-            AdditionalField af = new AdditionalField()
-            {
-                Id = Guid.NewGuid(),
-                FieldType = FieldType.Entero,
-                Type = oneType,
-                Name = "Matricula",
-                Range = new List<Range>()
-            };
-
-            af.Type = oneType;
-            oneType.AdditionalFields.Add(af);
-            topic.Types.Add(oneType);
-
             var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
 
             typeLogicMock.Setup(m => m.Get(It.IsAny<Guid>())).Throws(
@@ -193,6 +148,65 @@ namespace IMMRequest.WebApi.Tests
 
             Assert.AreEqual(value, "Error: Invalid ID, Type does not exist");
             Assert.AreEqual(okResult.StatusCode, 404);
+        }
+
+        [TestMethod]
+        public void PostCaseValidType()
+        {
+            var typeDTO = new TypeDTO(oneType);
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.Create(It.IsAny<Type>())).Returns(oneType);
+            var typeController = new TypeController(typeLogicMock.Object);
+
+            var result = typeController.Post(typeDTO);
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(typeDTO, value);
+        }
+
+        [TestMethod]
+        public void PostCaseInvalidTypeAlreadyRegistered()
+        {
+            var typeDTO = new TypeDTO(oneType);
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.Create(It.IsAny<Type>())).Throws(
+                new BusinessLogicException("Error: Type with same name associated to this topic already registered"));
+            var typeController = new TypeController(typeLogicMock.Object);
+
+            var result = typeController.Post(typeDTO);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Type with same name associated to this topic already registered");
+            Assert.AreEqual(okResult.StatusCode, 400);
+        }
+
+        [TestMethod]
+        public void PostCaseInvalidTypeEmptyFields()
+        {
+            oneType.Name = "";
+            var typeDTO = new TypeDTO(oneType);
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.Create(It.IsAny<Type>())).Throws(
+                new BusinessLogicException("Error: Type had empty fields"));
+            var typeController = new TypeController(typeLogicMock.Object);
+
+            var result = typeController.Post(typeDTO);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Type had empty fields");
+            Assert.AreEqual(okResult.StatusCode, 400);
         }
     }
 }
