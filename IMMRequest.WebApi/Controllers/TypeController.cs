@@ -66,5 +66,22 @@ namespace IMMRequest.WebApi
                 return BadRequest(e.Message);
             }
         }
+
+        [AuthenticationFilter()]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            try
+            {
+                Type typeToDelete = typeLogic.Get(id);
+                typeLogic.Remove(typeToDelete);
+                return Ok(typeToDelete.Id);
+            }
+            catch (Exception e)
+            when (e is BusinessLogicException || e is DataAccessException)
+            {
+                return NotFound(e.Message);
+            }
+        }
     }
 }
