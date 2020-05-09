@@ -18,7 +18,7 @@ namespace IMMRequest.WebApi
             this.typeLogic = typeLogic;
         }
 
-        [AutenticationFilter()]
+        [AuthenticationFilter()]
         [HttpGet]
         public IActionResult Get()
         {
@@ -32,7 +32,7 @@ namespace IMMRequest.WebApi
             return Ok(typesToReturn);
         }
 
-        [AutenticationFilter()]
+        [AuthenticationFilter()]
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
@@ -46,6 +46,24 @@ namespace IMMRequest.WebApi
             when (e is BusinessLogicException || e is DataAccessException)
             {
                 return NotFound(e.Message);
+            }
+        }
+
+        [AuthenticationFilter()]
+        [HttpPost]
+        public IActionResult Post([FromBody] TypeDTO typeDTO)
+        {
+            try
+            {
+                Type typeToCreate = typeDTO.ToEntity();
+                Type createdType = typeLogic.Create(typeToCreate);
+                TypeDTO typeToReturn = new TypeDTO(createdType);
+                return Ok(typeToReturn);
+            }
+            catch (Exception e)
+            when (e is BusinessLogicException || e is DataAccessException)
+            {
+                return BadRequest(e.Message);
             }
         }
     }

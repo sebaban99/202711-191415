@@ -6,10 +6,10 @@ using IMMRequest.BusinessLogic;
 
 namespace IMMRequest.WebApi
 {
-    public class AutenticationFilter : Attribute, IActionFilter
+    public class AuthenticationFilter : Attribute, IActionFilter
     {
         private const string NULL_TOKEN_FORMAT = "00000000-0000-0000-0000-000000000000"; 
-        public AutenticationFilter()
+        public AuthenticationFilter()
         {
 
         }
