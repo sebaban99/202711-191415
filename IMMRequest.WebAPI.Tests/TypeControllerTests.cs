@@ -208,5 +208,42 @@ namespace IMMRequest.WebApi.Tests
             Assert.AreEqual(value, "Error: Type had empty fields");
             Assert.AreEqual(okResult.StatusCode, 400);
         }
+
+        [TestMethod]
+        public void DeleteCaseExistsType()
+        {
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.Remove(oneType));
+            typeLogicMock.Setup(m => m.Get(oneType.Id)).Returns(oneType);
+            var typeController = new TypeController(typeLogicMock.Object);
+
+            var result = typeController.Delete(oneType.Id);
+            var okResult = result as ObjectResult;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(okResult.StatusCode, 200);
+        }
+
+        [TestMethod]
+        public void DeleteCaseNotExistsType()
+        {
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.Remove(oneType)).Throws(
+                new BusinessLogicException("Error: Type to delete doesn't exist"));
+            typeLogicMock.Setup(m => m.Get(oneType.Id)).Returns(oneType);
+            var typeController = new TypeController(typeLogicMock.Object);
+
+            var result = typeController.Delete(oneType.Id);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Type to delete doesn't exist");
+            Assert.AreEqual(okResult.StatusCode, 404);
+        }
     }
 }
