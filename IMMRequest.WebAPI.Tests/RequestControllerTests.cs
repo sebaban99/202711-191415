@@ -142,5 +142,44 @@ namespace IMMRequest.WebApi.Tests
                 Assert.AreEqual(value[i], requestDTOs[i]);
             }
         }
+
+        [TestMethod]
+        public void GetRequestByIdCaseExist()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.Get(oneRequest.Id)).Returns(oneRequest);
+            var typeController = new RequestController(requestLogicMock.Object);
+
+            var result = typeController.Get(oneRequest.Id);
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value as RequestDTO;
+
+            requestLogicMock.VerifyAll();
+
+            Assert.AreEqual(requestDTO, value);
+        }
+
+        [TestMethod]
+        public void GetRequestByIdNotCaseExist()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.Get(oneRequest.Id)).Throws(
+                new BusinessLogicException("Error: Invalid ID, Request does not exist"));
+            var requestController = new RequestController(requestLogicMock.Object);
+
+            var result = requestController.Get(oneRequest.Id);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+            Assert.AreEqual(value, "Error: Invalid ID, Request does not exist");
+            Assert.AreEqual(okResult.StatusCode, 404);
+        }
     }
 }
