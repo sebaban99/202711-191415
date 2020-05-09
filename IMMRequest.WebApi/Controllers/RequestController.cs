@@ -30,5 +30,23 @@ namespace IMMRequest.WebApi
             }
             return Ok(requestToReturn);
         }
+
+        [AuthenticationFilter()]
+        [HttpGet("{id}")]
+        public IActionResult Get(Guid id)
+        {
+            try
+            {
+                Request request = requestLogic.Get(id);
+                RequestDTO reqToReturn = new RequestDTO(request);
+                return Ok(reqToReturn);
+            }
+            catch (Exception e)
+            when (e is BusinessLogicException || e is DataAccessException)
+            {
+                return NotFound(e.Message);
+            }
+            
+        }
     }
 }
