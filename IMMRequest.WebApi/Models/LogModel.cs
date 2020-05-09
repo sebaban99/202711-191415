@@ -6,7 +6,7 @@ using IMMRequest.Domain;
 
 namespace IMMRequest.WebApi
 {
-    public class LogDTO
+    public class LogModel
     {
  
         public Guid Id {get;set;}
@@ -19,7 +19,7 @@ namespace IMMRequest.WebApi
  
         public string Email { get; set; }
 
-        public LogDTO(Log log){
+        public LogModel(Log log){
             this.Id = log.Id;
             this.ActionType = log.ActionType;
             this.Date = log.Date;
@@ -27,7 +27,7 @@ namespace IMMRequest.WebApi
             this.Email = log.Email;
             
         }
-        public LogDTO(){}
+        public LogModel(){}
 
     }
 }

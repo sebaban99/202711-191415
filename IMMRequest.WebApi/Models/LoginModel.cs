@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IMMRequest.WebApi
 {
-    public class LoginDTO
+    public class LoginModel
     {
         [Required]
         public string Email { get; set; }
