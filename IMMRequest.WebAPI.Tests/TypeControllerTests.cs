@@ -131,6 +131,7 @@ namespace IMMRequest.WebApi.Tests
             af.Type = oneType;
             oneType.AdditionalFields.Add(af);
             topic.Types.Add(oneType);
+            var typeDTO = new TypeDTO(oneType);
 
             var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
 
@@ -143,7 +144,7 @@ namespace IMMRequest.WebApi.Tests
 
             typeLogicMock.VerifyAll();
 
-            Assert.AreEqual(oneType, value);
+            Assert.AreEqual(typeDTO, value);
         }
 
         [TestMethod]
@@ -180,18 +181,18 @@ namespace IMMRequest.WebApi.Tests
 
             var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
 
-            typeLogicMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(oneType);
+            typeLogicMock.Setup(m => m.Get(It.IsAny<Guid>())).Throws(
+                new BusinessLogicException("Error: Invalid ID, Type does not exist"));
             var typeController = new TypeController(typeLogicMock.Object);
 
             var result = typeController.Get(oneType.Id);
-            var okResult = result as OkObjectResult;
-            var statusCode = okResult.StatusCode;
+            var okResult = result as ObjectResult;
             var value = okResult.Value;
 
             typeLogicMock.VerifyAll();
 
             Assert.AreEqual(value, "Error: Invalid ID, Type does not exist");
-            Assert.AreEqual(statusCode, 404);
+            Assert.AreEqual(okResult.StatusCode, 404);
         }
     }
 }
