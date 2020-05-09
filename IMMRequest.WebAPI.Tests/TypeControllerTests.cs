@@ -99,5 +99,99 @@ namespace IMMRequest.WebApi.Tests
                 Assert.AreEqual(value[i], typeModels[i]);
             }
         }
+
+        [TestMethod]
+        public void GetTypeByIdCaseExist()
+        {
+            Topic topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            Type oneType = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                FieldType = FieldType.Entero,
+                Type = oneType,
+                Name = "Matricula",
+                Range = new List<Range>()
+            };
+
+            af.Type = oneType;
+            oneType.AdditionalFields.Add(af);
+            topic.Types.Add(oneType);
+
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(oneType);
+            var typeController = new TypeController(typeLogicMock.Object);
+
+            var result = typeController.Get(oneType.Id);
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value as TypeDTO;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(oneType, value);
+        }
+
+        [TestMethod]
+        public void GetTypeByIdCaseNotExist()
+        {
+            Topic topic = new Topic()
+            {
+                Id = Guid.NewGuid(),
+                Types = new List<Type>(),
+                Area = new Area(),
+                Name = "Acoso sexual"
+            };
+
+            Type oneType = new Type()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Taxi-Acoso",
+                Topic = topic,
+                AdditionalFields = new List<AdditionalField>()
+            };
+
+            AdditionalField af = new AdditionalField()
+            {
+                Id = Guid.NewGuid(),
+                FieldType = FieldType.Entero,
+                Type = oneType,
+                Name = "Matricula",
+                Range = new List<Range>()
+            };
+
+            af.Type = oneType;
+            oneType.AdditionalFields.Add(af);
+            topic.Types.Add(oneType);
+
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(oneType);
+            var typeController = new TypeController(typeLogicMock.Object);
+
+            var result = typeController.Get(oneType.Id);
+            var okResult = result as OkObjectResult;
+            var statusCode = okResult.StatusCode;
+            var value = okResult.Value;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Invalid ID, Type does not exist");
+            Assert.AreEqual(statusCode, 404);
+        }
     }
 }
