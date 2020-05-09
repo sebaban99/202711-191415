@@ -11,14 +11,14 @@ namespace IMMRequest.WebApi
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public Guid Topic { get; set; }
+        public Guid TopicId { get; set; }
         public List<AdditionalFieldDTO> aFDTOs { get; set; }
 
         public TypeDTO(Type type)
         {
             Id = type.Id;
             Name = type.Name;
-            Topic = type.Topic.Id;
+            TopicId = type.Topic.Id;
             aFDTOs = new List<AdditionalFieldDTO>();
             foreach (AdditionalField af in type.AdditionalFields)
             {
@@ -35,7 +35,7 @@ namespace IMMRequest.WebApi
                 Name = this.Name,
                 Topic = new Topic()
                 {
-                    Id = this.Topic
+                    Id = this.TopicId
                 },
                 AdditionalFields = new List<AdditionalField>()
             };
