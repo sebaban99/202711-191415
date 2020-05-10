@@ -1,4 +1,5 @@
 ﻿using IMMRequest.BusinessLogic;
+using IMMRequest.DataAccess;
 using IMMRequest.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -225,6 +226,88 @@ namespace IMMRequest.WebApi.Tests
             requestLogicMock.VerifyAll();
             Assert.AreEqual(value, "Error: could not retrieve the specific Request");
             Assert.AreEqual(okResult.StatusCode, 404);
+        }
+
+        [TestMethod]
+        public void PostCaseValidRequest()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.Create(It.IsAny<Request>())).Returns(oneRequest.RequestNumber);
+
+            var reauestController = new RequestController(requestLogicMock.Object);
+
+            var result = reauestController.Post(requestDTO);
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+
+            Assert.AreEqual(oneRequest.RequestNumber, value);
+        }
+
+        [TestMethod]
+        public void PostCaseInvalidRequestTypeNotExists()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.Create(It.IsAny<Request>())).Throws(
+                new BusinessLogicException("Error: Request's Type does not exist"));
+
+            var reauestController = new RequestController(requestLogicMock.Object);
+
+            var result = reauestController.Post(requestDTO);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Request's Type does not exist");
+            Assert.AreEqual(okResult.StatusCode, 400);
+        }
+
+        [TestMethod]
+        public void PostCaseInvalidRequestEmptyFields()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.Create(It.IsAny<Request>())).Throws(
+                new BusinessLogicException("Error: Request had empty fields"));
+
+            var reauestController = new RequestController(requestLogicMock.Object);
+
+            var result = reauestController.Post(requestDTO);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Request had empty fields");
+            Assert.AreEqual(okResult.StatusCode, 400);
+        }
+
+        [TestMethod]
+        public void PostCaseInvalidRequestErrorInDB()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.Create(It.IsAny<Request>())).Throws(
+                new DataAccessException("Error: Could not add entity to DB"));
+
+            var reauestController = new RequestController(requestLogicMock.Object);
+
+            var result = reauestController.Post(requestDTO);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Could not add entity to DB");
+            Assert.AreEqual(okResult.StatusCode, 500);
         }
     }
 }
