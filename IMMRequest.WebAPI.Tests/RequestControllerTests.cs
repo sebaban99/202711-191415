@@ -290,7 +290,7 @@ namespace IMMRequest.WebApi.Tests
         }
 
         [TestMethod]
-        public void PostCaseInvalidRequestErrorInDB()
+        public void PostCaseInvalidErrorInDB()
         {
             var requestDTO = new RequestDTO(oneRequest);
             var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
@@ -307,6 +307,71 @@ namespace IMMRequest.WebApi.Tests
             requestLogicMock.VerifyAll();
 
             Assert.AreEqual(value, "Error: Could not add entity to DB");
+            Assert.AreEqual(okResult.StatusCode, 500);
+        }
+
+        [TestMethod]
+        public void PutCaseValidRequestExist()
+        {
+            Request updatedRequest = oneRequest;
+            updatedRequest.Description = "In process of being reviewed";
+            updatedRequest.Status = Status.Revision;
+            var updReqDTO = new RequestDTO(updatedRequest);
+            var originalReqDTO = new RequestDTO(oneRequest);
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.Update(It.IsAny<Request>())).Returns(updatedRequest);
+
+            var reauestController = new RequestController(requestLogicMock.Object);
+
+            var result = reauestController.Put(oneRequest.Id, originalReqDTO);
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value as RequestDTO;
+
+            requestLogicMock.VerifyAll();
+
+            Assert.AreEqual(updReqDTO, value);
+        }
+
+        [TestMethod]
+        public void PutCaseInvalidRequestNotExist()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.Update(It.IsAny<Request>())).Throws(
+                new BusinessLogicException("Error: Invalid ID, Request does not exist"));
+
+            var reauestController = new RequestController(requestLogicMock.Object);
+
+            var result = reauestController.Put(oneRequest.Id, requestDTO);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Invalid ID, Request does not exist");
+            Assert.AreEqual(okResult.StatusCode, 400);
+        }
+
+        [TestMethod]
+        public void PutCaseInvalidErrorInDB()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.Update(It.IsAny<Request>())).Throws(
+                new DataAccessException("Error: Could not update Entity in DB"));
+
+            var reauestController = new RequestController(requestLogicMock.Object);
+
+            var result = reauestController.Put(oneRequest.Id, requestDTO);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Could not update Entity in DB");
             Assert.AreEqual(okResult.StatusCode, 500);
         }
     }
