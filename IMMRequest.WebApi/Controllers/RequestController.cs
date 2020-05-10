@@ -48,5 +48,23 @@ namespace IMMRequest.WebApi
             }
             
         }
+
+        [AuthenticationFilter()]
+        [HttpGet("{requestNumber}")]
+        public IActionResult Get(int requestNumber)
+        {
+            try
+            {
+                Request request = requestLogic.GetByCondition(r => r.RequestNumber == requestNumber);
+                RequestDTO reqToReturn = new RequestDTO(request);
+                return Ok(reqToReturn);
+            }
+            catch (Exception e)
+            when (e is BusinessLogicException || e is DataAccessException)
+            {
+                return NotFound(e.Message);
+            }
+
+        }
     }
 }
