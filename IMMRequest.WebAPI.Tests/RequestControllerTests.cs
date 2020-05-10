@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using Range = IMMRequest.Domain.Range;
 using Type = IMMRequest.Domain.Type;
@@ -89,10 +90,12 @@ namespace IMMRequest.WebApi.Tests
         [TestInitialize]
         public void Initialize()
         {
-            //stateOfContainer.Range.Add(range);
-            //type.AdditionalFields.Add(stateOfContainer);
-            //topic.Types.Add(type);
-            //request.AddFieldValues.Add(stateOfContainerValue);
+            stateOfContainer.Range.Add(range);
+            type.AdditionalFields.Add(stateOfContainer);
+            topic.Types.Add(type);
+            oneRequest.AddFieldValues.Add(oneStateOfContainerValue);
+            anotherRequest.AddFieldValues.Add(anotherStateOfContainerValue);
+
         }
 
         [TestMethod]
@@ -179,6 +182,48 @@ namespace IMMRequest.WebApi.Tests
 
             requestLogicMock.VerifyAll();
             Assert.AreEqual(value, "Error: Invalid ID, Request does not exist");
+            Assert.AreEqual(okResult.StatusCode, 404);
+        }
+
+        [TestMethod]
+        public void GetRequestByRequestNumberCaseExist()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+            requestLogicMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Request, bool>>>())).Returns(oneRequest);
+
+            var typeController = new RequestController(requestLogicMock.Object);
+
+            var result = typeController.Get(oneRequest.RequestNumber);
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value as RequestDTO;
+
+            requestLogicMock.VerifyAll();
+
+            Assert.AreEqual(requestDTO, value);
+        }
+
+        [TestMethod]
+        public void GetRequestByRequestNumberCaseNotExist()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Request, bool>>>())).Throws(
+            new BusinessLogicException("Error: could not retrieve the specific Request"));
+
+            var requestController = new RequestController(requestLogicMock.Object);
+
+            var result = requestController.Get(oneRequest.RequestNumber);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+            Assert.AreEqual(value, "Error: could not retrieve the specific Request");
             Assert.AreEqual(okResult.StatusCode, 404);
         }
     }
