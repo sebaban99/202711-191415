@@ -23,7 +23,7 @@ namespace IMMRequest.WebApi
         }
 
         [HttpPost]
-        public IActionResult Login([FromBody] LoginModel model) 
+        public IActionResult Login([FromBody] LoginDTO model) 
         {    
             
             if (!session.ValidateEmailAndPassword(model.Email, model.Password)) 
@@ -38,7 +38,7 @@ namespace IMMRequest.WebApi
                 l.Date = DateTime.Now;
                 l.ActionType = "login";
                 
-                var ret = new LogModel(l);
+                var ret = new LogDTO(l);
                 this.log.Add(l);
                 
                 return Ok(admin.GetByCondition(a => a.Email == model.Email));
