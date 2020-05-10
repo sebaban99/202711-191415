@@ -90,5 +90,27 @@ namespace IMMRequest.WebApi
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+
+        [AuthenticationFilter()]
+        [HttpPut("{id}")]
+        public IActionResult Put(Guid id, [FromBody]RequestDTO requestDTO)
+        {
+            try
+            {
+                Request requestToUpdate = requestDTO.ToEntity();
+                requestToUpdate.Id = id;
+                Request updatedRequest = requestLogic.Update(requestToUpdate);
+                RequestDTO requestToReturn = new RequestDTO(updatedRequest);
+                return Ok(requestToReturn);
+            }
+            catch (BusinessLogicException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }
