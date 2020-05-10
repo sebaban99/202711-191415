@@ -12,12 +12,12 @@ namespace IMMRequest.BusinessLogic
 {
     public class RequestLogic : IRequestLogic
     {
-        private IRepository<Request> requestRepository;
+        private IRequestRepository requestRepository;
         private IRepository<AFValue> aFValueRepository;
         private IRepository<Type> typeRepository;
         private IRequestValidatorHelper requestValidator;
 
-        public RequestLogic(IRepository<Request> requestRepository,
+        public RequestLogic(IRequestRepository requestRepository,
             IRepository<AFValue> aFValueRepository, IRepository<Type> typeRepository)
         {
             this.requestRepository = requestRepository;
@@ -38,16 +38,14 @@ namespace IMMRequest.BusinessLogic
             }
         }
 
-        private int AssignRequestNumber()
+        public int AssignRequestNumber()
         {
-            return requestRepository.GetAll().ToList().Count() + 1;
+            return requestRepository.GetAmountOfElements() + 1;
         }
 
         public int Create(Request request)
         {
-            requestValidator.ValidateRequestObject(request);
-            requestValidator.ValidateType(request);
-            requestValidator.ValidateAFValues(request);
+            requestValidator.ValidateAdd(request);
             request.Status = Status.Creada;
             request.RequestNumber = AssignRequestNumber();
             AddAFValues(request);

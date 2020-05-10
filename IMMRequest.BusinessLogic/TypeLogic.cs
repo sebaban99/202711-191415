@@ -39,6 +39,8 @@ namespace IMMRequest.BusinessLogic
         {
             typeValidator.ValidateAdd(type);
             AddAdditionalFields(type);
+            Topic realEntity = topicRespository.Get(type.Topic.Id);
+            type.Topic = realEntity;
             typeRepository.Add(type);
             typeRepository.SaveChanges();
             return type;

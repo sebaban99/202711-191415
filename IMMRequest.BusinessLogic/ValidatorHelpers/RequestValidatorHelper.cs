@@ -67,14 +67,11 @@ namespace IMMRequest.BusinessLogic
                     || request.Type == null;
         }
 
-        public void ValidateAdd(Request entity)
+        public void ValidateAdd(Request request)
         {
-            throw new NotImplementedException();
-        }
-
-        public void ValidateDelete(Request entity)
-        {
-            throw new NotImplementedException();
+            ValidateRequestObject(request);
+            ValidateType(request);
+            ValidateAFValues(request);
         }
 
         private bool IsValidPhone(string phone)
