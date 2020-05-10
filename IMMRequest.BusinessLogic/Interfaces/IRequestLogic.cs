@@ -11,5 +11,6 @@ namespace IMMRequest.BusinessLogic
         Request GetByCondition(Expression<Func<Request, bool>> expression);
         int Create(Request request);
         Request Update(Request request);
+        int AssignRequestNumber();
     }
 }

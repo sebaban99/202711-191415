@@ -1,5 +1,6 @@
 ﻿using IMMRequest.BusinessLogic;
 using IMMRequest.DataAccess;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -41,10 +42,13 @@ namespace IMMRequest.WebApi
                 TypeDTO typeToReturn = new TypeDTO(type);
                 return Ok(typeToReturn);
             }
-            catch (Exception e)
-            when (e is BusinessLogicException || e is DataAccessException)
+            catch (BusinessLogicException e)
             {
                 return NotFound(e.Message);
+            }
+            catch (DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
 
@@ -59,10 +63,13 @@ namespace IMMRequest.WebApi
                 TypeDTO typeToReturn = new TypeDTO(createdType);
                 return Ok(typeToReturn);
             }
-            catch (Exception e)
-            when (e is BusinessLogicException || e is DataAccessException)
+            catch (BusinessLogicException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
 
@@ -76,10 +83,13 @@ namespace IMMRequest.WebApi
                 typeLogic.Remove(typeToDelete);
                 return Ok(typeToDelete.Id);
             }
-            catch (Exception e)
-            when (e is BusinessLogicException || e is DataAccessException)
+            catch (BusinessLogicException e)
             {
                 return NotFound(e.Message);
+            }
+            catch (DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
     }

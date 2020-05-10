@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace IMMRequest.DataAccess.Repositories
 {
-    public class RequestRepository : BaseRepository<Request>
+    public class RequestRepository : BaseRepository<Request>, IRequestRepository
     {
         public RequestRepository(IMMRequestContext context)
         {
@@ -28,6 +28,18 @@ namespace IMMRequest.DataAccess.Repositories
             catch (DbException)
             {
                 throw new DataAccessException("Error: could not retrieve specific Entity");
+            }
+        }
+
+        public int GetAmountOfElements()
+        {
+            try
+            {
+                return Context.Requests.Count();
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: could not retrieve amount of Requests in DB");
             }
         }
     }

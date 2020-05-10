@@ -191,7 +191,6 @@ namespace IMMRequest.WebApi.Tests
         [TestMethod]
         public void PostCaseInvalidTypeEmptyFields()
         {
-            oneType.Name = "";
             var typeDTO = new TypeDTO(oneType);
             var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
 
