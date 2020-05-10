@@ -4,6 +4,7 @@ using IMMRequest.DataAccess;
 using System;
 using System.Collections.Generic;
 using IMMRequest.Domain;
+using Microsoft.AspNetCore.Http;
 
 namespace IMMRequest.WebApi
 {
@@ -41,15 +42,17 @@ namespace IMMRequest.WebApi
                 RequestDTO reqToReturn = new RequestDTO(request);
                 return Ok(reqToReturn);
             }
-            catch (Exception e)
-            when (e is BusinessLogicException || e is DataAccessException)
+            catch (BusinessLogicException e)
             {
                 return NotFound(e.Message);
             }
-            
+            catch (DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+
         }
 
-        [AuthenticationFilter()]
         [HttpGet("{requestNumber}")]
         public IActionResult Get(int requestNumber)
         {
@@ -59,12 +62,33 @@ namespace IMMRequest.WebApi
                 RequestDTO reqToReturn = new RequestDTO(request);
                 return Ok(reqToReturn);
             }
-            catch (Exception e)
-            when (e is BusinessLogicException || e is DataAccessException)
+            catch (BusinessLogicException e)
             {
                 return NotFound(e.Message);
             }
+            catch (DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
 
+        [HttpPost]
+        public IActionResult Post([FromBody] RequestDTO requestDTO)
+        {
+            try
+            {
+                Request requestToCreate = requestDTO.ToEntity();
+                int requestNumber = requestLogic.Create(requestToCreate);
+                return Ok(requestNumber);
+            }
+            catch(BusinessLogicException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch(DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
     }
 }
