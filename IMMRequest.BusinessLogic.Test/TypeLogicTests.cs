@@ -34,14 +34,15 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             topic.Types.Add(type);
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -75,8 +76,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -94,7 +95,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -132,8 +133,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -151,7 +152,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Topic)null);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -187,8 +188,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -206,7 +207,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -242,8 +243,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -261,7 +262,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -297,8 +298,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = null,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -316,7 +317,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -352,8 +353,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -370,7 +371,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -405,8 +406,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -424,7 +425,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
 
             typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
@@ -455,8 +456,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -474,7 +475,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Type)null);
 
             typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
@@ -503,8 +504,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -525,8 +526,8 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
-            typeRepositoryMock.Setup(m => m.GetAll()).Returns(types);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
+            typeRepositoryMock.Setup(m => m.GetActiveTypes()).Returns(types);
 
             typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
                 addFieldRepositoryMock.Object);
@@ -555,8 +556,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -574,9 +575,9 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
-            typeRepositoryMock.Setup(m => m.Remove(type));
+            typeRepositoryMock.Setup(m => m.SoftDelete(type));
             typeRepositoryMock.Setup(m => m.SaveChanges());
 
             typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
@@ -605,8 +606,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -624,7 +625,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.Remove(type));
             typeRepositoryMock.Setup(m => m.SaveChanges());
@@ -655,8 +656,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -697,7 +698,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -732,8 +733,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -774,7 +775,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -810,8 +811,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -852,7 +853,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -888,8 +889,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -923,7 +924,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -959,8 +960,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -985,7 +986,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -1021,8 +1022,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -1055,7 +1056,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -1090,8 +1091,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -1124,7 +1125,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -1162,8 +1163,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -1198,7 +1199,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -1234,8 +1235,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -1261,7 +1262,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -1297,8 +1298,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -1343,7 +1344,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -1379,8 +1380,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -1416,7 +1417,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -1452,8 +1453,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -1488,7 +1489,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
@@ -1523,8 +1524,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Taxi-Acoso",
                 Topic = topic,
-                AdditionalFields = new List<AdditionalField>()
-
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             AdditionalField af = new AdditionalField()
@@ -1560,7 +1561,7 @@ namespace IMMRequest.BusinessLogic.Tests
 
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<IRepository<Type>>(MockBehavior.Strict);
+            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(

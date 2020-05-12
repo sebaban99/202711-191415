@@ -352,3 +352,5 @@ MigrationBackup/
 .ionide/
 
 IMMRequest.DataAccess/ContextFactory.cs
+
+IMMRequest.WebApi/appsettings.json

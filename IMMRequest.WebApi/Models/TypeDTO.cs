@@ -12,6 +12,7 @@ namespace IMMRequest.WebApi
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid TopicId { get; set; }
+        public bool IsActive { get; set; }
         public List<AdditionalFieldDTO> aFDTOs { get; set; }
 
         public TypeDTO(Type type)
@@ -19,6 +20,7 @@ namespace IMMRequest.WebApi
             Id = type.Id;
             Name = type.Name;
             TopicId = type.Topic.Id;
+            IsActive = type.IsActive;
             aFDTOs = new List<AdditionalFieldDTO>();
             foreach (AdditionalField af in type.AdditionalFields)
             {
@@ -33,6 +35,7 @@ namespace IMMRequest.WebApi
             {
                 Id = this.Id,
                 Name = this.Name,
+                IsActive = this.IsActive,
                 Topic = new Topic()
                 {
                     Id = this.TopicId

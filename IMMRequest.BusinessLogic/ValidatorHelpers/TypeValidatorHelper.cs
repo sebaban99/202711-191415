@@ -10,10 +10,10 @@ namespace IMMRequest.BusinessLogic
 {
     public class TypeValidatorHelper : ITypeValidatorHelper
     {
-        private IRepository<Type> typeRepository;
+        private ITypeRepository typeRepository;
         private IRepository<Topic> topicRespository;
 
-        public TypeValidatorHelper(IRepository<Type> typeRepository, IRepository<Topic> topicRespository)
+        public TypeValidatorHelper(ITypeRepository typeRepository, IRepository<Topic> topicRespository)
         {
             this.typeRepository = typeRepository;
             this.topicRespository = topicRespository;
@@ -49,7 +49,7 @@ namespace IMMRequest.BusinessLogic
         public void ValidateDelete(Type type)
         {
             Type typeById = typeRepository.Get(type.Id);
-            if (typeById == null)
+            if (typeById == null || !typeById.IsActive)
             {
                 throw new BusinessLogicException("Error: Type to delete doesn't exist");
             }
