@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
-using System.Linq.Expressions;
+using IMMRequest.DataAccess.Interfaces;
+using IMMRequest.Exceptions;
 using Type = IMMRequest.Domain.Type;
 
 namespace IMMRequest.DataAccess

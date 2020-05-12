@@ -2,6 +2,8 @@ using System;
 using System.Data.Common;
 using System.Linq;
 using IMMRequest.Domain;
+using IMMRequest.DataAccess.Interfaces;
+using IMMRequest.Exceptions;
 
 namespace IMMRequest.DataAccess
 {

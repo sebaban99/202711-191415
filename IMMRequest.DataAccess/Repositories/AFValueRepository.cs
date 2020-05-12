@@ -1,8 +1,8 @@
 using IMMRequest.Domain;
 using System;
+using IMMRequest.Exceptions;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
 
 namespace IMMRequest.DataAccess
 {

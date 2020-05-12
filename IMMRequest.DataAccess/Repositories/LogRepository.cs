@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using IMMRequest.Exceptions;
+using IMMRequest.DataAccess.Interfaces;
 
 namespace IMMRequest.DataAccess
 {

@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
-using IMMRequest.DataAccess;
+using IMMRequest.Exceptions;
+using IMMRequest.DataAccess.Interfaces;
 
 namespace IMMRequest.DataAccess
 {

@@ -2,7 +2,7 @@
 using System;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
+using IMMRequest.Exceptions;
 
 namespace IMMRequest.DataAccess
 {

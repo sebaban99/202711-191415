@@ -1,4 +1,5 @@
 ﻿using IMMRequest.Domain;
+using IMMRequest.Exceptions;
 using System;
 using System.Data.Common;
 using System.Linq;
