@@ -9,12 +9,12 @@ namespace IMMRequest.BusinessLogic
 {
     public class TypeLogic : ITypeLogic
     {
-        private IRepository<Type> typeRepository;
+        private ITypeRepository typeRepository;
         private IRepository<Topic> topicRespository;
         private IRepository<AdditionalField> additionalFieldRespository;
         private ITypeValidatorHelper typeValidator;
 
-        public TypeLogic(IRepository<Type> typeRepository, IRepository<Topic> topicRespository,
+        public TypeLogic(ITypeRepository typeRepository, IRepository<Topic> topicRespository,
             IRepository<AdditionalField> additionalFieldRespository)
         {
             this.typeRepository = typeRepository;
@@ -41,6 +41,7 @@ namespace IMMRequest.BusinessLogic
             AddAdditionalFields(type);
             Topic realEntity = topicRespository.Get(type.Topic.Id);
             type.Topic = realEntity;
+            type.IsActive = true;
             typeRepository.Add(type);
             typeRepository.SaveChanges();
             return type;
@@ -59,13 +60,13 @@ namespace IMMRequest.BusinessLogic
 
         public IEnumerable<Type> GetAll()
         {
-            return typeRepository.GetAll();
+            return typeRepository.GetActiveTypes();
         }
 
         public void Remove(Type type)
         {
             typeValidator.ValidateDelete(type);
-            typeRepository.Remove(type);
+            typeRepository.SoftDelete(type);
             typeRepository.SaveChanges();
         }
     }
