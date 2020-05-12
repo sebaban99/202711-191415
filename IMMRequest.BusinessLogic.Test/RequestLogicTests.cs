@@ -26,7 +26,8 @@ namespace IMMRequest.BusinessLogic.Tests
             Id = Guid.NewGuid(),
             Name = "Contenedor roto",
             Topic = topic,
-            AdditionalFields = new List<AdditionalField>()
+            AdditionalFields = new List<AdditionalField>(),
+            IsActive = true
         };
 
         static AdditionalField stateOfContainer = new AdditionalField()
@@ -154,7 +155,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 Id = Guid.NewGuid(),
                 Name = "Contenedor roto",
                 Topic = trashContainers,
-                AdditionalFields = new List<AdditionalField>()
+                AdditionalFields = new List<AdditionalField>(),
+                IsActive = true
             };
 
             trashContainers.Types.Add(brokenContainer);

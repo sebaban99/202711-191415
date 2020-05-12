@@ -56,7 +56,6 @@ namespace IMMRequest.DataAccess.Tests
             Assert.AreEqual(false, typeRepositoryInMemory.Get(brokenContainer.Id).IsActive);
         }
 
-
         [TestMethod]
         public void GetActiveTypes()
         {
@@ -64,9 +63,10 @@ namespace IMMRequest.DataAccess.Tests
             typeRepositoryInMemory.Add(brokenLight);
             typeRepositoryInMemory.SaveChanges();
             typeRepositoryInMemory.SoftDelete(brokenContainer);
+            typeRepositoryInMemory.SaveChanges();
 
             List<Type> types = (List<Type>)typeRepositoryInMemory.GetActiveTypes().ToList();
-            Assert.IsTrue(types.Contains(brokenLight));
+            Assert.AreEqual(1, types.Count);
         }
 
         [TestMethod]

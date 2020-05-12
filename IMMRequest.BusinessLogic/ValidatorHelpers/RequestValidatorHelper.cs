@@ -87,15 +87,15 @@ namespace IMMRequest.BusinessLogic
             }
         }
 
-        private bool IsTypeRegistered(Guid id)
+        private bool IsTypeValid(Guid id)
         {
             Type typeInDB = typeRepository.Get(id);
-            return typeInDB != null;
+            return typeInDB != null && typeInDB.IsActive;
         }
 
         public void ValidateType(Request request)
         {
-            if (!IsTypeRegistered(request.Type.Id))
+            if (!IsTypeValid(request.Type.Id))
             {
                 throw new BusinessLogicException("Error: Request's Type does not exist");
             }
