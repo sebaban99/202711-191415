@@ -1,12 +1,14 @@
 ﻿using IMMRequest.Domain;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Linq.Expressions;
 using Type = IMMRequest.Domain.Type;
 
 namespace IMMRequest.DataAccess
 {
-    public class TypeRepository : BaseRepository<Type>
+    public class TypeRepository : BaseRepository<Type>, ITypeRepository
     {
         public TypeRepository(IMMRequestContext context)
         {
@@ -30,5 +32,15 @@ namespace IMMRequest.DataAccess
         }
 
 
+        public IEnumerable<Type> GetActiveTypes()
+        {
+            return Context.Types.Where(t => t.IsActive == true);
+        }
+
+        public void SoftDelete(Type type)
+        {
+            type.IsActive = false;
+            Update(type);
+        }
     }
 }
