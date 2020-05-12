@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using IMMRequest.DataAccess;
+﻿using IMMRequest.DataAccess.Interfaces;
+using IMMRequest.Exceptions;
+using IMMRequest.BusinessLogic.Interfaces;
 using IMMRequest.Domain;
 
 namespace IMMRequest.BusinessLogic
