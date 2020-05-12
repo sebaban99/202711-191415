@@ -12,10 +12,10 @@ namespace IMMRequest.WebApi
     public class LoginController : Controller
     {
         private ISessionLogic session;
-        private AdminLogic admin;
+        private IAdminLogic admin;
         private ILogLogic log;
 
-        public LoginController(ISessionLogic session, AdminLogic admin, ILogLogic log) : base()
+        public LoginController(ISessionLogic session, IAdminLogic admin, ILogLogic log) : base()
         {
             this.session = session;
             this.admin = admin;
@@ -26,7 +26,7 @@ namespace IMMRequest.WebApi
         public IActionResult Login([FromBody] LoginDTO model) 
         {    
             
-            if (!session.ValidateEmailAndPassword(model.Email, model.Password)) 
+            if (!session.ValidateLogin(model.Email, model.Password)) 
             {  
                 return BadRequest("Login error: Incorrect email or password");
             }

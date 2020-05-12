@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 
-namespace IMMRequest.DataAccess.Repositories
+namespace IMMRequest.DataAccess
 {
     public class AreaRepository : BaseRepository<Area>
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using IMMRequest.DataAccess;
 
-namespace IMMRequest.DataAccess.Repositories
+namespace IMMRequest.DataAccess
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class
     {

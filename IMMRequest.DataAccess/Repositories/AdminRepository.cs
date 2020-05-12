@@ -3,7 +3,7 @@ using System;
 using System.Data.Common;
 using System.Linq;
 
-namespace IMMRequest.DataAccess.Repositories
+namespace IMMRequest.DataAccess
 {
     public class AdminRepository : BaseRepository<Admin>
     {
@@ -26,25 +26,6 @@ namespace IMMRequest.DataAccess.Repositories
             {
                 throw new DataAccessException("Error: could not get specific Entity");
             }
-        }
-
-        public bool ModifyToken(Admin admin)
-        {
-            try
-            {
-                var saved = GetByCondition(a => a.Email == admin.Email);
-                saved.SessionToken = admin.SessionToken;
-                Context.Attach(saved);
-                Context.Update(saved);
-                Context.SaveChanges();
-                return true;
-
-            }
-            catch (DbException e)
-            {
-                throw (new DataAccessException("Error al Modificar Token " + e.Message));
-            }
-
         }
     }
 }

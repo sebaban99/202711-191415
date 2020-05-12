@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using Type = IMMRequest.Domain.Type;
 
-namespace IMMRequest.DataAccess.Repositories
+namespace IMMRequest.DataAccess
 {
     public class TypeRepository : BaseRepository<Type>
     {

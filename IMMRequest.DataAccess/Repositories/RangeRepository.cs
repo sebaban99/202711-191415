@@ -3,7 +3,7 @@ using System;
 using System.Data.Common;
 using System.Linq;
 
-namespace IMMRequest.DataAccess.Repositories
+namespace IMMRequest.DataAccess
 {
     public class RangeRepository : BaseRepository<Range>
     {
