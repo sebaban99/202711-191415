@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
-using IMMRequest.DataAccess;
 using IMMRequest.Domain;
 
-namespace IMMRequest.BusinessLogic
+namespace IMMRequest.BusinessLogic.Interfaces
 {
     public interface ISessionLogic
     {

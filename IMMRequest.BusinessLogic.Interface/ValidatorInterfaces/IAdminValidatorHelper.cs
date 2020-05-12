@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using IMMRequest.Domain;
+﻿using IMMRequest.Domain;
 
-namespace IMMRequest.BusinessLogic
+namespace IMMRequest.BusinessLogic.Interfaces
 {
     public interface IAdminValidatorHelper
     {
