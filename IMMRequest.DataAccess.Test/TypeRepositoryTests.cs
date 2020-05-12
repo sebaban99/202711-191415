@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Type = IMMRequest.Domain.Type;
+using System.Linq;
 
 namespace IMMRequest.DataAccess.Tests
 {
@@ -12,6 +13,7 @@ namespace IMMRequest.DataAccess.Tests
     {
         Type brokenContainer = new Type()
         {
+            IsActive = true,
             Topic = new Topic(),
             Name = "Contenedor roto",
             Id = Guid.NewGuid(),
@@ -23,6 +25,7 @@ namespace IMMRequest.DataAccess.Tests
             Topic = new Topic(),
             Name = "Poste de luz roto",
             Id = Guid.NewGuid(),
+            IsActive = true,
             AdditionalFields = new List<AdditionalField>()
         };
 
@@ -43,9 +46,32 @@ namespace IMMRequest.DataAccess.Tests
         }
 
         [TestMethod]
+        public void SoftDeleteType()
+        {
+            typeRepositoryInMemory.Add(brokenContainer);
+            typeRepositoryInMemory.Add(brokenLight);
+            typeRepositoryInMemory.SaveChanges();
+            typeRepositoryInMemory.SoftDelete(brokenContainer);
+            
+            Assert.AreEqual(false, typeRepositoryInMemory.Get(brokenContainer.Id).IsActive);
+        }
+
+
+        [TestMethod]
+        public void GetActiveTypes()
+        {
+            typeRepositoryInMemory.Add(brokenContainer);
+            typeRepositoryInMemory.Add(brokenLight);
+            typeRepositoryInMemory.SaveChanges();
+            typeRepositoryInMemory.SoftDelete(brokenContainer);
+
+            List<Type> types = (List<Type>)typeRepositoryInMemory.GetActiveTypes().ToList();
+            Assert.IsTrue(types.Contains(brokenLight));
+        }
+
+        [TestMethod]
         public void GetType_ExistentType_ShouldReturnSpecificTypeFromDB()
         {
-
             typeRepositoryInMemory.Add(brokenContainer);
             typeRepositoryInMemory.Add(brokenLight);
             typeRepositoryInMemory.SaveChanges();
