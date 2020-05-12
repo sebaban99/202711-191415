@@ -1,7 +1,6 @@
-﻿using IMMRequest.Domain;
-using System;
+﻿using System;
 
-namespace IMMRequest.BusinessLogic
+namespace IMMRequest.Exceptions
 {
     public class BusinessLogicException : Exception
     {

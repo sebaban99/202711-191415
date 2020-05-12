@@ -1,6 +1,6 @@
 using System;
 
-namespace IMMRequest.DataAccess
+namespace IMMRequest.Exceptions
 {
     public class DataAccessException : Exception
     {
