@@ -12,7 +12,7 @@ namespace IMMRequest.BusinessLogic
 {
     public class LogLogic : ILogLogic
     {
-        private const string Message1 = "Ya existe un Log con ese id";
+        private const string Message1 = "Log already exists";
         private ILogRepository logRepository;
 
         public LogLogic(ILogRepository logRepository)
@@ -32,13 +32,14 @@ namespace IMMRequest.BusinessLogic
 
         public void Add(Log log)
         {
-            if (this.Get(log.Id.ToString()) != null)
+            if (log != null)
             {
                 logRepository.Add(log);
+                logRepository.SaveChanges();
             }
             else
             {
-                throw new Exception(Message1.ToString());
+                throw new BusinessLogicException(Message1.ToString());
             }
         }
 
@@ -47,6 +48,7 @@ namespace IMMRequest.BusinessLogic
             if (this.Get(log.Id.ToString()) != null)
             {
                 logRepository.Remove(log);
+                logRepository.SaveChanges();
             }
         }
 

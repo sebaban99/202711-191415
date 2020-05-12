@@ -1,9 +1,10 @@
+using System;
 using IMMRequest.Domain;
 
 namespace IMMRequest.DataAccess
 {
     public interface ISessionRepository : IRepository<Session>
     {
-        bool ValidToken(string token);
+        bool ValidateSession(Guid token);
     }
 }

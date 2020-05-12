@@ -15,7 +15,7 @@ namespace IMMRequest.Domain
 
         public Log()
         {
-           
+            this.Id = Guid.NewGuid();
             this.ActionType = actionTypeAvailable.login.ToString();
             this.Date = DateTime.Now;
             this.Admin = null;
@@ -24,6 +24,7 @@ namespace IMMRequest.Domain
 
         public Log(string type, Admin a)
         {
+            this.Id = Guid.NewGuid();
             this.ActionType = type;
             this.Date = DateTime.Now;
             this.Admin = a;

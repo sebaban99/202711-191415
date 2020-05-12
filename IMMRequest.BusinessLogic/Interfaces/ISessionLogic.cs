@@ -7,11 +7,11 @@ namespace IMMRequest.BusinessLogic
 {
     public interface ISessionLogic
     {
-        bool ValidateEmailAndPassword(string email, string password);
+        bool ValidateLogin(string email, string password);
 
-        bool ValidToken(string token);
+        bool ValidateSession(Guid token);
 
-        void GenerateToken(Admin loggedAdmin);
+        void GenerateSession(Admin loggedAdmin);
         
     }
 }

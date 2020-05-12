@@ -1,7 +1,6 @@
 using System;
 using System.Data.Common;
 using System.Linq;
-using IMMRequest.DataAccess.Repositories;
 using IMMRequest.Domain;
 
 namespace IMMRequest.DataAccess
@@ -29,36 +28,22 @@ namespace IMMRequest.DataAccess
             }
         }
 
-        public bool ValidToken(string token)
+        public bool ValidateSession(Guid adminId)
         {
             try
             {
-                Guid validToken;
-
-                if (string.IsNullOrEmpty(token))
+                if (adminId == null)
                 {
                     return false;
                 }
-                bool isValid = Guid.TryParse(token, out validToken);
-                Guid receivedToken = new Guid(token);
 
-                Guid query = (from q in Context.Administrators
-                                 where q.SessionToken == receivedToken
-                                 select q).FirstOrDefault().Id;
+                Session session = GetByCondition(q => q.AdminId == adminId);
 
-                if (query != null)
-                {
-                    return isValid && true;
-                }
-                return isValid && false;
-            }
-            catch (NullReferenceException eNull)
-            {
-                throw (new Exception("Security error: the token doesn't exist, " + eNull));
+                return session != null;
             }
             catch (Exception e)
             {
-                throw (new Exception("Error, the token is not valid " + e));
+                throw (new DataAccessException("Error, the session is not valid " + e));
             }
         }
     }

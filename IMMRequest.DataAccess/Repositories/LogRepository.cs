@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 
-namespace IMMRequest.DataAccess.Repositories
+namespace IMMRequest.DataAccess
 {
     public class LogRepository : BaseRepository<Log>, ILogRepository
     {
@@ -17,7 +17,7 @@ namespace IMMRequest.DataAccess.Repositories
         {
             try
             {
-                return Context.Logs.First(x => x.Id == id);
+                return Context.Logs.FirstOrDefault(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {

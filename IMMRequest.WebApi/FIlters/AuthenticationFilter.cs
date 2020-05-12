@@ -1,34 +1,45 @@
 using System;
-using IMMRequest.DataAccess;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using IMMRequest.BusinessLogic;
+using IMMRequest.DataAccess;
 
 namespace IMMRequest.WebApi
 {
-    public class AuthenticationFilter : Attribute, IActionFilter
+    public class AuthenticationFilter : Attribute, IAuthorizationFilter
     {
-        private const string NULL_TOKEN_FORMAT = "00000000-0000-0000-0000-000000000000"; 
-        public AuthenticationFilter()
+        private ISessionLogic GetSessionLogic(AuthorizationFilterContext context)
         {
-
+            var typeOfSessionsLogic = typeof(ISessionLogic);
+            return context.HttpContext.RequestServices.GetService(typeOfSessionsLogic) as ISessionLogic;
         }
-        public void OnActionExecuting(ActionExecutingContext controlToken)
+
+        public void OnAuthorization(AuthorizationFilterContext context)
         {
-            // OBTENEMOS EL TOKEN DEL HEADER
-            string token = controlToken.HttpContext.Request.Headers["token"];
-            // SI EL TOKEN ES NULL CORTAMOS LA PIPELINE Y RETORNAMOS UN RESULTADO
-            if (string.IsNullOrEmpty(token) || token == NULL_TOKEN_FORMAT)
+            string token = context.HttpContext.Request.Headers["token"];
+            if (token == null)
             {
-                controlToken.Result = new ContentResult()
+                context.Result = new ContentResult()
                 {
-                    Content = "A valid token is needed",
+                    StatusCode = 401,
+                    Content = "Invalid session token"
                 };
-            }           
-        }
-        public void OnActionExecuted(ActionExecutedContext context)
-        {
+                return;
+            }
 
+            var sessionLogic = GetSessionLogic(context);
+            
+            if (!sessionLogic.ValidateSession(new Guid(token)))
+            {
+                context.Result = new ContentResult()
+                {
+                    StatusCode = 403,
+                    Content = "A valid session is needed"
+                };
+                return;
+            }
         }
     }
 }
