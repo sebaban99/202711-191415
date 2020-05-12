@@ -1,7 +1,7 @@
 using System;
 using IMMRequest.Domain;
 
-namespace IMMRequest.DataAccess
+namespace IMMRequest.DataAccess.Interfaces
 {
     public interface ISessionRepository : IRepository<Session>
     {
