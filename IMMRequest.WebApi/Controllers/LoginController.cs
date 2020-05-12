@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Text;
-using System.Collections.Generic;
-using IMMRequest.BusinessLogic;
-using IMMRequest.DataAccess;
+using IMMRequest.BusinessLogic.Interfaces;
 using IMMRequest.Domain;
 
 namespace IMMRequest.WebApi

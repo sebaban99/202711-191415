@@ -1,11 +1,11 @@
-using IMMRequest.BusinessLogic;
+using IMMRequest.BusinessLogic.Interfaces;
 using IMMRequest.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using IMMRequest.Exceptions;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Range = IMMRequest.Domain.Range;
 using Type = IMMRequest.Domain.Type;
 

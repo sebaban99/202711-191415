@@ -1,5 +1,5 @@
-﻿using IMMRequest.BusinessLogic;
-using IMMRequest.DataAccess;
+﻿using IMMRequest.BusinessLogic.Interfaces;
+using IMMRequest.Exceptions;
 using IMMRequest.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
