@@ -31,6 +31,7 @@ namespace IMMRequest.BusinessLogic
 
         public Admin Create(Admin admin)
         {
+            admin.Id = Guid.NewGuid();
             adminValidator.ValidateAdd(admin);
             adminRepository.Add(admin);
             adminRepository.SaveChanges();

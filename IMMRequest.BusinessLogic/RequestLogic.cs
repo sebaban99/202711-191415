@@ -43,11 +43,17 @@ namespace IMMRequest.BusinessLogic
             return requestRepository.GetAmountOfElements() + 1;
         }
 
+        private void GiveNewRequestFormat(Request request)
+        {
+            request.Status = Status.Creada;
+            request.RequestNumber = AssignRequestNumber();
+            request.Id = Guid.NewGuid();
+        }
+
         public int Create(Request request)
         {
             requestValidator.ValidateAdd(request);
-            request.Status = Status.Creada;
-            request.RequestNumber = AssignRequestNumber();
+            GiveNewRequestFormat(request);
             AddAFValues(request);
             requestRepository.Add(request);
             requestRepository.SaveChanges();
