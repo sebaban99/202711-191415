@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IMMRequest.Domain;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using IMMRequest.Exceptions;
 using System.Collections.Generic;
 
 namespace IMMRequest.DataAccess.Tests
