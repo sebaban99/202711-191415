@@ -35,11 +35,6 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                if (adminId == null)
-                {
-                    return false;
-                }
-
                 Session session = GetByCondition(q => q.AdminId == adminId);
 
                 return session != null;

@@ -6,7 +6,7 @@ namespace IMMRequest.BusinessLogic.Interfaces
 {
     public interface ISessionLogic
     {
-        bool ValidateLogin(string email, string password);
+        Admin ValidateLogin(string email, string password);
 
         bool ValidateSession(Guid token);
 

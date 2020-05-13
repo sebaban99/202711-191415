@@ -21,10 +21,10 @@ namespace IMMRequest.BusinessLogic
 
         public bool ValidateSession(Guid adminId)
         {
-            return sessionRepository.ValidateSession(adminId))
+            return sessionRepository.ValidateSession(adminId);
         }
 
-        public bool ValidateLogin(string email, string password)
+        public Admin ValidateLogin(string email, string password)
         {
             if (email != null && password != null)
             {
@@ -35,14 +35,12 @@ namespace IMMRequest.BusinessLogic
                     {
                         this.GenerateSession(loggedAdmin);
                     }
-                    Session.LoggedAdmin = loggedAdmin;
-                    return true;
+                    return loggedAdmin;
                 }
             }
-            return false;
+            return null;
         }
         
-        //ESTE METODO SE USA LUEGO DE VALIDAR QUE EXISTE UN ADMIN CON EMAIL Y CONTRASEÑA CORRECTOS
         public void GenerateSession(Admin loggedUser)
         {
            

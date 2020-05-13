@@ -11,7 +11,7 @@ namespace IMMRequest.DataAccess.Tests
     [TestClass]
     public class SessionRepositoryTests
     {
-        Admin sebaAdmin = new Admin()
+        static Admin sebaAdmin = new Admin()
         {
             Email = "seba@asd.com",
             Password = "Pass",
@@ -22,12 +22,12 @@ namespace IMMRequest.DataAccess.Tests
         Session session = new Session()
         {
             Id = Guid.NewGuid(),
-            AdminId = Guid.NewGuid(),
+            AdminId = sebaAdmin.Id,
         };
         
-
         private SessionRepository sessionRepositoryInMemory = new SessionRepository(
            ContextFactory.GetNewContext(ContextType.MEMORY));
+
         [TestInitialize]
         public void Initialize()
         {
@@ -49,6 +49,23 @@ namespace IMMRequest.DataAccess.Tests
             sessionRepositoryInMemory.SaveChanges();
 
             Assert.AreEqual(sessionRepositoryInMemory.Get(session.Id), session);
+        }
+
+        [TestMethod]
+        public void ValidateSessionSessionExists()
+        {
+
+            sessionRepositoryInMemory.Add(session);
+            sessionRepositoryInMemory.SaveChanges();
+            bool sessionExists = sessionRepositoryInMemory.ValidateSession(sebaAdmin.Id);
+
+            Assert.AreEqual(true, sessionExists);
+        }
+
+        [TestMethod]
+        public void ValidateSessionSessionNotExists()
+        {
+            Assert.AreEqual(false, sessionRepositoryInMemory.ValidateSession(sebaAdmin.Id));
         }
     }
 }
