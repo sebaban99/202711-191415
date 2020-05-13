@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.WebApi
 {
+    [ExcludeFromCodeCoverage]
     public class LoginDTO
     {
         [Required]

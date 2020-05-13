@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using IMMRequest.BusinessLogic.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.WebApi
 {
+    [ExcludeFromCodeCoverage]
     public class AuthenticationFilter : Attribute, IAuthorizationFilter
     {
         private ISessionLogic GetSessionLogic(AuthorizationFilterContext context)

@@ -7,6 +7,7 @@ using IMMRequest.Domain;
 
 namespace IMMRequest.WebApi
 {
+    [ExcludeFromCodeCoverage]
     public class LogDTO
     {
  
