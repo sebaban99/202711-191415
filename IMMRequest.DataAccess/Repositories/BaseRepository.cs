@@ -11,7 +11,7 @@ namespace IMMRequest.DataAccess
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class
     {
-        protected IMMRequestContext Context { get; set; }
+        protected DbContext Context { get; set; }
 
         public void Add(T entity)
         {

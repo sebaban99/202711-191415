@@ -4,12 +4,13 @@ using IMMRequest.Domain;
 using IMMRequest.DataAccess.Interfaces;
 using System.Linq;
 using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess
 {
     public class RequestRepository : BaseRepository<Request>, IRequestRepository
     {
-        public RequestRepository(IMMRequestContext context)
+        public RequestRepository(DbContext context)
         {
             this.Context = context;
         }
@@ -18,7 +19,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.Requests.First(x => x.Id == id);
+                return Context.Set<Request>().First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {
@@ -34,7 +35,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.Requests.Count();
+                return Context.Set<Request>().Count();
             }
             catch (DbException)
             {

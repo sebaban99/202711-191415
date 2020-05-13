@@ -21,11 +21,7 @@ namespace IMMRequest.BusinessLogic
 
         public bool ValidateSession(Guid adminId)
         {
-            if(sessionRepository.ValidateSession(adminId))
-            {
-                return true;
-            }
-                return false;
+            return sessionRepository.ValidateSession(adminId))
         }
 
         public bool ValidateLogin(string email, string password)
@@ -42,7 +38,6 @@ namespace IMMRequest.BusinessLogic
                     Session.LoggedAdmin = loggedAdmin;
                     return true;
                 }
-                return false;
             }
             return false;
         }

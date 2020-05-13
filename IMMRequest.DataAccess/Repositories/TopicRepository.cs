@@ -3,12 +3,13 @@ using System;
 using System.Data.Common;
 using System.Linq;
 using IMMRequest.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess
 {
     public class TopicRepository : BaseRepository<Topic>
     {
-        public TopicRepository(IMMRequestContext context)
+        public TopicRepository(DbContext context)
         {
             Context = context;
         }
@@ -17,7 +18,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.Topics.First(x => x.Id == id);
+                return Context.Set<Topic>().First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {

@@ -3,12 +3,13 @@ using System;
 using System.Data.Common;
 using System.Linq;
 using IMMRequest.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess
 {
     public class RangeRepository : BaseRepository<Range>
     {
-        public RangeRepository(IMMRequestContext context)
+        public RangeRepository(DbContext context)
         {
             Context = context;
         }
@@ -17,7 +18,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.RangeValues.First(x => x.Id == id);
+                return Context.Set<Range>().First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {

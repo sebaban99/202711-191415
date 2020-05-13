@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using IMMRequest.Domain;
+﻿using IMMRequest.Domain;
 using Microsoft.EntityFrameworkCore;
 using Type = IMMRequest.Domain.Type;
 
