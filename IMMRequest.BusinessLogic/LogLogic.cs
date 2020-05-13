@@ -7,11 +7,10 @@ using IMMRequest.BusinessLogic.Interfaces;
 using IMMRequest.Exceptions;
 
 namespace IMMRequest.BusinessLogic
-
 {
     public class LogLogic : ILogLogic
     {
-        private const string Message1 = "Log already exists";
+        private const string ALREADY_EXISTS_LOG_MESSAGE = "Log already exists";
         private ILogRepository logRepository;
 
         public LogLogic(ILogRepository logRepository)
@@ -38,24 +37,27 @@ namespace IMMRequest.BusinessLogic
             }
             else
             {
-                throw new BusinessLogicException(Message1.ToString());
+                throw new BusinessLogicException(ALREADY_EXISTS_LOG_MESSAGE);
             }
         }
 
         public void Remove(Log log)
         {
-            if (this.Get(log.Id.ToString()) != null)
+            Log logById = Get(log.Id); 
+            if (logById != null)
             {
                 logRepository.Remove(log);
                 logRepository.SaveChanges();
             }
+            else
+            {
+                throw new BusinessLogicException("Log to remove was not found");
+            }
         }
 
-        private Log Get(string id)
+        private Log Get(Guid id)
         {
-            Guid logId = new Guid(id);
-            return logRepository.Get(logId);
+            return logRepository.Get(id);
         }
-
     }
 }
