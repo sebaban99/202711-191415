@@ -58,7 +58,7 @@ namespace IMMRequest.WebApi
                     .AllowCredentials());
             });
 
-            services.AddDbContext<IMMRequestContext>(
+            services.AddDbContext<DbContext, IMMRequestContext>(
                 o => o.UseSqlServer(Configuration.GetConnectionString("IMMRequest")));
 
             //services.AddCors(
