@@ -22,14 +22,25 @@ namespace IMMRequest.WebApi
         [HttpGet]
         public IActionResult Get()
         {
-            IEnumerable<Request> requestsInBD = requestLogic.GetAll();
-            List<RequestDTO> requestToReturn = new List<RequestDTO>();
-            foreach (Request req in requestsInBD)
+            try
             {
-                RequestDTO reqDTO = new RequestDTO(req);
-                requestToReturn.Add(reqDTO);
+                IEnumerable<Request> requestsInBD = requestLogic.GetAll();
+                List<RequestDTO> requestToReturn = new List<RequestDTO>();
+                foreach (Request req in requestsInBD)
+                {
+                    RequestDTO reqDTO = new RequestDTO(req);
+                    requestToReturn.Add(reqDTO);
+                }
+                return Ok(requestToReturn);
             }
-            return Ok(requestToReturn);
+            catch (BusinessLogicException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         [AuthenticationFilter()]
