@@ -3,14 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
-using System.Linq.Expressions;
+using IMMRequest.DataAccess.Interfaces;
+using IMMRequest.Exceptions;
 using Type = IMMRequest.Domain.Type;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess
 {
     public class TypeRepository : BaseRepository<Type>, ITypeRepository
     {
-        public TypeRepository(IMMRequestContext context)
+        public TypeRepository(DbContext context)
         {
             Context = context;
         }
@@ -19,7 +21,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.Types.First(x => x.Id == id);
+                return Context.Set<Type>().First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {
@@ -34,7 +36,7 @@ namespace IMMRequest.DataAccess
 
         public IEnumerable<Type> GetActiveTypes()
         {
-            return Context.Types.Where(t => t.IsActive == true);
+            return Context.Set<Type>().Where(t => t.IsActive == true);
         }
 
         public void SoftDelete(Type type)

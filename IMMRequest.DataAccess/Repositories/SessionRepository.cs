@@ -2,12 +2,15 @@ using System;
 using System.Data.Common;
 using System.Linq;
 using IMMRequest.Domain;
+using IMMRequest.DataAccess.Interfaces;
+using IMMRequest.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess
 {
     public class SessionRepository : BaseRepository<Session>, ISessionRepository
     {
-        public SessionRepository(IMMRequestContext context)
+        public SessionRepository(DbContext context)
         {
             Context = context;
         }
@@ -16,7 +19,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.Sessions.First(x => x.Id == id);
+                return Context.Set<Session>().First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {

@@ -2,13 +2,14 @@
 using System;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
+using IMMRequest.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess
 {
     public class AreaRepository : BaseRepository<Area>
     {
-        public AreaRepository(IMMRequestContext context)
+        public AreaRepository(DbContext context)
         {
             Context = context;
         }
@@ -17,7 +18,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.Areas.First(x => x.Id == id);
+                return Context.Set<Area>().First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Text;
 using Type = IMMRequest.Domain.Type;
 
-namespace IMMRequest.DataAccess
+namespace IMMRequest.DataAccess.Interfaces
 {
     public interface ITypeRepository : IRepository<Type>
     {

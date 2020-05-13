@@ -1,13 +1,15 @@
 ﻿using IMMRequest.Domain;
 using System;
+using IMMRequest.Exceptions;
 using System.Data.Common;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess
 {
     public class AdminRepository : BaseRepository<Admin>
     {
-        public AdminRepository(IMMRequestContext context)
+        public AdminRepository(DbContext context)
         {
             Context = context;
         }
@@ -16,7 +18,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.Administrators.First(x => x.Id == id);
+                return Context.Set<Admin>().First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {

@@ -1,14 +1,15 @@
 using IMMRequest.Domain;
 using System;
+using IMMRequest.Exceptions;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess
 {
     public class AFValueRepository : BaseRepository<AFValue>
     {
-        public AFValueRepository(IMMRequestContext context)
+        public AFValueRepository(DbContext context)
         {
             Context = context;
         }
@@ -17,7 +18,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.AFValues.First(x => x.Id == id);
+                return Context.Set<AFValue>().First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {

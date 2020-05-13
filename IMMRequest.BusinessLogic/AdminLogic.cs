@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using IMMRequest.DataAccess;
+using IMMRequest.DataAccess.Interfaces;
 using System.Linq.Expressions;
+using IMMRequest.BusinessLogic.Interfaces;
+using IMMRequest.Exceptions;
 using IMMRequest.Domain;
 
 namespace IMMRequest.BusinessLogic
@@ -31,6 +33,7 @@ namespace IMMRequest.BusinessLogic
 
         public Admin Create(Admin admin)
         {
+            admin.Id = Guid.NewGuid();
             adminValidator.ValidateAdd(admin);
             adminRepository.Add(admin);
             adminRepository.SaveChanges();

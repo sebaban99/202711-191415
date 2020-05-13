@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using IMMRequest.BusinessLogic;
-using IMMRequest.DataAccess;
+using IMMRequest.BusinessLogic.Interfaces;
+using IMMRequest.Exceptions;
 using System;
 using System.Collections.Generic;
 using IMMRequest.Domain;

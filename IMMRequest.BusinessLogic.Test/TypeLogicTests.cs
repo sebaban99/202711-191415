@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using IMMRequest.Exceptions;
 using Type = IMMRequest.Domain.Type;
 using Range = IMMRequest.Domain.Range;
 using IMMRequest.Domain;
-using IMMRequest.DataAccess;
+using IMMRequest.DataAccess.Interfaces;
 using Moq;
 using System.Linq.Expressions;
 

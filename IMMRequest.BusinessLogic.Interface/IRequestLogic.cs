@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using IMMRequest.Domain;
 
-namespace IMMRequest.BusinessLogic
+namespace IMMRequest.BusinessLogic.Interfaces
 {
     public interface IRequestLogic : ILogic<Request>
     {

@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
-namespace IMMRequest.DataAccess
+namespace IMMRequest.DataAccess.Interfaces
 {
     public interface IRepository<T>
     {

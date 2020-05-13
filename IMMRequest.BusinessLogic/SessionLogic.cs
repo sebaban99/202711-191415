@@ -1,7 +1,8 @@
 using System;
-using System.Linq;
-using IMMRequest.DataAccess;
+using IMMRequest.DataAccess.Interfaces;
 using IMMRequest.Domain;
+using IMMRequest.BusinessLogic.Interfaces;
+using IMMRequest.Exceptions;
 
 namespace IMMRequest.BusinessLogic
 {
@@ -20,11 +21,7 @@ namespace IMMRequest.BusinessLogic
 
         public bool ValidateSession(Guid adminId)
         {
-            if(sessionRepository.ValidateSession(adminId))
-            {
-                return true;
-            }
-                return false;
+            return sessionRepository.ValidateSession(adminId))
         }
 
         public bool ValidateLogin(string email, string password)
@@ -41,7 +38,6 @@ namespace IMMRequest.BusinessLogic
                     Session.LoggedAdmin = loggedAdmin;
                     return true;
                 }
-                return false;
             }
             return false;
         }

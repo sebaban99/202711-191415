@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using IMMRequest.DataAccess;
+using IMMRequest.DataAccess.Interfaces;
+using IMMRequest.Exceptions;
 using Type = IMMRequest.Domain.Type;
 using Range = IMMRequest.Domain.Range;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

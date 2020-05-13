@@ -1,7 +1,6 @@
 ﻿using IMMRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using Range = IMMRequest.Domain.Range;
 
 namespace IMMRequest.DataAccess.Tests

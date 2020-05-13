@@ -3,8 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using IMMRequest.BusinessLogic;
-using IMMRequest.DataAccess;
+using IMMRequest.BusinessLogic.Interfaces;
 
 namespace IMMRequest.WebApi
 {

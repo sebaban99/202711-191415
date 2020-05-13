@@ -3,12 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using IMMRequest.Exceptions;
+using IMMRequest.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess
 {
     public class LogRepository : BaseRepository<Log>, ILogRepository
     {
-        public LogRepository(IMMRequestContext context)
+        public LogRepository(DbContext context)
         {
             Context = context;
         }
@@ -17,7 +20,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.Logs.FirstOrDefault(x => x.Id == id);
+                return Context.Set<Log>().FirstOrDefault(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {
@@ -33,7 +36,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.Logs.ToList().Where(x=>
+                return Context.Set<Log>().ToList().Where(x=>
                 {
                     bool retorno=false;
                     if(x.Date.CompareTo(from)>0||x.Date.CompareTo(from)==0)

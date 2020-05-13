@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\IMMRequest.DataAccess.Interface\IMMRequest.DataAccess.Interfaces.csproj" />
     <ProjectReference Include="..\IMMRequest.Domain\IMMRequest.Domain.csproj" />
+    <ProjectReference Include="..\IMMRequest.Exceptions\IMMRequest.Exceptions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

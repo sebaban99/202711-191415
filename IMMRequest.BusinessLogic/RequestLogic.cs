@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text.RegularExpressions;
-using IMMRequest.DataAccess;
+using IMMRequest.BusinessLogic.Interfaces;
+using IMMRequest.Exceptions;
+using IMMRequest.DataAccess.Interfaces;
 using IMMRequest.Domain;
 using Type = IMMRequest.Domain.Type;
 
@@ -43,11 +43,17 @@ namespace IMMRequest.BusinessLogic
             return requestRepository.GetAmountOfElements() + 1;
         }
 
+        private void GiveNewRequestFormat(Request request)
+        {
+            request.Status = Status.Creada;
+            request.RequestNumber = AssignRequestNumber();
+            request.Id = Guid.NewGuid();
+        }
+
         public int Create(Request request)
         {
             requestValidator.ValidateAdd(request);
-            request.Status = Status.Creada;
-            request.RequestNumber = AssignRequestNumber();
+            GiveNewRequestFormat(request);
             AddAFValues(request);
             requestRepository.Add(request);
             requestRepository.SaveChanges();

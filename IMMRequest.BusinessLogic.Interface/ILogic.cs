@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
-namespace IMMRequest.BusinessLogic
+namespace IMMRequest.BusinessLogic.Interfaces
 {
     public interface ILogic<T>
     {

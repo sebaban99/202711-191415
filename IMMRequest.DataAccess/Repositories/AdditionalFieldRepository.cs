@@ -1,4 +1,6 @@
 ﻿using IMMRequest.Domain;
+using IMMRequest.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Data.Common;
 using System.Linq;
@@ -7,7 +9,7 @@ namespace IMMRequest.DataAccess
 {
     public class AdditionalFieldRepository : BaseRepository<AdditionalField>
     {
-        public AdditionalFieldRepository(IMMRequestContext context)
+        public AdditionalFieldRepository(DbContext context)
         {
             Context = context;
         }
@@ -16,7 +18,7 @@ namespace IMMRequest.DataAccess
         {
             try
             {
-                return Context.AdditionalFields.First(x => x.Id == id);
+                return Context.Set<AdditionalField>().First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {

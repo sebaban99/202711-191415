@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using IMMRequest.DataAccess;
+using IMMRequest.BusinessLogic.Interfaces;
+using IMMRequest.Exceptions;
+using IMMRequest.DataAccess.Interfaces;
 using IMMRequest.Domain;
 using Type = IMMRequest.Domain.Type;
 
@@ -27,6 +28,7 @@ namespace IMMRequest.BusinessLogic
         {
             foreach (AdditionalField af in type.AdditionalFields)
             {
+                af.Id = Guid.NewGuid();
                 additionalFieldRespository.Add(af);
             }
             if (type.AdditionalFields.Count != 0)
@@ -35,13 +37,19 @@ namespace IMMRequest.BusinessLogic
             }
         }
 
+        private void GiveNewTypeFormat(Type type)
+        {
+            Topic realEntity = topicRespository.Get(type.Topic.Id);
+            type.Topic = realEntity;
+            type.IsActive = true;
+            type.Id = Guid.NewGuid();
+        }
+
         public Type Create(Type type)
         {
             typeValidator.ValidateAdd(type);
             AddAdditionalFields(type);
-            Topic realEntity = topicRespository.Get(type.Topic.Id);
-            type.Topic = realEntity;
-            type.IsActive = true;
+            GiveNewTypeFormat(type);
             typeRepository.Add(type);
             typeRepository.SaveChanges();
             return type;

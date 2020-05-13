@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Text;
-using System.Collections.Generic;
-using IMMRequest.BusinessLogic;
-using IMMRequest.DataAccess;
+using IMMRequest.BusinessLogic.Interfaces;
 using IMMRequest.Domain;
 
 namespace IMMRequest.WebApi
@@ -11,37 +8,37 @@ namespace IMMRequest.WebApi
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-        private ISessionLogic session;
-        private IAdminLogic admin;
-        private ILogLogic log;
+        private ISessionLogic sessionLogic;
+        private IAdminLogic adminLogic;
+        private ILogLogic logLogic;
 
         public LoginController(ISessionLogic session, IAdminLogic admin, ILogLogic log) : base()
         {
-            this.session = session;
-            this.admin = admin;
-            this.log = log;
+            this.sessionLogic = session;
+            this.adminLogic = admin;
+            this.logLogic = log;
         }
 
         [HttpPost]
         public IActionResult Login([FromBody] LoginDTO model) 
         {    
             
-            if (!session.ValidateLogin(model.Email, model.Password)) 
+            if (!sessionLogic.ValidateLogin(model.Email, model.Password)) 
             {  
                 return BadRequest("Login error: Incorrect email or password");
             }
             else
             {
-                Log l= new Log();
-                l.Admin = Session.LoggedAdmin;
-                l.Email = Session.LoggedAdmin.Email;
-                l.Date = DateTime.Now;
-                l.ActionType = "login";
+                Log newLog= new Log();
+                newLog.Admin = Session.LoggedAdmin;
+                newLog.Email = Session.LoggedAdmin.Email;
+                newLog.Date = DateTime.Now;
+                newLog.ActionType = "login";
                 
-                var ret = new LogDTO(l);
-                this.log.Add(l);
+                var ret = new LogDTO(newLog);
+                this.logLogic.Add(newLog);
                 
-                return Ok(admin.GetByCondition(a => a.Email == model.Email));
+                return Ok(adminLogic.GetByCondition(a => a.Email == model.Email));
             }
         }
     }

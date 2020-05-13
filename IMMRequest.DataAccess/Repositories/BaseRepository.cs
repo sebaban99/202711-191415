@@ -4,13 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
-using IMMRequest.DataAccess;
+using IMMRequest.Exceptions;
+using IMMRequest.DataAccess.Interfaces;
 
 namespace IMMRequest.DataAccess
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class
     {
-        protected IMMRequestContext Context { get; set; }
+        protected DbContext Context { get; set; }
 
         public void Add(T entity)
         {

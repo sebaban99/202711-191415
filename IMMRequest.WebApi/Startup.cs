@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using IMMRequest.BusinessLogic;
 using IMMRequest.DataAccess;
+using IMMRequest.BusinessLogic.Interfaces;
+using IMMRequest.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using IMMRequest.Domain;
 using Type = IMMRequest.Domain.Type;
@@ -60,7 +58,7 @@ namespace IMMRequest.WebApi
                     .AllowCredentials());
             });
 
-            services.AddDbContext<IMMRequestContext>(
+            services.AddDbContext<DbContext, IMMRequestContext>(
                 o => o.UseSqlServer(Configuration.GetConnectionString("IMMRequest")));
 
             //services.AddCors(
