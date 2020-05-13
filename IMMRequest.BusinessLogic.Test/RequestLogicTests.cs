@@ -7,9 +7,11 @@ using Range = IMMRequest.Domain.Range;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IMMRequest.Domain;
 using Moq;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.BusinessLogic.Tests
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class RequestLogicTests
     {

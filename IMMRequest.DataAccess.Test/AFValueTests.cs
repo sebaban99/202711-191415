@@ -1,9 +1,11 @@
 ﻿using IMMRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.DataAccess.Tests
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class AFValueTests
     {

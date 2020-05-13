@@ -5,9 +5,11 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using IMMRequest.Exceptions;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.DataAccess.Tests
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class RequestRepositoryTests
 

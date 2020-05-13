@@ -1,10 +1,12 @@
 ﻿using IMMRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Range = IMMRequest.Domain.Range;
 
 namespace IMMRequest.DataAccess.Tests
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class RangeRepositoryTests
     {

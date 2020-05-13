@@ -1,9 +1,11 @@
 ﻿using IMMRequest.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 using Type = IMMRequest.Domain.Type;
 
 namespace IMMRequest.DataAccess
 {
+    [ExcludeFromCodeCoverage]
     public class IMMRequestContext : DbContext
     {
         public DbSet<Request> Requests { get; set; }

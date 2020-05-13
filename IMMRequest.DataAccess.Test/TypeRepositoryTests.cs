@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using Type = IMMRequest.Domain.Type;
 using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.DataAccess.Tests
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class TypeRepositoryTests
     {

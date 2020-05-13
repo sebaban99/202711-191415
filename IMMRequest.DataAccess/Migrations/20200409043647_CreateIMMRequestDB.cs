@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IMMRequest.DataAccess.Migrations
-{
+
+    [ExcludeFromCodeCoverage]
     public partial class CreateIMMRequestDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

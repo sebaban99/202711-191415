@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.Exceptions
 {
+    [ExcludeFromCodeCoverage]
     public class DataAccessException : Exception
     {
         public DataAccessException() { }

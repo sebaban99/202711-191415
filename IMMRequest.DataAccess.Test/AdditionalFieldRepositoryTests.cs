@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using IMMRequest.Domain;
-
+using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.DataAccess.Tests
 {
+    [ExcludeFromCodeCoverage]
     [TestClass] 
     public class AdditionalFieldRepositoryTests
     {
