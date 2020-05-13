@@ -8,9 +8,11 @@ using IMMRequest.Domain;
 using IMMRequest.DataAccess.Interfaces;
 using Moq;
 using System.Linq.Expressions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.BusinessLogic.Tests
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class TypeLogicTests
     {

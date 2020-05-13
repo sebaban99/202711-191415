@@ -13,9 +13,11 @@ using IMMRequest.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using IMMRequest.Domain;
 using Type = IMMRequest.Domain.Type;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.WebApi
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)

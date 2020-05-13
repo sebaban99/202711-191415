@@ -1,21 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using IMMRequest.BusinessLogic.Interfaces;
-using IMMRequest.Exceptions;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using IMMRequest.Domain;
+using IMMRequest.BusinessLogic.Interfaces;
+using IMMRequest.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace IMMRequest.WebApi
 {
     [Route("api/[controller]")]
-    public class RequestController : ControllerBase
+    [ApiController]
+    public class AdminController : ControllerBase
     {
-        private IRequestLogic requestLogic;
+        private IAdminLogic adminLogic;
 
-        public RequestController(IRequestLogic requestLogic)
+        public AdminController (IAdminLogic adminLogic)
         {
-            this.requestLogic = requestLogic;
+            this.adminLogic = adminLogic;
         }
 
         [AuthenticationFilter()]
@@ -24,14 +25,14 @@ namespace IMMRequest.WebApi
         {
             try
             {
-                IEnumerable<Request> requestsInBD = requestLogic.GetAll();
-                List<RequestDTO> requestToReturn = new List<RequestDTO>();
-                foreach (Request req in requestsInBD)
+                IEnumerable <Admin> adminsInBD = adminLogic.GetAll();
+                List<AdminDTO> adminsToReturn = new List<AdminDTO>();
+                foreach (Admin admin in adminsInBD)
                 {
-                    RequestDTO reqDTO = new RequestDTO(req);
-                    requestToReturn.Add(reqDTO);
+                    AdminDTO adminDTO = new AdminDTO(admin);
+                    adminsToReturn.Add(adminDTO);
                 }
-                return Ok(requestToReturn);
+                return Ok(adminsToReturn);
             }
             catch (BusinessLogicException e)
             {
@@ -49,9 +50,9 @@ namespace IMMRequest.WebApi
         {
             try
             {
-                Request request = requestLogic.Get(id);
-                RequestDTO reqToReturn = new RequestDTO(request);
-                return Ok(reqToReturn);
+                Admin admin = adminLogic.Get(id);
+                AdminDTO adminToReturn = new AdminDTO(admin);
+                return Ok(adminToReturn);
             }
             catch (BusinessLogicException e)
             {
@@ -61,17 +62,17 @@ namespace IMMRequest.WebApi
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-
         }
 
-        [HttpGet("{requestNumber}")]
-        public IActionResult Get(int requestNumber)
+        [AuthenticationFilter()]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
         {
             try
             {
-                Request request = requestLogic.GetByCondition(r => r.RequestNumber == requestNumber);
-                RequestDTO reqToReturn = new RequestDTO(request);
-                return Ok(reqToReturn);
+                Admin adminToDelete = adminLogic.Get(id);
+                adminLogic.Remove(adminToDelete);
+                return Ok(adminToDelete.Id);
             }
             catch (BusinessLogicException e)
             {
@@ -83,20 +84,22 @@ namespace IMMRequest.WebApi
             }
         }
 
+        [AuthenticationFilter()]
         [HttpPost]
-        public IActionResult Post([FromBody] RequestDTO requestDTO)
+        public IActionResult Post([FromBody] AdminDTO admin)
         {
             try
             {
-                Request requestToCreate = requestDTO.ToEntity();
-                int requestNumber = requestLogic.Create(requestToCreate);
-                return Ok(requestNumber);
+                Admin adminToCreate = admin.ToEntity();
+                Admin createdAdmin = adminLogic.Create(adminToCreate);
+                AdminDTO adminToReturn = new AdminDTO(createdAdmin);
+                return Ok(adminToReturn);
             }
-            catch(BusinessLogicException e)
+            catch (BusinessLogicException e)
             {
                 return BadRequest(e.Message);
             }
-            catch(DataAccessException e)
+            catch (DataAccessException e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
@@ -104,15 +107,15 @@ namespace IMMRequest.WebApi
 
         [AuthenticationFilter()]
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, [FromBody]RequestDTO requestDTO)
+        public IActionResult Put(Guid id, [FromBody] AdminDTO adminDTO)
         {
             try
             {
-                Request requestToUpdate = requestDTO.ToEntity();
-                requestToUpdate.Id = id;
-                Request updatedRequest = requestLogic.Update(requestToUpdate);
-                RequestDTO requestToReturn = new RequestDTO(updatedRequest);
-                return Ok(requestToReturn);
+                Admin adminToUpdate = adminDTO.ToEntity();
+                adminToUpdate.Id = id;
+                Admin updatedAdmin = adminLogic.Update(adminToUpdate);
+                AdminDTO adminToReturn = new AdminDTO(updatedAdmin);
+                return Ok(adminToReturn);
             }
             catch (BusinessLogicException e)
             {

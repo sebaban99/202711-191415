@@ -45,7 +45,7 @@ namespace IMMRequest.BusinessLogic
             Admin adminById = adminRepository.Get(id);
             if(adminById == null)
             {
-                throw new BusinessLogicException("Error: Invalid ID, Type does not exist");
+                throw new BusinessLogicException("Error: Invalid ID, Admin does not exist");
             }
             return adminById;
         }

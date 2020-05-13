@@ -10,9 +10,11 @@ using System.Linq.Expressions;
 using System.Text;
 using Range = IMMRequest.Domain.Range;
 using Type = IMMRequest.Domain.Type;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.WebApi.Tests
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class RequestControllerTests
     {

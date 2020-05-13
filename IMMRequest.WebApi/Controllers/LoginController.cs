@@ -21,21 +21,21 @@ namespace IMMRequest.WebApi
 
         [HttpPost]
         public IActionResult Login([FromBody] LoginDTO model) 
-        {    
-            
-            if (!sessionLogic.ValidateLogin(model.Email, model.Password)) 
+        {
+            Admin loggedAdmin = sessionLogic.ValidateLogin(model.Email, model.Password);
+            if (loggedAdmin == null) 
             {  
                 return BadRequest("Login error: Incorrect email or password");
             }
             else
             {
-                Log newLog= new Log();
-                newLog.Admin = Session.LoggedAdmin;
+                Session.LoggedAdmin = loggedAdmin;
+                Log newLog = new Log();
+                newLog.Admin = loggedAdmin;
                 newLog.Email = Session.LoggedAdmin.Email;
                 newLog.Date = DateTime.Now;
                 newLog.ActionType = "login";
                 
-                var ret = new LogDTO(newLog);
                 this.logLogic.Add(newLog);
                 
                 return Ok(adminLogic.GetByCondition(a => a.Email == model.Email));

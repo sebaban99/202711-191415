@@ -6,8 +6,9 @@ namespace IMMRequest.Domain
 {
     public class Log
     {
-        public Guid Id { get; set; }
         public enum actionTypeAvailable { login, generateRequest };
+
+        public Guid Id { get; set; }
         public string ActionType { get; set; }
         public DateTime Date { get; set; }
         public Admin Admin { get; set; }

@@ -22,14 +22,25 @@ namespace IMMRequest.WebApi
         [HttpGet]
         public IActionResult Get()
         {
-            IEnumerable<Type> typesInBD = typeLogic.GetAll();
-            List<TypeDTO> typesToReturn = new List<TypeDTO>();
-            foreach (Type type in typesInBD)
+            try
             {
-                TypeDTO tm = new TypeDTO(type);
-                typesToReturn.Add(tm);
+                IEnumerable<Type> typesInBD = typeLogic.GetAll();
+                List<TypeDTO> typesToReturn = new List<TypeDTO>();
+                foreach (Type type in typesInBD)
+                {
+                    TypeDTO tm = new TypeDTO(type);
+                    typesToReturn.Add(tm);
+                }
+                return Ok(typesToReturn);
             }
-            return Ok(typesToReturn);
+            catch (BusinessLogicException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         [AuthenticationFilter()]
