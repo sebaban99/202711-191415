@@ -44,7 +44,7 @@ namespace IMMRequest.BusinessLogic.Tests
         Range range = new Range()
         {
             Id = Guid.NewGuid(),
-            AdditionalFieldId = stateOfContainer.Id,
+            AdditionalField = stateOfContainer,
             Value = "Incendiado o chocado"
         };
 
@@ -73,15 +73,15 @@ namespace IMMRequest.BusinessLogic.Tests
         AFValue stateOfContainerValue = new AFValue()
         {
             Value = "Incendiado o chocado",
-            RequestId = request.Id,
-            AddFieldId = stateOfContainer.Id
+            Request = request,
+            AdditionalField = stateOfContainer
         };
 
         AFValue dateOfDiscoveryValue = new AFValue()
         {
             Value = DateTime.Today.ToShortDateString(),
-            RequestId = request.Id,
-            AddFieldId = dateOfDiscovery.Id
+            Request = request,
+            AdditionalField = dateOfDiscovery
         };
 
         List<Request> requestsInDB = new List<Request>();
@@ -127,15 +127,12 @@ namespace IMMRequest.BusinessLogic.Tests
             requestRepositoryMock.Setup(m => m.SaveChanges());
             requestRepositoryMock.Setup(m => m.GetAmountOfElements()).Returns(1);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
-            aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
-            aFValueRepositoryMock.Setup(m => m.SaveChanges());
 
             requestLogic = new RequestLogic(requestRepositoryMock.Object,
                 aFValueRepositoryMock.Object, typeRepositoryMock.Object);
             var result = requestLogic.Create(request);
 
             requestRepositoryMock.VerifyAll();
-            aFValueRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
 
             Assert.AreEqual(result, request.RequestNumber);
@@ -337,30 +334,6 @@ namespace IMMRequest.BusinessLogic.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(BusinessLogicException), "Error: One Request's additional field was not from type")]
-        public void CreateRequestCaseInvalidRequestAFVNotFromType()
-        {
-            request.AddFieldValues[0].AddFieldId = Guid.NewGuid();
-
-            var requestRepositoryMock = new Mock<IRequestRepository>(MockBehavior.Strict);
-            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
-            requestRepositoryMock.Setup(m => m.Add(request));
-            requestRepositoryMock.Setup(m => m.SaveChanges());
-            typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
-            aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
-            aFValueRepositoryMock.Setup(m => m.SaveChanges());
-
-            requestLogic = new RequestLogic(requestRepositoryMock.Object,
-                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
-            var result = requestLogic.Create(request);
-
-            requestRepositoryMock.VerifyAll();
-            aFValueRepositoryMock.VerifyAll();
-            typeRepositoryMock.VerifyAll();
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(BusinessLogicException), "Error: One Request's additional field value was empty")]
         public void CreateRequestCaseInvalidRequestAFVNUllValue()
         {
@@ -440,14 +413,14 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Id = Guid.NewGuid(),
                 Value = DateTime.Today.AddDays(-1).ToShortDateString(),
-                AdditionalFieldId = dateOfDiscovery.Id
+                AdditionalField = dateOfDiscovery
             };
 
             Range tomorrow = new Range()
             {
                 Id = Guid.NewGuid(),
                 Value = DateTime.Today.AddDays(1).ToShortDateString(),
-                AdditionalFieldId = dateOfDiscovery.Id
+                AdditionalField = dateOfDiscovery
             };
 
             dateOfDiscovery.Range.Add(yesterday);
@@ -497,62 +470,6 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.VerifyAll();
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(BusinessLogicException), "Error: One Request's additional field value was invalid, check fields's range")]
-        public void CreateRequestCaseInvalidRequestAFVNotInValidRangeScenario3()
-        {
-            AdditionalField amountOfContainersAffected = new AdditionalField()
-            {
-                Id = Guid.NewGuid(),
-                FieldType = FieldType.Entero,
-                Type = type,
-                Name = "Cantidad de contenedores afectados en la cuadra",
-                Range = new List<Range>()
-            };
-
-            Range minValue = new Range()
-            {
-                Id = Guid.NewGuid(),
-                AdditionalFieldId = amountOfContainersAffected.Id,
-                Value = "1"
-            };
-
-            Range maxValue = new Range()
-            {
-                Id = Guid.NewGuid(),
-                AdditionalFieldId = amountOfContainersAffected.Id,
-                Value = "5"
-            };
-
-            amountOfContainersAffected.Range.Add(minValue);
-            amountOfContainersAffected.Range.Add(maxValue);
-            request.Type.AdditionalFields.Add(amountOfContainersAffected);
-
-            AFValue amount = new AFValue()
-            {
-                Id = Guid.NewGuid(),
-                AddFieldId = amountOfContainersAffected.Id,
-                RequestId = request.Id,
-                Value = "0"
-            };
-
-            var requestRepositoryMock = new Mock<IRequestRepository>(MockBehavior.Strict);
-            var aFValueRepositoryMock = new Mock<IRepository<AFValue>>(MockBehavior.Strict);
-            var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
-            requestRepositoryMock.Setup(m => m.Add(request));
-            requestRepositoryMock.Setup(m => m.SaveChanges());
-            typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
-            aFValueRepositoryMock.Setup(m => m.Add(It.IsAny<AFValue>()));
-            aFValueRepositoryMock.Setup(m => m.SaveChanges());
-
-            requestLogic = new RequestLogic(requestRepositoryMock.Object,
-                aFValueRepositoryMock.Object, typeRepositoryMock.Object);
-            var result = requestLogic.Create(request);
-
-            requestRepositoryMock.VerifyAll();
-            aFValueRepositoryMock.VerifyAll();
-            typeRepositoryMock.VerifyAll();
-        }
 
         [TestMethod]
         public void GetRequestCaseRequestExist()

@@ -13,7 +13,7 @@ namespace IMMRequest.WebApi
         public string Name { get; set; }
         public FieldType FieldType { get; set; }
         public Guid Type { get; set; }
-        public List<Range> Range { get; set; }
+        public List<RangeDTO> RangeDTOs { get; set; }
 
         public AdditionalFieldDTO() { }
 
@@ -23,7 +23,12 @@ namespace IMMRequest.WebApi
             Name = af.Name;
             FieldType = af.FieldType;
             Type = af.Type.Id;
-            Range = af.Range;
+            RangeDTOs = new List<RangeDTO>();
+            foreach (Range r in af.Range)
+            {
+                RangeDTO rangeDTO = new RangeDTO(r);
+                RangeDTOs.Add(rangeDTO);
+            }
         }
 
         public AdditionalField ToEntity()
@@ -33,8 +38,17 @@ namespace IMMRequest.WebApi
                 Id = this.Id,
                 Name = this.Name,
                 FieldType = this.FieldType,
-                Range = this.Range
+                Range = new List<Range>()
             };
+            if (this.RangeDTOs != null)
+            {
+                foreach (RangeDTO rangeDTO in this.RangeDTOs)
+                {
+                    Range rangeEntity = rangeDTO.ToEntity();
+                    rangeEntity.AdditionalField = afAsEntity;
+                    afAsEntity.Range.Add(rangeEntity);
+                }
+            }
             return afAsEntity;
         }
     }

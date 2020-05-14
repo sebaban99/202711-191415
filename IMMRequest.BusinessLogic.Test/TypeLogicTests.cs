@@ -45,14 +45,16 @@ namespace IMMRequest.BusinessLogic.Tests
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
+            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            rangeRepositoryMock.Setup(m => m.SaveChanges());
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -95,7 +97,6 @@ namespace IMMRequest.BusinessLogic.Tests
             type.AdditionalFields.Add(af);
             topic.Types.Add(type);
 
-            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
@@ -103,15 +104,15 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
-            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+           
+            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
-            addFieldRepositoryMock.VerifyAll();
             topicRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
 
@@ -152,7 +153,6 @@ namespace IMMRequest.BusinessLogic.Tests
             type.AdditionalFields.Add(af);
             topic.Types.Add(type);
 
-            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Topic)null);
@@ -160,15 +160,15 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
-            addFieldRepositoryMock.Setup(a => a.Add(It.IsAny<AdditionalField>()));
-            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+            
+            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
-            addFieldRepositoryMock.VerifyAll();
             topicRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
         }
@@ -217,10 +217,12 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.SaveChanges());
             addFieldRepositoryMock.Setup(a => a.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
+            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -272,10 +274,12 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.SaveChanges());
             addFieldRepositoryMock.Setup(a => a.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
+            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -327,10 +331,12 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.SaveChanges());
             addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
+            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -381,10 +387,12 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.SaveChanges());
             addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
+            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -429,9 +437,10 @@ namespace IMMRequest.BusinessLogic.Tests
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
+            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Get(type.Id);
 
             addFieldRepositoryMock.VerifyAll();
@@ -480,8 +489,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns((Type)null);
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Get(type.Id);
 
             addFieldRepositoryMock.VerifyAll();
@@ -531,8 +539,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             typeRepositoryMock.Setup(m => m.GetActiveTypes()).Returns(types);
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.GetAll();
 
             addFieldRepositoryMock.VerifyAll();
@@ -582,8 +589,7 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.SoftDelete(type));
             typeRepositoryMock.Setup(m => m.SaveChanges());
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             typeLogic.Remove(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -632,8 +638,7 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.Remove(type));
             typeRepositoryMock.Setup(m => m.SaveChanges());
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             typeLogic.Remove(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -675,21 +680,21 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = "Radio Taxi",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option2 = new Range()
             {
                 Value = "Fono Taxi",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option3 = new Range()
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -710,8 +715,7 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -752,21 +756,21 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = "Radio Taxi",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option2 = new Range()
             {
                 Value = "Fono Taxi",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option3 = new Range()
             {
                 Value = "Taxi aeropuerto",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -775,7 +779,6 @@ namespace IMMRequest.BusinessLogic.Tests
             type.AdditionalFields.Add(af);
             topic.Types.Add(type);
 
-            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
@@ -783,15 +786,12 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
-            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+            
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
-            addFieldRepositoryMock.VerifyAll();
             topicRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
         }
@@ -830,21 +830,21 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = "3",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option1 = new Range()
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option3 = new Range()
             {
                 Value = "5",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -865,8 +865,7 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -908,14 +907,14 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option1 = new Range()
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
 
@@ -936,8 +935,7 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -979,7 +977,7 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -998,8 +996,7 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -1041,14 +1038,14 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option1 = new Range()
             {
                 Value = "4",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -1068,8 +1065,7 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -1110,14 +1106,14 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option2 = new Range()
             {
                 Value = "4",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -1125,7 +1121,6 @@ namespace IMMRequest.BusinessLogic.Tests
             type.AdditionalFields.Add(af);
             topic.Types.Add(type);
 
-            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
@@ -1133,15 +1128,12 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
-            addFieldRepositoryMock.Setup(m => m.SaveChanges());
+            
 
-
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
-            addFieldRepositoryMock.VerifyAll();
+            
             topicRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
 
@@ -1184,14 +1176,14 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = date.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option2 = new Range()
             {
                 Value = date.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -1211,8 +1203,7 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -1255,7 +1246,7 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = date.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -1274,8 +1265,7 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -1321,21 +1311,21 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = date1.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option2 = new Range()
             {
                 Value = date2.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option3 = new Range()
             {
                 Value = date3.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -1356,8 +1346,7 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -1402,14 +1391,14 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = date1.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option2 = new Range()
             {
                 Value = date2.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -1429,8 +1418,8 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
+              
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -1474,14 +1463,14 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = date1.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option2 = new Range()
             {
                 Value = "3 de mayo",
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -1501,8 +1490,7 @@ namespace IMMRequest.BusinessLogic.Tests
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
 
 
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
             addFieldRepositoryMock.VerifyAll();
@@ -1546,14 +1534,14 @@ namespace IMMRequest.BusinessLogic.Tests
             {
                 Value = date1.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             Range option2 = new Range()
             {
                 Value = date2.ToShortDateString(),
                 Id = Guid.NewGuid(),
-                AdditionalFieldId = af.Id
+                AdditionalField = af
             };
 
             af.Range.Add(option1);
@@ -1561,7 +1549,6 @@ namespace IMMRequest.BusinessLogic.Tests
             type.AdditionalFields.Add(af);
             topic.Types.Add(type);
 
-            var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
@@ -1569,15 +1556,10 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.GetByCondition(
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
-            addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
-            addFieldRepositoryMock.Setup(m => m.SaveChanges());
-
-
-            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object,
-                addFieldRepositoryMock.Object);
+           
+            typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
             var result = typeLogic.Create(type);
 
-            addFieldRepositoryMock.VerifyAll();
             topicRepositoryMock.VerifyAll();
             typeRepositoryMock.VerifyAll();
 

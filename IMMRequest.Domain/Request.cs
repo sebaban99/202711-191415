@@ -17,7 +17,8 @@ namespace IMMRequest.Domain
     {
         public Guid Id {get; set;}
         public int RequestNumber {get; set;}
-        public Type Type {get; set;}
+        public virtual Type Type {get; set;}
+        public Guid TypeId { get; set; }
         public string Details {get; set;}
         public string Name {get; set;}
         public string Email {get; set;}

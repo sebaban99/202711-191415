@@ -1,6 +1,7 @@
 ﻿using IMMRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Range = IMMRequest.Domain.Range;
 
@@ -10,19 +11,29 @@ namespace IMMRequest.DataAccess.Tests
     [TestClass]
     public class RangeRepositoryTests
     {
-        private static Guid additionalFieldId = Guid.NewGuid();
+        private static AdditionalField additionalField = new AdditionalField()
+        {
+            Id = Guid.NewGuid(),
+            FieldType = FieldType.Texto,
+            Range = new List<Range>(),
+            Name = "Tipo de taxi",
+            Type = new Domain.Type()
+            {
+                Id = Guid.NewGuid()
+            }
+        };
 
         Range oneRangeAddField = new Range()
         {
             Id = Guid.NewGuid(),
-            AdditionalFieldId = additionalFieldId,
+            AdditionalField = additionalField,
             Value = "Fono taxi"
         };
 
         Range anotherRangeAddField = new Range()
         {
             Id = Guid.NewGuid(),
-            AdditionalFieldId = additionalFieldId,
+            AdditionalField = additionalField,
             Value = "Taxi aeropuerto"
         };
 

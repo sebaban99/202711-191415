@@ -11,8 +11,8 @@ namespace IMMRequest.DataAccess.Tests
     {
         AFValue aFValue = new AFValue()
         {
-            RequestId = Guid.NewGuid(),
-            AddFieldId = Guid.NewGuid(),
+            Request = new Request(),
+            AdditionalField = new AdditionalField(),
             Value = "ABXE1234"
         };
 

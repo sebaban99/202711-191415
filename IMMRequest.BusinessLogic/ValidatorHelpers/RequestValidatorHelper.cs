@@ -64,8 +64,7 @@ namespace IMMRequest.BusinessLogic
         public bool AreEmptyFields(Request request)
         {
             return !IsValidString(request.Details) || !IsValidEmail(request.Email)
-                    || !IsValidName(request.Name) || !IsValidPhone(request.Phone)
-                    || request.Type == null;
+                    || !IsValidName(request.Name) || !IsValidPhone(request.Phone);
         }
 
         public void ValidateAdd(Request request)
@@ -96,7 +95,7 @@ namespace IMMRequest.BusinessLogic
 
         public void ValidateType(Request request)
         {
-            if (!IsTypeValid(request.Type.Id))
+            if (!IsTypeValid(request.TypeId))
             {
                 throw new BusinessLogicException("Error: Request's Type does not exist");
             }
@@ -109,27 +108,6 @@ namespace IMMRequest.BusinessLogic
                 if (afv == null)
                 {
                     throw new BusinessLogicException("Error: One Request's additional field value was empty");
-                }
-            }
-        }
-
-        private void AreAFValuesTypeConsistent(Request request)
-        {
-            bool notFound;
-            foreach (AdditionalField af in request.Type.AdditionalFields)
-            {
-                notFound = true;
-                foreach (AFValue afv in request.AddFieldValues)
-                {
-                    if (afv.AddFieldId == af.Id)
-                    {
-                        notFound = false;
-                        break;
-                    }
-                }
-                if (notFound)
-                {
-                    throw new BusinessLogicException("Error: One Request's additional field was not from type");
                 }
             }
         }
@@ -242,12 +220,12 @@ namespace IMMRequest.BusinessLogic
             ValidateDateRange(addFieldById, afv);
         }
 
-        private void AreValuesValid(Request request)
+        private void AreValuesValid(Request request, Type type)
         {
             AdditionalField addFieldById;
             foreach (AFValue afv in request.AddFieldValues)
             {
-                addFieldById = request.Type.AdditionalFields.Find(x => x.Id == afv.AddFieldId);
+                addFieldById = type.AdditionalFields.Find(x => x.Id == afv.AdditionalField.Id);
                 ValidateAFVObject(afv);
                 if (addFieldById.FieldType == FieldType.Texto)
                 {
@@ -266,11 +244,11 @@ namespace IMMRequest.BusinessLogic
 
         public void ValidateAFValues(Request request)
         {
-            if (request.Type.AdditionalFields.Count != 0)
+            Type typeById = typeRepository.Get(request.TypeId);
+            if (typeById.AdditionalFields != null && typeById.AdditionalFields.Count != 0)
             {
                 AreAFValuesEmpty(request.AddFieldValues);
-                AreAFValuesTypeConsistent(request);
-                AreValuesValid(request);
+                AreValuesValid(request, typeById);
             }
         }
 
