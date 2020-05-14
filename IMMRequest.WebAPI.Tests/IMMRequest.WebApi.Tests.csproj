@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IMMRequest.BusinessLogic\IMMRequest.BusinessLogic.csproj" />
     <ProjectReference Include="..\IMMRequest.Domain\IMMRequest.Domain.csproj" />
     <ProjectReference Include="..\IMMRequest.WebApi\IMMRequest.WebApi.csproj" />
   </ItemGroup>

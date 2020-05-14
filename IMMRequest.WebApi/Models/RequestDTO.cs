@@ -9,27 +9,34 @@ namespace IMMRequest.WebApi
     {
         public Guid Id { get; set; }
         public int RequestNumber { get; set; }
-        public TypeDTO Type { get; set; }
         public string Details { get; set; }
+        public Guid TypeId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public Status Status { get; set; }
         public string Description { get; set; }
-        public List<AFValue> AddFieldValues { get; set; }
+        public List<AFValueDTO> AddFieldValuesDTOs { get; set; }
+
+        public RequestDTO() { }
 
         public RequestDTO(Request req)
         {
             Id = req.Id;
             RequestNumber = req.RequestNumber;
-            Type = new TypeDTO(req.Type);
+            TypeId = req.TypeId;
             Details = req.Details;
             Name = req.Name;
             Email = req.Email;
             Phone = req.Phone;
             Status = req.Status;
             Description = req.Description;
-            AddFieldValues = req.AddFieldValues;
+            AddFieldValuesDTOs = new List<AFValueDTO>();
+            foreach(AFValue af in req.AddFieldValues)
+            {
+                AFValueDTO afvDTO = new AFValueDTO(af);
+                AddFieldValuesDTOs.Add(afvDTO);
+            }
         }
 
         public Request ToEntity()
@@ -38,15 +45,24 @@ namespace IMMRequest.WebApi
             {
                 Id = this.Id,
                 RequestNumber = this.RequestNumber,
-                Type = this.Type.ToEntity(),
+                TypeId = this.TypeId,
                 Details = this.Details,
                 Name = this.Name,
                 Email = this.Email,
                 Phone = this.Phone,
                 Status = this.Status,
                 Description = this.Description,
-                AddFieldValues = this.AddFieldValues,
+                AddFieldValues = new List<AFValue>()
             };
+            if(AddFieldValuesDTOs != null)
+            {
+                foreach (AFValueDTO afvDTO in this.AddFieldValuesDTOs)
+                {
+                    AFValue afv = afvDTO.ToEntity();
+                    afv.Request = reqToReturn;
+                    reqToReturn.AddFieldValues.Add(afv);
+                }
+            }
             return reqToReturn;
         }
 

@@ -46,7 +46,7 @@ namespace IMMRequest.WebApi.Tests
         Range range = new Range()
         {
             Id = Guid.NewGuid(),
-            AdditionalFieldId = stateOfContainer.Id,
+            AdditionalField = stateOfContainer,
             Value = "Incendiado o chocado"
         };
 
@@ -79,15 +79,15 @@ namespace IMMRequest.WebApi.Tests
         AFValue anotherStateOfContainerValue = new AFValue()
         {
             Value = "Incendiado o chocado",
-            RequestId = anotherRequest.Id,
-            AddFieldId = stateOfContainer.Id
+            Request = anotherRequest,
+            AdditionalField = stateOfContainer
         };
 
         AFValue oneStateOfContainerValue = new AFValue()
         {
             Value = "Incendiado o chocado",
-            RequestId = oneRequest.Id,
-            AddFieldId = stateOfContainer.Id
+            Request = oneRequest,
+            AdditionalField = stateOfContainer
         };
 
         [TestInitialize]

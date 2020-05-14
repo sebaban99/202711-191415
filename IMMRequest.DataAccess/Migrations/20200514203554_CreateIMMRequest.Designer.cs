@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IMMRequest.DataAccess.Migrations
 {
     [DbContext(typeof(IMMRequestContext))]
-    [Migration("20200513195905_CreateIMMRequest")]
+    [Migration("20200514203554_CreateIMMRequest")]
     partial class CreateIMMRequest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,19 +23,24 @@ namespace IMMRequest.DataAccess.Migrations
 
             modelBuilder.Entity("IMMRequest.Domain.AFValue", b =>
                 {
-                    b.Property<Guid>("RequestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AddFieldId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdditionalFieldID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RequestId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RequestId", "AddFieldId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdditionalFieldID");
+
+                    b.HasIndex("RequestId");
 
                     b.ToTable("AFValues");
                 });
@@ -131,7 +136,7 @@ namespace IMMRequest.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AdditionalFieldId")
+                    b.Property<Guid?>("AdditionalFieldId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Value")
@@ -171,7 +176,7 @@ namespace IMMRequest.DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("TypeId")
+                    b.Property<Guid>("TypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -238,7 +243,13 @@ namespace IMMRequest.DataAccess.Migrations
 
             modelBuilder.Entity("IMMRequest.Domain.AFValue", b =>
                 {
-                    b.HasOne("IMMRequest.Domain.Request", null)
+                    b.HasOne("IMMRequest.Domain.AdditionalField", "AdditionalField")
+                        .WithMany()
+                        .HasForeignKey("AdditionalFieldID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("IMMRequest.Domain.Request", "Request")
                         .WithMany("AddFieldValues")
                         .HasForeignKey("RequestId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -261,18 +272,18 @@ namespace IMMRequest.DataAccess.Migrations
 
             modelBuilder.Entity("IMMRequest.Domain.Range", b =>
                 {
-                    b.HasOne("IMMRequest.Domain.AdditionalField", null)
+                    b.HasOne("IMMRequest.Domain.AdditionalField", "AdditionalField")
                         .WithMany("Range")
-                        .HasForeignKey("AdditionalFieldId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AdditionalFieldId");
                 });
 
             modelBuilder.Entity("IMMRequest.Domain.Request", b =>
                 {
                     b.HasOne("IMMRequest.Domain.Type", "Type")
                         .WithMany()
-                        .HasForeignKey("TypeId");
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("IMMRequest.Domain.Topic", b =>

@@ -12,37 +12,29 @@ namespace IMMRequest.BusinessLogic
     {
         private ITypeRepository typeRepository;
         private IRepository<Topic> topicRespository;
-        private IRepository<AdditionalField> additionalFieldRespository;
         private ITypeValidatorHelper typeValidator;
 
-        public TypeLogic(ITypeRepository typeRepository, IRepository<Topic> topicRespository,
-            IRepository<AdditionalField> additionalFieldRespository)
+        public TypeLogic(ITypeRepository typeRepository, IRepository<Topic> topicRespository)
         {
             this.typeRepository = typeRepository;
             this.topicRespository = topicRespository;
-            this.additionalFieldRespository = additionalFieldRespository;
             typeValidator = new TypeValidatorHelper(typeRepository, topicRespository);
         }
 
-        private void AddAdditionalFields(Type type)
+        private void FormatAdditionalFields(Type type)
         {
             foreach (AdditionalField af in type.AdditionalFields)
             {
                 af.Id = Guid.NewGuid();
                 af.Type = type;
-                if(af.Range.Count != 0)
+                if (af.Range.Count != 0)
                 {
-                    foreach(Range range in af.Range)
+                    foreach (Range range in af.Range)
                     {
                         range.Id = Guid.NewGuid();
-                        range.AdditionalFieldId = af.Id;
+                        range.AdditionalField = af;
                     }
                 }
-                additionalFieldRespository.Add(af);
-            }
-            if (type.AdditionalFields.Count != 0)
-            {
-                additionalFieldRespository.SaveChanges();
             }
         }
 
@@ -58,7 +50,7 @@ namespace IMMRequest.BusinessLogic
         {
             typeValidator.ValidateAdd(type);
             GiveNewTypeFormat(type);
-            AddAdditionalFields(type);
+            FormatAdditionalFields(type);
             typeRepository.Add(type);
             typeRepository.SaveChanges();
             return type;

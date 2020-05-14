@@ -34,14 +34,20 @@ namespace IMMRequest.DataAccess
                .HasMany(ad => ad.AdditionalFields)
                .WithOne(tp => tp.Type);
             modelBuilder.Entity<AdditionalField>()
-               .HasMany(r => r.Range);
+               .HasKey(a => a.Id);
+            modelBuilder.Entity<AdditionalField>()
+               .HasMany(r => r.Range)
+               .WithOne(a => a.AdditionalField);
             modelBuilder.Entity<Request>()
                .HasOne(t => t.Type);
+            modelBuilder.Entity<Request>()
+              .HasMany(afv => afv.AddFieldValues)
+              .WithOne(r => r.Request);
             modelBuilder.Entity<Admin>()
                 .HasIndex(a => a.Email)
                 .IsUnique();
             modelBuilder.Entity<AFValue>()
-                .HasKey((a => new { a.RequestId, a.AddFieldId }));
+                .HasOne(a => a.AdditionalField);
         }
     }
 }

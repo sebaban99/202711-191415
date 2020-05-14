@@ -6,7 +6,7 @@ namespace IMMRequest.Domain
 {
     public class Log
     {
-        public enum actionTypeAvailable { login, generateRequest };
+        public enum ActionTypeAvailable { login, generateRequest };
 
         public Guid Id { get; set; }
         public string ActionType { get; set; }
@@ -17,7 +17,7 @@ namespace IMMRequest.Domain
         public Log()
         {
             this.Id = Guid.NewGuid();
-            this.ActionType = actionTypeAvailable.login.ToString();
+            this.ActionType = ActionTypeAvailable.login.ToString();
             this.Date = DateTime.Now;
             this.Admin = null;
             this.Email = string.Empty;

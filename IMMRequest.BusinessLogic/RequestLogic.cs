@@ -26,15 +26,12 @@ namespace IMMRequest.BusinessLogic
             requestValidator = new RequestValidatorHelper(requestRepository, aFValueRepository, typeRepository);
         }
 
-        private void AddAFValues(Request request)
+        private void FormatAFValues(Request request)
         {
             foreach (AFValue af in request.AddFieldValues)
             {
-                aFValueRepository.Add(af);
-            }
-            if (request.AddFieldValues.Count() != 0)
-            {
-                aFValueRepository.SaveChanges();
+                af.Id = Guid.NewGuid();
+                af.Request = request;
             }
         }
 
@@ -54,7 +51,7 @@ namespace IMMRequest.BusinessLogic
         {
             requestValidator.ValidateAdd(request);
             GiveNewRequestFormat(request);
-            AddAFValues(request);
+            FormatAFValues(request);
             requestRepository.Add(request);
             requestRepository.SaveChanges();
             return request.RequestNumber;

@@ -133,7 +133,7 @@ namespace IMMRequest.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     RequestNumber = table.Column<int>(nullable: false),
-                    TypeId = table.Column<Guid>(nullable: true),
+                    TypeId = table.Column<Guid>(nullable: false),
                     Details = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
@@ -149,7 +149,7 @@ namespace IMMRequest.DataAccess.Migrations
                         column: x => x.TypeId,
                         principalTable: "Types",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,7 +157,7 @@ namespace IMMRequest.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    AdditionalFieldId = table.Column<Guid>(nullable: false),
+                    AdditionalFieldId = table.Column<Guid>(nullable: true),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -168,21 +168,27 @@ namespace IMMRequest.DataAccess.Migrations
                         column: x => x.AdditionalFieldId,
                         principalTable: "AdditionalFields",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "AFValues",
                 columns: table => new
                 {
-                    RequestId = table.Column<Guid>(nullable: false),
-                    AddFieldId = table.Column<Guid>(nullable: false),
                     Id = table.Column<Guid>(nullable: false),
+                    RequestId = table.Column<Guid>(nullable: false),
+                    AdditionalFieldID = table.Column<Guid>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AFValues", x => new { x.RequestId, x.AddFieldId });
+                    table.PrimaryKey("PK_AFValues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AFValues_AdditionalFields_AdditionalFieldID",
+                        column: x => x.AdditionalFieldID,
+                        principalTable: "AdditionalFields",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AFValues_Requests_RequestId",
                         column: x => x.RequestId,
@@ -202,6 +208,16 @@ namespace IMMRequest.DataAccess.Migrations
                 column: "Email",
                 unique: true,
                 filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AFValues_AdditionalFieldID",
+                table: "AFValues",
+                column: "AdditionalFieldID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AFValues_RequestId",
+                table: "AFValues",
+                column: "RequestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Logs_AdminId",

@@ -21,7 +21,7 @@ namespace IMMRequest.DataAccess
             }
             catch (DbException)
             {
-                throw new DataAccessException("Error: Could not add entity to DB");
+                throw new DataAccessException("Error: Could not add entity or a component of it to DB");
             }
         }
 
@@ -90,9 +90,9 @@ namespace IMMRequest.DataAccess
             {
                 this.Context.SaveChanges();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException e)
             {
-                throw new DataAccessException("Error: changes could not be applied to DB");
+                throw new DataAccessException("Error: changes could not be applied to DB " + e.Message);
             }
             catch (DbException)
             {
