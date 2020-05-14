@@ -29,6 +29,15 @@ namespace IMMRequest.BusinessLogic
             foreach (AdditionalField af in type.AdditionalFields)
             {
                 af.Id = Guid.NewGuid();
+                af.Type = type;
+                if(af.Range.Count != 0)
+                {
+                    foreach(Range range in af.Range)
+                    {
+                        range.Id = Guid.NewGuid();
+                        range.AdditionalFieldId = af.Id;
+                    }
+                }
                 additionalFieldRespository.Add(af);
             }
             if (type.AdditionalFields.Count != 0)
@@ -48,8 +57,8 @@ namespace IMMRequest.BusinessLogic
         public Type Create(Type type)
         {
             typeValidator.ValidateAdd(type);
-            AddAdditionalFields(type);
             GiveNewTypeFormat(type);
+            AddAdditionalFields(type);
             typeRepository.Add(type);
             typeRepository.SaveChanges();
             return type;

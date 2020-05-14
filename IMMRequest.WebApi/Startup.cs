@@ -43,7 +43,7 @@ namespace IMMRequest.WebApi
             //AddScoped Repository
             services.AddScoped<IRequestRepository, RequestRepository>();
             services.AddScoped<IRepository<AFValue>, AFValueRepository>();
-            services.AddScoped<IRepository<Type>, TypeRepository>();
+            services.AddScoped<ITypeRepository, TypeRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<IRepository<Admin>, AdminRepository>();

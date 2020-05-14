@@ -22,14 +22,5 @@ namespace IMMRequest.Domain
             this.Admin = null;
             this.Email = string.Empty;
         }
-
-        public Log(string type, Admin a)
-        {
-            this.Id = Guid.NewGuid();
-            this.ActionType = type;
-            this.Date = DateTime.Now;
-            this.Admin = a;
-            this.Email = a.Email;
-        }
     }
 }

@@ -283,7 +283,7 @@ namespace IMMRequest.BusinessLogic
             if (request.Description != requestToUpdate.Description &&
                 !IsValidString(request.Description))
             {
-                throw new BusinessLogicException("Error: Invalid Description update, Request's new description was empty");
+                throw new BusinessLogicException("Error: Invalid Description update, Request's new description was empty or contained only symbols");
             }
         }
 

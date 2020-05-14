@@ -150,6 +150,26 @@ namespace IMMRequest.WebApi.Tests
         }
 
         [TestMethod]
+        public void GetAllRequestsCaseErrorInDB()
+        {
+            var requests = new List<Request>();
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.GetAll()).Throws(
+                new DataAccessException("Error: could not get Table's elements"));
+            var requestController = new RequestController(requestLogicMock.Object);
+
+            var result = requestController.Get();
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: could not get Table's elements");
+            Assert.AreEqual(okResult.StatusCode, 500);
+        }
+
+        [TestMethod]
         public void GetRequestByIdCaseExist()
         {
             var requestDTO = new RequestDTO(oneRequest);
@@ -186,6 +206,26 @@ namespace IMMRequest.WebApi.Tests
             requestLogicMock.VerifyAll();
             Assert.AreEqual(value, "Error: Invalid ID, Request does not exist");
             Assert.AreEqual(okResult.StatusCode, 404);
+        }
+
+        [TestMethod]
+        public void GetRequestCaseErrorInDB()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.Get(oneRequest.Id)).Throws(
+                new DataAccessException("Error: could not retrieve Entity"));
+            var requestController = new RequestController(requestLogicMock.Object);
+
+            var result = requestController.Get(oneRequest.Id);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+            Assert.AreEqual(value, "Error: could not retrieve Entity");
+            Assert.AreEqual(okResult.StatusCode, 500);
         }
 
         [TestMethod]
@@ -228,6 +268,28 @@ namespace IMMRequest.WebApi.Tests
             requestLogicMock.VerifyAll();
             Assert.AreEqual(value, "Error: could not retrieve the specific Request");
             Assert.AreEqual(okResult.StatusCode, 404);
+        }
+
+        [TestMethod]
+        public void GetRequestByRequestNumberCaseErrorInDB()
+        {
+            var requestDTO = new RequestDTO(oneRequest);
+
+            var requestLogicMock = new Mock<IRequestLogic>(MockBehavior.Strict);
+
+            requestLogicMock.Setup(m => m.GetByCondition(
+                It.IsAny<Expression<Func<Request, bool>>>())).Throws(
+            new DataAccessException("Error: could not retrieve Entity"));
+
+            var requestController = new RequestController(requestLogicMock.Object);
+
+            var result = requestController.Get(oneRequest.RequestNumber);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            requestLogicMock.VerifyAll();
+            Assert.AreEqual(value, "Error: could not retrieve Entity");
+            Assert.AreEqual(okResult.StatusCode, 500);
         }
 
         [TestMethod]

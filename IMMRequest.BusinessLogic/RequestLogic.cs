@@ -14,11 +14,11 @@ namespace IMMRequest.BusinessLogic
     {
         private IRequestRepository requestRepository;
         private IRepository<AFValue> aFValueRepository;
-        private IRepository<Type> typeRepository;
+        private ITypeRepository typeRepository;
         private IRequestValidatorHelper requestValidator;
 
         public RequestLogic(IRequestRepository requestRepository,
-            IRepository<AFValue> aFValueRepository, IRepository<Type> typeRepository)
+            IRepository<AFValue> aFValueRepository, ITypeRepository typeRepository)
         {
             this.requestRepository = requestRepository;
             this.aFValueRepository = aFValueRepository;

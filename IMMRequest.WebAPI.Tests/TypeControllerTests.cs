@@ -115,6 +115,34 @@ namespace IMMRequest.WebApi.Tests
         }
 
         [TestMethod]
+        public void GetAllTypesCaseErrorInDB()
+        {
+            var types = new List<Type>();
+            types.Add(oneType);
+            types.Add(anotherType);
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.GetAll()).Throws(
+                new DataAccessException("Error: could not get Table's elements"));
+            var typeController = new TypeController(typeLogicMock.Object);
+            var typeModels = new List<TypeDTO>();
+            foreach (Type type in types)
+            {
+                TypeDTO tm = new TypeDTO(type);
+                typeModels.Add(tm);
+            }
+
+            var result = typeController.Get();
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: could not get Table's elements");
+            Assert.AreEqual(okResult.StatusCode, 500);
+        }
+
+        [TestMethod]
         public void GetTypeByIdCaseExist()
         {
             var typeDTO = new TypeDTO(oneType);
@@ -150,6 +178,25 @@ namespace IMMRequest.WebApi.Tests
 
             Assert.AreEqual(value, "Error: Invalid ID, Type does not exist");
             Assert.AreEqual(okResult.StatusCode, 404);
+        }
+
+        [TestMethod]
+        public void GetTypeByIdCaseErrorInDB()
+        {
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.Get(It.IsAny<Guid>())).Throws(
+                new DataAccessException("Error: could not retrieve Entity"));
+            var typeController = new TypeController(typeLogicMock.Object);
+
+            var result = typeController.Get(oneType.Id);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: could not retrieve Entity");
+            Assert.AreEqual(okResult.StatusCode, 500);
         }
 
         [TestMethod]
@@ -211,6 +258,26 @@ namespace IMMRequest.WebApi.Tests
         }
 
         [TestMethod]
+        public void PostCaseErrorInDB()
+        {
+            var typeDTO = new TypeDTO(oneType);
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.Create(It.IsAny<Type>())).Throws(
+                new DataAccessException("Error: Could not add entity to DB"));
+            var typeController = new TypeController(typeLogicMock.Object);
+
+            var result = typeController.Post(typeDTO);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Could not add entity to DB");
+            Assert.AreEqual(okResult.StatusCode, 500);
+        }
+
+        [TestMethod]
         public void DeleteCaseExistsType()
         {
             var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
@@ -245,6 +312,26 @@ namespace IMMRequest.WebApi.Tests
 
             Assert.AreEqual(value, "Error: Type to delete doesn't exist");
             Assert.AreEqual(okResult.StatusCode, 404);
+        }
+
+        [TestMethod]
+        public void DeleteCaseErrorInDB()
+        {
+            var typeLogicMock = new Mock<ITypeLogic>(MockBehavior.Strict);
+
+            typeLogicMock.Setup(m => m.Remove(oneType)).Throws(
+                new DataAccessException("Error: Entity could not be removed from DB"));
+            typeLogicMock.Setup(m => m.Get(oneType.Id)).Returns(oneType);
+            var typeController = new TypeController(typeLogicMock.Object);
+
+            var result = typeController.Delete(oneType.Id);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            typeLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Entity could not be removed from DB");
+            Assert.AreEqual(okResult.StatusCode, 500);
         }
     }
 }
