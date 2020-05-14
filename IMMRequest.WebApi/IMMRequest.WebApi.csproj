@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\IMMRequest.BusinessLogic.Interface\IMMRequest.BusinessLogic.Interfaces.csproj" />
+    <ProjectReference Include="..\IMMRequest.BusinessLogic\IMMRequest.BusinessLogic.csproj" />
+    <ProjectReference Include="..\IMMRequest.DataAccess.Interface\IMMRequest.DataAccess.Interfaces.csproj" />
+    <ProjectReference Include="..\IMMRequest.DataAccess\IMMRequest.DataAccess.csproj" />
+    <ProjectReference Include="..\IMMRequest.Domain\IMMRequest.Domain.csproj" />
+    <ProjectReference Include="..\IMMRequest.Exceptions\IMMRequest.Exceptions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.3" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+
+</Project>
