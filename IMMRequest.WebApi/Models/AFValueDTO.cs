@@ -29,8 +29,9 @@ namespace IMMRequest.WebApi
                 Id = this.Id,
                 Request = new Request()
                 {
-                    Id = this.RequestId 
+                    Id = this.RequestId
                 },
+                AdditionalFieldID = this.AdditionalFieldId,
                 Value = this.Value
             };
             return afvAsEntity;
