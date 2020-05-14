@@ -18,7 +18,6 @@ namespace IMMRequest.WebApi
             this.typeLogic = typeLogic;
         }
 
-        [AuthenticationFilter()]
         [HttpGet]
         public IActionResult Get()
         {
