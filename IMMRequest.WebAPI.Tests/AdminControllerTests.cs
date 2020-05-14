@@ -79,6 +79,33 @@ namespace IMMRequest.WebApi.Tests
         }
 
         [TestMethod]
+        public void GetAllAdminsCaseErrorInDB()
+        {
+            var admins = new List<Admin>();
+            admins.Add(sebaAdmin);
+            admins.Add(pedroAdmin);
+
+            var adminDTOs = new List<AdminDTO>();
+            adminDTOs.Add(new AdminDTO(sebaAdmin));
+            adminDTOs.Add(new AdminDTO(pedroAdmin));
+
+            var adminLogicMock = new Mock<IAdminLogic>(MockBehavior.Strict);
+
+            adminLogicMock.Setup(m => m.GetAll()).Throws(
+                new DataAccessException("Error: could not get Table's elements"));
+            var adminController = new AdminController(adminLogicMock.Object);
+
+            var result = adminController.Get();
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            adminLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: could not get Table's elements");
+            Assert.AreEqual(okResult.StatusCode, 500);
+        }
+
+        [TestMethod]
         public void GetAdminByIdCaseExist()
         {
             var adminDTO = new AdminDTO(sebaAdmin);
@@ -116,6 +143,27 @@ namespace IMMRequest.WebApi.Tests
 
             Assert.AreEqual(value, "Error: Invalid ID, Admin does not exist");
             Assert.AreEqual(okResult.StatusCode, 404);
+        }
+
+        [TestMethod]
+        public void GetAdminByIdCaseErrorInDB()
+        {
+            var adminDTO = new AdminDTO(sebaAdmin);
+
+            var adminLogicMock = new Mock<IAdminLogic>(MockBehavior.Strict);
+
+            adminLogicMock.Setup(m => m.Get(It.IsAny<Guid>())).Throws(
+                new DataAccessException("Error: could not retrieve Entity"));
+            var adminController = new AdminController(adminLogicMock.Object);
+
+            var result = adminController.Get(sebaAdmin.Id);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            adminLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: could not retrieve Entity");
+            Assert.AreEqual(okResult.StatusCode, 500);
         }
 
         [TestMethod]
@@ -177,6 +225,26 @@ namespace IMMRequest.WebApi.Tests
         }
 
         [TestMethod]
+        public void PostCaseErrorInDB()
+        {
+            var adminDTO = new AdminDTO(sebaAdmin);
+            var adminLogicMock = new Mock<IAdminLogic>(MockBehavior.Strict);
+
+            adminLogicMock.Setup(m => m.Create(It.IsAny<Admin>())).Throws(
+                new DataAccessException("Error: Could not add entity to DB"));
+            var adminController = new AdminController(adminLogicMock.Object);
+
+            var result = adminController.Post(adminDTO);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            adminLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Could not add entity to DB");
+            Assert.AreEqual(okResult.StatusCode, 500);
+        }
+
+        [TestMethod]
         public void DeleteCaseExistsType()
         {
             var adminLogicMock = new Mock<IAdminLogic>(MockBehavior.Strict);
@@ -211,6 +279,26 @@ namespace IMMRequest.WebApi.Tests
 
             Assert.AreEqual(value, "Error: Admin to delete doesn't exist");
             Assert.AreEqual(okResult.StatusCode, 404);
+        }
+
+        [TestMethod]
+        public void DeleteCaseErrorInDB()
+        {
+            var adminLogicMock = new Mock<IAdminLogic>(MockBehavior.Strict);
+
+            adminLogicMock.Setup(m => m.Remove(sebaAdmin)).Throws(
+                new DataAccessException("Error: Entity could not be removed from DB"));
+            adminLogicMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(sebaAdmin);
+            var adminController = new AdminController(adminLogicMock.Object);
+
+            var result = adminController.Delete(sebaAdmin.Id);
+            var okResult = result as ObjectResult;
+            var value = okResult.Value;
+
+            adminLogicMock.VerifyAll();
+
+            Assert.AreEqual(value, "Error: Entity could not be removed from DB");
+            Assert.AreEqual(okResult.StatusCode, 500);
         }
 
         [TestMethod]

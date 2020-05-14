@@ -16,6 +16,8 @@ namespace IMMRequest.WebApi
         public bool IsActive { get; set; }
         public List<AdditionalFieldDTO> aFDTOs { get; set; }
 
+        public TypeDTO() { }
+
         public TypeDTO(Type type)
         {
             Id = type.Id;
@@ -43,11 +45,14 @@ namespace IMMRequest.WebApi
                 },
                 AdditionalFields = new List<AdditionalField>()
             };
-            foreach (AdditionalFieldDTO afDTO in this.aFDTOs)
+            if(aFDTOs != null)
             {
-                AdditionalField af = afDTO.ToEntity();
-                af.Type = typeAsEntity;
-                typeAsEntity.AdditionalFields.Add(af);
+                foreach (AdditionalFieldDTO afDTO in this.aFDTOs)
+                {
+                    AdditionalField af = afDTO.ToEntity();
+                    af.Type = typeAsEntity;
+                    typeAsEntity.AdditionalFields.Add(af);
+                }
             }
             return typeAsEntity;
         }

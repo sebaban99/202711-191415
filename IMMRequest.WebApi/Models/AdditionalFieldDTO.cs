@@ -15,6 +15,8 @@ namespace IMMRequest.WebApi
         public Guid Type { get; set; }
         public List<Range> Range { get; set; }
 
+        public AdditionalFieldDTO() { }
+
         public AdditionalFieldDTO(AdditionalField af)
         {
             Id = af.Id;
@@ -22,19 +24,6 @@ namespace IMMRequest.WebApi
             FieldType = af.FieldType;
             Type = af.Type.Id;
             Range = af.Range;
-        }
-
-        public override bool Equals(Object obj)
-        {
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
-            {
-                return false;
-            }
-            else
-            {
-                AdditionalFieldDTO afm = (AdditionalFieldDTO)obj;
-                return this.Id == afm.Id;
-            }
         }
 
         public AdditionalField ToEntity()
