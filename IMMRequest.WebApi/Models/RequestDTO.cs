@@ -32,10 +32,13 @@ namespace IMMRequest.WebApi
             Status = req.Status;
             Description = req.Description;
             AddFieldValuesDTOs = new List<AFValueDTO>();
-            foreach(AFValue af in req.AddFieldValues)
+            if (req.AddFieldValues != null)
             {
-                AFValueDTO afvDTO = new AFValueDTO(af);
-                AddFieldValuesDTOs.Add(afvDTO);
+                foreach (AFValue af in req.AddFieldValues)
+                {
+                    AFValueDTO afvDTO = new AFValueDTO(af);
+                    AddFieldValuesDTOs.Add(afvDTO);
+                }
             }
         }
 

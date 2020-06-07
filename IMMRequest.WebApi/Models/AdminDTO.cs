@@ -10,6 +10,8 @@ namespace IMMRequest.WebApi
         public string Email { get; set; }
         public string Password { get; set; }
 
+        public AdminDTO() { }
+
         public AdminDTO(Admin admin)
         {
             Id = admin.Id;

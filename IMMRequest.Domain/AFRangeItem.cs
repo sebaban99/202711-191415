@@ -2,7 +2,7 @@ using System;
 
 namespace IMMRequest.Domain
 {
-    public class Range
+    public class AFRangeItem
     {
         public Guid Id {get; set;}  
         public AdditionalField AdditionalField { get; set; }

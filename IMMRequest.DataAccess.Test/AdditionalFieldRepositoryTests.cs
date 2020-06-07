@@ -15,7 +15,7 @@ namespace IMMRequest.DataAccess.Tests
             Id = Guid.NewGuid(),
             Name = "Estado del contenedor",
             Type = new Domain.Type(),
-            Range = new List<Domain.Range>(),
+            Range = new List<Domain.AFRangeItem>(),
         };
 
         AdditionalField stateOfStreetLight = new AdditionalField()
@@ -23,7 +23,7 @@ namespace IMMRequest.DataAccess.Tests
             Id = Guid.NewGuid(),
             Name = "Estado del poste de luz",
             Type = new Domain.Type(),
-            Range = new List<Domain.Range>(),
+            Range = new List<Domain.AFRangeItem>(),
         };
 
         private AdditionalFieldRepository addfieldRepositoryInMemory = new AdditionalFieldRepository(

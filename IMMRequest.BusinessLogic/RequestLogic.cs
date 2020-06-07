@@ -13,17 +13,12 @@ namespace IMMRequest.BusinessLogic
     public class RequestLogic : IRequestLogic
     {
         private IRequestRepository requestRepository;
-        private IRepository<AFValue> aFValueRepository;
-        private ITypeRepository typeRepository;
         private IRequestValidatorHelper requestValidator;
 
-        public RequestLogic(IRequestRepository requestRepository,
-            IRepository<AFValue> aFValueRepository, ITypeRepository typeRepository)
+        public RequestLogic(IRequestRepository requestRepository, ITypeRepository typeRepository)
         {
             this.requestRepository = requestRepository;
-            this.aFValueRepository = aFValueRepository;
-            this.typeRepository = typeRepository;
-            requestValidator = new RequestValidatorHelper(requestRepository, aFValueRepository, typeRepository);
+            requestValidator = new RequestValidatorHelper(typeRepository);
         }
 
         private void FormatAFValues(Request request)
@@ -32,6 +27,11 @@ namespace IMMRequest.BusinessLogic
             {
                 af.Id = Guid.NewGuid();
                 af.Request = request;
+                foreach(AFValueItem item in af.Values)
+                {
+                    item.Id = Guid.NewGuid();
+                    item.AFValue = af;
+                }
             }
         }
 
@@ -45,6 +45,7 @@ namespace IMMRequest.BusinessLogic
             request.Status = Status.Creada;
             request.RequestNumber = AssignRequestNumber();
             request.Id = Guid.NewGuid();
+            request.CreationDate = DateTime.Now;
         }
 
         public int Create(Request request)

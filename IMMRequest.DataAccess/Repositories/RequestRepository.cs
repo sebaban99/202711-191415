@@ -5,6 +5,8 @@ using IMMRequest.DataAccess.Interfaces;
 using System.Linq;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace IMMRequest.DataAccess
 {
@@ -29,6 +31,11 @@ namespace IMMRequest.DataAccess
             {
                 throw new DataAccessException("Error: could not retrieve specific Entity");
             }
+        }
+
+        public IEnumerable<Request> GetAllByCondition(Expression<Func<Request, bool>> expression)
+        {
+            return Context.Set<Request>().Where(expression);
         }
 
         public int GetAmountOfElements()

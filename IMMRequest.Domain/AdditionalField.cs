@@ -7,7 +7,8 @@ namespace IMMRequest.Domain
     {
         Fecha,
         Texto,
-        Entero
+        Entero,
+        Bool
     }
     public class AdditionalField
     {
@@ -15,6 +16,6 @@ namespace IMMRequest.Domain
         public string Name {get; set;}
         public FieldType FieldType { get; set;}
         public Type Type {get; set;}
-        public List<Range> Range {get; set;}
+        public List<AFRangeItem> Range {get; set;}
     }
 }

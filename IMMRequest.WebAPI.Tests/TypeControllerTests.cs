@@ -6,7 +6,7 @@ using IMMRequest.Exceptions;
 using Moq;
 using System;
 using System.Collections.Generic;
-using Range = IMMRequest.Domain.Range;
+using AFRangeItem = IMMRequest.Domain.AFRangeItem;
 using Type = IMMRequest.Domain.Type;
 using System.Diagnostics.CodeAnalysis;
 
@@ -46,7 +46,7 @@ namespace IMMRequest.WebApi.Tests
             FieldType = FieldType.Entero,
             Type = oneType,
             Name = "Matricula",
-            Range = new List<Range>()
+            Range = new List<AFRangeItem>()
         };
 
         [TestInitialize]

@@ -7,18 +7,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IMMRequest.DataAccess
 {
-    public class RangeRepository : BaseRepository<Range>
+    public class RangeRepository : BaseRepository<AFRangeItem>
     {
         public RangeRepository(DbContext context)
         {
             Context = context;
         }
 
-        public override Range Get(Guid id)
+        public override AFRangeItem Get(Guid id)
         {
             try
             {
-                return Context.Set<Range>().First(x => x.Id == id);
+                return Context.Set<AFRangeItem>().First(x => x.Id == id);
             }
             catch (System.InvalidOperationException)
             {
