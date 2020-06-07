@@ -37,7 +37,7 @@ namespace IMMRequest.WebApi
                 context.Result = new ContentResult()
                 {
                     StatusCode = 403,
-                    Content = "A valid session is needed"
+                    Content = "AFValueItemDTO valid session is needed"
                 };
                 return;
             }

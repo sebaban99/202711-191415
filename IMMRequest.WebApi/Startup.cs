@@ -49,7 +49,7 @@ namespace IMMRequest.WebApi
             services.AddScoped<IRepository<Admin>, AdminRepository>();
             services.AddScoped<IRepository<Topic>, TopicRepository>();
             services.AddScoped<IRepository<AdditionalField>, AdditionalFieldRepository>();
-            services.AddScoped<IRepository<Range>, RangeRepository>();
+            services.AddScoped<IRepository<AFRangeItem>, RangeRepository>();
 
 
             services.AddCors(options =>

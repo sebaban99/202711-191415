@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Range = IMMRequest.Domain.Range;
+using AFRangeItem = IMMRequest.Domain.AFRangeItem;
 
 namespace IMMRequest.WebApi
 {
@@ -24,7 +24,7 @@ namespace IMMRequest.WebApi
             FieldType = af.FieldType;
             Type = af.Type.Id;
             RangeDTOs = new List<RangeDTO>();
-            foreach (Range r in af.Range)
+            foreach (AFRangeItem r in af.Range)
             {
                 RangeDTO rangeDTO = new RangeDTO(r);
                 RangeDTOs.Add(rangeDTO);
@@ -38,13 +38,13 @@ namespace IMMRequest.WebApi
                 Id = this.Id,
                 Name = this.Name,
                 FieldType = this.FieldType,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
             if (this.RangeDTOs != null)
             {
                 foreach (RangeDTO rangeDTO in this.RangeDTOs)
                 {
-                    Range rangeEntity = rangeDTO.ToEntity();
+                    AFRangeItem rangeEntity = rangeDTO.ToEntity();
                     rangeEntity.AdditionalField = afAsEntity;
                     afAsEntity.Range.Add(rangeEntity);
                 }

@@ -29,7 +29,7 @@ namespace IMMRequest.BusinessLogic
                 af.Type = type;
                 if (af.Range.Count != 0)
                 {
-                    foreach (Range range in af.Range)
+                    foreach (AFRangeItem range in af.Range)
                     {
                         range.Id = Guid.NewGuid();
                         range.AdditionalField = af;

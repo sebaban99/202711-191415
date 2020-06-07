@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
-using Range = IMMRequest.Domain.Range;
+using AFRangeItem = IMMRequest.Domain.AFRangeItem;
 using Type = IMMRequest.Domain.Type;
 using System.Diagnostics.CodeAnalysis;
 
@@ -40,10 +40,10 @@ namespace IMMRequest.WebApi.Tests
             FieldType = FieldType.Texto,
             Type = type,
             Name = "Estado del contenedor",
-            Range = new List<Range>()
+            Range = new List<AFRangeItem>()
         };
 
-        Range range = new Range()
+        AFRangeItem range = new AFRangeItem()
         {
             Id = Guid.NewGuid(),
             AdditionalField = stateOfContainer,
@@ -76,16 +76,28 @@ namespace IMMRequest.WebApi.Tests
             AddFieldValues = new List<AFValue>()
         };
 
-        AFValue anotherStateOfContainerValue = new AFValue()
+        AFValueItem item = new AFValueItem()
         {
-            Value = "Incendiado o chocado",
+            AFValue = oneStateOfContainerValue,
+            Value = "Incendiado o chocado"
+        };
+
+        AFValueItem item2 = new AFValueItem()
+        {
+            AFValue = anotherStateOfContainerValue,
+            Value = "Incendiado o chocado"
+        };
+
+        static AFValue anotherStateOfContainerValue = new AFValue()
+        {
+            Values = new List<AFValueItem>(),
             Request = anotherRequest,
             AdditionalField = stateOfContainer
         };
 
-        AFValue oneStateOfContainerValue = new AFValue()
+        static AFValue oneStateOfContainerValue = new AFValue()
         {
-            Value = "Incendiado o chocado",
+            Values = new List<AFValueItem>(),
             Request = oneRequest,
             AdditionalField = stateOfContainer
         };
@@ -93,6 +105,8 @@ namespace IMMRequest.WebApi.Tests
         [TestInitialize]
         public void Initialize()
         {
+            oneStateOfContainerValue.Values.Add(item);
+            anotherStateOfContainerValue.Values.Add(item);
             stateOfContainer.Range.Add(range);
             type.AdditionalFields.Add(stateOfContainer);
             topic.Types.Add(type);

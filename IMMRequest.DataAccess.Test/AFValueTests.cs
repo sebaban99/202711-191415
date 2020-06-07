@@ -1,6 +1,7 @@
 ﻿using IMMRequest.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace IMMRequest.DataAccess.Tests
@@ -9,11 +10,15 @@ namespace IMMRequest.DataAccess.Tests
     [TestClass]
     public class AFValueTests
     {
+        AFValueItem item = new AFValueItem()
+        {
+            Value = "ABXE1234"
+        };
         AFValue aFValue = new AFValue()
         {
             Request = new Request(),
             AdditionalField = new AdditionalField(),
-            Value = "ABXE1234"
+            Values = new List<AFValueItem>()
         };
 
         private AFValueRepository aFValueRepositoryInMemory = new AFValueRepository(
@@ -22,6 +27,7 @@ namespace IMMRequest.DataAccess.Tests
         [TestInitialize]
         public void Initialize()
         {
+            aFValue.Values.Add(item);
             aFValueRepositoryInMemory.Empty();
         }
 

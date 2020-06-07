@@ -14,7 +14,8 @@ namespace IMMRequest.DataAccess
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Type> Types { get; set; }
         public DbSet<AdditionalField> AdditionalFields { get; set; }
-        public DbSet<Range> RangeValues { get; set; }
+        public DbSet<AFRangeItem> RangeValues { get; set; }
+        public DbSet<AFValueItem> AFValueItems { get; set; }
         public DbSet<AFValue> AFValues { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Log> Logs { get; set; }
