@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMMRequest.DataAccess.Inter
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMMRequest.Exceptions", "IMMRequest.Exceptions\IMMRequest.Exceptions.csproj", "{29E97320-1D00-4BEA-BF94-700C940F7C9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMMRequest.Importer", "IMMRequest.Importer\IMMRequest.Importer.csproj", "{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,18 @@ Global
 		{29E97320-1D00-4BEA-BF94-700C940F7C9E}.Release|x64.Build.0 = Release|Any CPU
 		{29E97320-1D00-4BEA-BF94-700C940F7C9E}.Release|x86.ActiveCfg = Release|Any CPU
 		{29E97320-1D00-4BEA-BF94-700C940F7C9E}.Release|x86.Build.0 = Release|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Debug|x64.Build.0 = Debug|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Debug|x86.Build.0 = Debug|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Release|x64.ActiveCfg = Release|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Release|x64.Build.0 = Release|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Release|x86.ActiveCfg = Release|Any CPU
+		{85232E8B-6138-41C3-A7AB-3C87B8C0A6D6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
