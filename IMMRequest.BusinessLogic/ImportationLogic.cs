@@ -28,9 +28,11 @@ namespace IMMRequest.BusinessLogic
             }
             try
             {
-                path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + path;
+                var pathCurrent = Environment.CurrentDirectory;
 
-                List<string> files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
+                var importersPath = Path.Combine(Environment.CurrentDirectory,path);
+
+                List<string> files = Directory.GetFiles(importersPath, "*.*", SearchOption.AllDirectories)
                   .Where(file => new string[] { ".dll" }
                   .Contains(Path.GetExtension(file)))
                   .ToList();
@@ -38,7 +40,7 @@ namespace IMMRequest.BusinessLogic
                 foreach (string filePath in files)
                 {
                     Assembly myAssembly = Assembly.LoadFile(filePath);
-                    foreach (System.Type typeOfFile in myAssembly.GetExportedTypes())
+                    foreach (System.Type typeOfFile in myAssembly.GetTypes())
                     {
                         if (typeof(IImporter).IsAssignableFrom(typeOfFile))
                         {
@@ -48,7 +50,7 @@ namespace IMMRequest.BusinessLogic
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw new ImportException("Error importing file, check file or try with different one");
             }

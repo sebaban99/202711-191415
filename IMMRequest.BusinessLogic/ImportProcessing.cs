@@ -45,6 +45,8 @@ namespace IMMRequest.BusinessLogic
                     type.AdditionalFields = new List<AdditionalField>();
                     type.Topic = topicRepository.GetByCondition(t => t.Name == type.Topic.Name &&
                         t.Area.Name == type.Topic.Area.Name);
+                    typeRepository.Add(type);
+                    typeRepository.SaveChanges();
                 }
                 else
                 {
@@ -93,6 +95,8 @@ namespace IMMRequest.BusinessLogic
                 if (topicByName == null)
                 {
                     ProcessNewTopic(topic);
+                    topicRepository.Add(topic);
+                    topicRepository.SaveChanges();
                 }
                 else
                 {
@@ -154,6 +158,10 @@ namespace IMMRequest.BusinessLogic
                     }
                 }
             }
+            else
+            {
+                area.Topics = new List<Topic>();
+            }
         }
 
         private void ProcessArea(Area area)
@@ -164,6 +172,8 @@ namespace IMMRequest.BusinessLogic
                 if (areaByName == null)
                 {
                     ProcessNewArea(area);
+                    areaRepository.Add(area);
+                    areaRepository.SaveChanges();
                 }
                 else
                 {
@@ -179,8 +189,6 @@ namespace IMMRequest.BusinessLogic
                         }
                     }
                 }
-                areaRepository.Add(area);
-                areaRepository.SaveChanges();
             }
             else
             {
@@ -193,8 +201,6 @@ namespace IMMRequest.BusinessLogic
             foreach(Area area in elementsToImport)
             {
                 ProcessArea(area);
-                areaRepository.Add(area);
-                areaRepository.SaveChanges();
             }
         }
     }
