@@ -9,6 +9,6 @@ namespace IMMRequest.BusinessLogic.Interfaces
 {
     public interface IImpElementParser
     {
-        List<Area> ParseElements(List<AreaImpModel> areaImpModel);
+        List<Area> ParseElements(List<AreaImpModel> areaImpModels);
     }
 }
