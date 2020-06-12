@@ -39,6 +39,10 @@ namespace IMMRequest.WebApi
             services.AddScoped<ISessionLogic, SessionLogic>();
             services.AddScoped<IAdminLogic, AdminLogic>();
             services.AddScoped<ITypeLogic, TypeLogic>();
+            services.AddScoped<IImpElementParser, ImpElementParser>();
+            services.AddScoped<IImportationLogic,ImportationLogic>();
+            services.AddScoped<IImportProcessing, ImportProcessing>();
+
         
             //AddScoped Repository
             services.AddScoped<IRequestRepository, RequestRepository>();
@@ -50,6 +54,7 @@ namespace IMMRequest.WebApi
             services.AddScoped<IRepository<Topic>, TopicRepository>();
             services.AddScoped<IRepository<AdditionalField>, AdditionalFieldRepository>();
             services.AddScoped<IRepository<AFRangeItem>, RangeRepository>();
+            services.AddScoped<IRepository<Area>, AreaRepository>();
 
 
             services.AddCors(options =>

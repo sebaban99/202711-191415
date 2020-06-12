@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IMMRequest.Domain\IMMRequest.Domain.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IMMRequest.Importer\IMMRequest.Importer.csproj" />
   </ItemGroup>
 

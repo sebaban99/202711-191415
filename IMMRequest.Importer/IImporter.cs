@@ -1,0 +1,12 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace IMMRequest.Importer
+{
+    public interface IImporter
+    {
+        List<AreaImpModel> ImportFile(string path);
+        string ImporterName { get; set; }
+    }
+}
