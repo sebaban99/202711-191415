@@ -15,13 +15,15 @@ namespace IMMRequest.WebApi
     public class ImportationController : ControllerBase
     {
         private IImportationLogic importationLogic;
-        private IImpElementParser ImpElementParser;
+        private IImpElementParser impElementParser;
+        private IImportProcessing importProcessing;
             
-        //Agregar inyeccion a clase de la logica ImportLogic que valide lo que se va a agregar y agregue
-        public ImportationController(IImportationLogic importationLogic, IImpElementParser impElementParser)
+        public ImportationController(IImportationLogic importationLogic, IImpElementParser impElementParser,
+            IImportProcessing importProcessing)
         {
             this.importationLogic = importationLogic;
-            this.ImpElementParser = impElementParser;
+            this.impElementParser = impElementParser;
+            this.importProcessing = importProcessing;
         }
 
         [HttpGet()]
@@ -50,12 +52,12 @@ namespace IMMRequest.WebApi
                 importationLogic.GetImportationsMethods(@"Importers");
                 IImporter importer = importationLogic.GetImporter(impInfo.importationMethod);
                 List<AreaImpModel> importedElements = importer.ImportFile(impInfo.filePath);
-                List<Area> realElemnts = ImpElementParser.ParseElements(importedElements);
-                //Llamar a clase de logica que valide y agregue o lance una excepcion si hay elementos invalidos
+                List<Area> realElemnts = impElementParser.ParseElements(importedElements);
+                importProcessing.ProcessImportedElements(realElemnts);
                 return Ok();
             }
             catch (Exception e)
-            when (e is ImportException || e is BusinessLogicException)
+            when (e is ImportException || e is BusinessLogicException || e is DataAccessException)
             {
                 return BadRequest(e.Message);
             }
