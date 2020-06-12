@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IMMRequest.BusinessLogic.Interface\IMMRequest.BusinessLogic.Interfaces.csproj" />
     <ProjectReference Include="..\IMMRequest.DataAccess.Interface\IMMRequest.DataAccess.Interfaces.csproj" />
     <ProjectReference Include="..\IMMRequest.Domain\IMMRequest.Domain.csproj" />

@@ -10,7 +10,7 @@ namespace IMMRequest.JSONImporter
 {
     public class JSONImporter : IImporter
     {
-        public string ImporterName { get ; set; }
+        public string ImporterName { get; set; }
 
         public JSONImporter()
         {

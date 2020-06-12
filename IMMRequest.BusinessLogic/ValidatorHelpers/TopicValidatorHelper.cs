@@ -29,7 +29,7 @@ namespace IMMRequest.BusinessLogic
 
         public bool AreEmptyFields(Topic topic)
         {
-            return !IsValidString(topic.Name) || topic.Area == null;
+            return !IsValidString(topic.Name) || topic.Area == null || topic.Types == null;
         }
 
         public void ValidateEntityObject(Topic topic)
@@ -40,15 +40,15 @@ namespace IMMRequest.BusinessLogic
             }
         }
 
-        private bool IsAreaRegistered(Guid id)
+        private bool IsAreaRegistered(string name)
         {
-            Area areaInDB = areaRespository.Get(id);
+            Area areaInDB = areaRespository.GetByCondition(a => a.Name == name);
             return areaInDB != null;
         }
 
         private void ValidateArea(Topic topic)
         {
-            if (!IsAreaRegistered(topic.Area.Id))
+            if (!IsAreaRegistered(topic.Area.Name))
             {
                 throw new BusinessLogicException("Error: Area does not exist");
             }
