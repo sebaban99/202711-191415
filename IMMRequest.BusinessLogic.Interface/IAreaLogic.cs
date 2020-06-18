@@ -8,5 +8,6 @@ namespace IMMRequest.BusinessLogic.Interfaces
     public interface IAreaLogic
     {
         Area Create(Area area);
+        IEnumerable<Area> GetAll();
     }
 }

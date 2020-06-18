@@ -43,6 +43,7 @@ namespace IMMRequest.BusinessLogic
             Topic realEntity = topicRespository.Get(type.Topic.Id);
             type.Topic = realEntity;
             type.IsActive = true;
+            type.CreationDate = DateTime.Now;
             type.Id = Guid.NewGuid();
         }
 

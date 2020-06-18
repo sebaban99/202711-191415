@@ -8,5 +8,6 @@ namespace IMMRequest.Importer
     {
         List<AreaImpModel> ImportFile(string path);
         string ImporterName { get; set; }
+        List<ImportationField> RequiredFields { get; set; }
     }
 }

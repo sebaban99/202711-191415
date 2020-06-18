@@ -42,6 +42,7 @@ namespace IMMRequest.WebApi
             services.AddScoped<IImpElementParser, ImpElementParser>();
             services.AddScoped<IImportationLogic,ImportationLogic>();
             services.AddScoped<IImportProcessing, ImportProcessing>();
+            services.AddScoped<IAreaLogic, AreaLogic>();
 
         
             //AddScoped Repository
@@ -56,18 +57,32 @@ namespace IMMRequest.WebApi
             services.AddScoped<IRepository<AFRangeItem>, RangeRepository>();
             services.AddScoped<IRepository<Area>, AreaRepository>();
 
+            //services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader()); });
 
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                    builder.SetIsOriginAllowed(_ => true)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(builder =>
+            //        builder.SetIsOriginAllowed(_ => true)
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader()
+            //        .AllowCredentials());
+            //});
+            //services.AddMvc(option => option.EnableEndpointRouting = false);
 
             services.AddDbContext<DbContext, IMMRequestContext>(
                 o => o.UseSqlServer(Configuration.GetConnectionString("IMMRequest")));
+
+            services.AddCors(
+                options =>
+                {
+                    options.AddPolicy(
+           "CorsPolicy",
+           builder => builder
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+            );
+                });
 
             //services.AddCors(
             //    options =>
@@ -87,6 +102,8 @@ namespace IMMRequest.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -103,7 +120,9 @@ namespace IMMRequest.WebApi
                 endpoints.MapControllers();
             });
 
-            app.UseCors("CorsPolicy");
+            //app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader());
+
+
         }
     }
 }

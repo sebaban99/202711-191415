@@ -64,7 +64,7 @@ namespace IMMRequest.WebApi
 
         }
 
-        [HttpGet("{requestNumber}")]
+        [HttpGet("Check/{requestNumber}")]
         public IActionResult Get(int requestNumber)
         {
             try

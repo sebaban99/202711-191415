@@ -117,5 +117,16 @@ namespace IMMRequest.DataAccess
             }
         }
 
+        public virtual IEnumerable<T> GetAllByCondition(Expression<Func<T, bool>> expression)
+        {
+            try
+            {
+                return Context.Set<T>().Where(expression);
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: could not retrieve Entity");
+            }
+        }
     }
 }
