@@ -11,10 +11,18 @@ namespace IMMRequest.JSONImporter
     public class JSONImporter : IImporter
     {
         public string ImporterName { get; set; }
+        public List<ImportationField> RequiredFields { get; set; }
 
         public JSONImporter()
         {
             ImporterName = "JSON Importer";
+            RequiredFields = new List<ImportationField>();
+            ImportationField impField = new ImportationField()
+            {
+                NameOfField = "Path to file to be imported:",
+                FieldType = "string"
+            };
+            RequiredFields.Add(impField);
         }
 
         public List<AreaImpModel> ImportFile(string path)
