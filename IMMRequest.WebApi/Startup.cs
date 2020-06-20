@@ -56,6 +56,8 @@ namespace IMMRequest.WebApi
             services.AddScoped<IRepository<AdditionalField>, AdditionalFieldRepository>();
             services.AddScoped<IRepository<AFRangeItem>, RangeRepository>();
             services.AddScoped<IRepository<Area>, AreaRepository>();
+            services.AddScoped<IRepository<AdditionalField>, AdditionalFieldRepository>();
+            services.AddScoped<IRepository<AFRangeItem>, RangeRepository>();
 
             //services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader()); });
 

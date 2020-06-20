@@ -21,7 +21,6 @@ namespace IMMRequest.WebApi.Controllers
             this.areaLogic = areaLogic;
         }
 
-        [AuthenticationFilter()]
         [HttpGet]
         public IActionResult Get()
         {
