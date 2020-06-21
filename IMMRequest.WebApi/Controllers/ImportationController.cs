@@ -51,7 +51,7 @@ namespace IMMRequest.WebApi
             {
                 importationLogic.GetImportationsMethods(@"Importers");
                 IImporter importer = importationLogic.GetImporter(impInfo.importationMethod);
-                List<AreaImpModel> importedElements = importer.ImportFile(impInfo.filePath);
+                List<AreaImpModel> importedElements = importer.ImportFile(impInfo);
                 List<Area> realElemnts = impElementParser.ParseElements(importedElements);
                 importProcessing.ProcessImportedElements(realElemnts);
                 return Ok();

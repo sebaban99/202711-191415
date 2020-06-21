@@ -20,13 +20,23 @@ namespace IMMRequest.JSONImporter
             ImportationField impField = new ImportationField()
             {
                 NameOfField = "Path to file to be imported:",
-                FieldType = "string"
+                FieldType = "string",
+                FieldValue = ""
             };
             RequiredFields.Add(impField);
         }
 
-        public List<AreaImpModel> ImportFile(string path)
+        public List<AreaImpModel> ImportFile(ImportInfoDTO importInfo)
         {
+            if(importInfo.requiredFields == null || importInfo.requiredFields.Count != 1)
+            {
+                throw new ImportException("Error on Importation: Received information is not compatible with required by the importer");
+            }
+            string path = importInfo.requiredFields[0].FieldValue;
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                throw new ImportException("Error on Importation: Path to file was missing or corrupted");
+            }
             List<AreaImpModel> importedArea = new List<AreaImpModel>();
             ValidatePath(path);
             try
@@ -34,12 +44,11 @@ namespace IMMRequest.JSONImporter
                 string json = "";
                 StreamReader reader = new StreamReader(path);
                 json = reader.ReadToEnd();
-                JsonConverter[] converters = { new CustomJSONConverter() };
-                importedArea = JsonConvert.DeserializeObject<List<AreaImpModel>>(json, new JsonSerializerSettings() { Converters = converters });
+                importedArea = JsonConvert.DeserializeObject<List<AreaImpModel>>(json);
             }
             catch (Exception)
             {
-                throw new ImportException("Error on Area import: JSON file was corrput or invalid");
+                throw new ImportException("Error on Import: JSON file was corrupt or invalid");
             }
             return importedArea;
         }
