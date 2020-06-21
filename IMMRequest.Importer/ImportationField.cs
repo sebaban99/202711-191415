@@ -8,5 +8,6 @@ namespace IMMRequest.Importer
     {
         public string NameOfField { get; set; }
         public string FieldType { get; set; }
+        public string FieldValue { get; set; }
     }
 }

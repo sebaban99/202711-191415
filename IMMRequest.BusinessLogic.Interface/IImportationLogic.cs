@@ -9,7 +9,7 @@ namespace IMMRequest.BusinessLogic.Interfaces
     public interface IImportationLogic
     {
         List<IImporter> GetImportationsMethods(string path);
-        List<AreaImpModel> ImportFile(IImporter importerSelected, string path);
+        List<AreaImpModel> ImportFile(IImporter importerSelected, ImportInfoDTO importInfo);
         IImporter GetImporter(string name);
     }
 }

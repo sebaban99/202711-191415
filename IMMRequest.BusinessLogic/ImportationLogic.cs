@@ -70,9 +70,9 @@ namespace IMMRequest.BusinessLogic
             throw new ImportException("Importation method requested is not supported");
         }
 
-        public List<AreaImpModel> ImportFile(IImporter importerSelected, string path)
+        public List<AreaImpModel> ImportFile(IImporter importerSelected, ImportInfoDTO impInfo)
         {
-            return importerSelected.ImportFile(path);
+            return importerSelected.ImportFile(impInfo);
         }
     }
 }

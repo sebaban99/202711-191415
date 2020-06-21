@@ -6,7 +6,7 @@ namespace IMMRequest.Importer
 {
     public interface IImporter
     {
-        List<AreaImpModel> ImportFile(string path);
+        List<AreaImpModel> ImportFile(ImportInfoDTO path);
         string ImporterName { get; set; }
         List<ImportationField> RequiredFields { get; set; }
     }
