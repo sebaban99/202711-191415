@@ -34,12 +34,11 @@ namespace IMMRequest.JSONImporter
                 string json = "";
                 StreamReader reader = new StreamReader(path);
                 json = reader.ReadToEnd();
-                JsonConverter[] converters = { new CustomJSONConverter() };
-                importedArea = JsonConvert.DeserializeObject<List<AreaImpModel>>(json, new JsonSerializerSettings() { Converters = converters });
+                importedArea = JsonConvert.DeserializeObject<List<AreaImpModel>>(json);
             }
             catch (Exception)
             {
-                throw new ImportException("Error on Area import: JSON file was corrput or invalid");
+                throw new ImportException("Error on Import: JSON file was corrupt or invalid");
             }
             return importedArea;
         }
