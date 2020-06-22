@@ -1,13 +1,13 @@
 import {AFValueDTO} from './AFValueDTO';
 export class RequestDTO {
-    Id: string;
-    RequestNumber: number;
-    Details: string;
-    TypeId: string;
-    Name: string;
-    Email: string;
-    Phone: string;
-    Status: number;
-    Description: string;
-    AddFieldValuesDTOs: Array<AFValueDTO>;
+    id: string;
+    requestNumber: number;
+    details: string;
+    typeId: string;
+    name: string;
+    email: string;
+    phone: string;
+    status: number;
+    description: string;
+    addFieldValuesDTOs: Array<AFValueDTO>;
 }

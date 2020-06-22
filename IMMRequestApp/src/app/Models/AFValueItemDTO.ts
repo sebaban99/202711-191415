@@ -1,5 +1,5 @@
 export class AFValueItemDTO{
-    Id: string;
-    AFValueId: string;
-    Value: string;
+    id: string;
+    aFValueId: string;
+    value: string;
 }

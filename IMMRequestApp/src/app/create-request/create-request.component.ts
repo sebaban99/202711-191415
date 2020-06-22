@@ -14,7 +14,6 @@ import { AreaDTO } from '../Models/AreaDTO';
 export class CreateRequestComponent implements OnInit {
 
   @Input() displayedRequest: RequestDTO;
-  @Input() IsBeingDisplayed: boolean;
   Id: string;
   RequestNumber: number;
   Details: string;
@@ -25,22 +24,22 @@ export class CreateRequestComponent implements OnInit {
   Status: number;
   Description: string;
   AddFieldValuesDTOs: Array<AFValueDTO>;
-  Areas: Array<AreaDTO>
+  areas: Array<AreaDTO>
 
   constructor(private requestService: RequestService, private router: Router) { }
 
   ngOnInit(): void {
-    if(this.IsBeingDisplayed == true){
-      this.Id = this.displayedRequest.Id;
-      this.RequestNumber = this.displayedRequest.RequestNumber;
-      this.Details = this.displayedRequest.Details;
-      this.TypeId = this.displayedRequest.TypeId
-      this.Name = this.displayedRequest.Name;
-      this.Email = this.displayedRequest.Email;
-      this.Phone = this.displayedRequest.Phone;
-      this.Status = this.displayedRequest.Status;
-      this.Description = this.displayedRequest.Description;
-      this.AddFieldValuesDTOs = this.displayedRequest.AddFieldValuesDTOs;
+    if(this.displayedRequest != null){
+      this.Id = this.displayedRequest.id;
+      this.RequestNumber = this.displayedRequest.requestNumber;
+      this.Details = this.displayedRequest.details;
+      this.TypeId = this.displayedRequest.typeId
+      this.Name = this.displayedRequest.name;
+      this.Email = this.displayedRequest.email;
+      this.Phone = this.displayedRequest.phone;
+      this.Status = this.displayedRequest.status;
+      this.Description = this.displayedRequest.description;
+      this.AddFieldValuesDTOs = this.displayedRequest.addFieldValuesDTOs;
     }
     else{
       this.getAreas();
@@ -49,22 +48,24 @@ export class CreateRequestComponent implements OnInit {
   }
 
   getAreas(): void{
-    //this.Areas = this.requestService.getAreas();
+    this.requestService.getAreas()
+    .subscribe(x => {this.areas = x}
+    ,error => {alert(error)});
   }
 
   onSubmit() {
 
     let newRequestDTO = new RequestDTO();
-    newRequestDTO.Id = this.Id;
-    newRequestDTO.RequestNumber = this.RequestNumber;
-    newRequestDTO.Details = this.Details;
-    newRequestDTO.TypeId = this.TypeId;
-    newRequestDTO.Name = this.Name;
-    newRequestDTO.Email = this.Email;
-    newRequestDTO.Phone = this.Phone;
-    newRequestDTO.Status = this.Status;
-    newRequestDTO.Description = this.Description;
-    newRequestDTO.AddFieldValuesDTOs = this.AddFieldValuesDTOs;
+    newRequestDTO.id = this.Id;
+    newRequestDTO.requestNumber = this.RequestNumber;
+    newRequestDTO.details = this.Details;
+    newRequestDTO.typeId = this.TypeId;
+    newRequestDTO.name = this.Name;
+    newRequestDTO.email = this.Email;
+    newRequestDTO.phone = this.Phone;
+    newRequestDTO.status = this.Status;
+    newRequestDTO.description = this.Description;
+    newRequestDTO.addFieldValuesDTOs = this.AddFieldValuesDTOs;
 
     this.requestService.CreateRequest(newRequestDTO).subscribe(res => {
       alert("Request created succesfully! Request number is: ");

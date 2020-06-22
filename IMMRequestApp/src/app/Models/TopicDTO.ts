@@ -1,7 +1,7 @@
 import { TypeDTO } from './TypeDTO';
 
 export class TopicDTO{
-    Id: string;
-    Name: string;
-    Types: Array<TypeDTO>;
+    id: string;
+    name: string;
+    types: Array<TypeDTO>;
 }

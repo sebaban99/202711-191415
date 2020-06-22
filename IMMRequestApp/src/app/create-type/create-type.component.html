@@ -1,0 +1,117 @@
+<div *ngIf="areas != undefined" style="margin-bottom: 80px;">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mx-auto text-center" style="margin-top: 2rem; margin-bottom: 1rem;">
+        <h2 class="contentsTitle">Crear Tipo</h2>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 offset-lg-3 mx-auto text-left">
+      <div class="register" style="margin-left: 15px;">
+        <div class="container-request">
+          <div id="fieldsInput" enctype="multipart/form-data" class="form-horizontal">
+            <form #createTypeForm="ngForm">
+                <div class="form-group">
+                    <label class="control-label col-xs-3" for="area">Área:</label>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <select class="form-control" [(ngModel)]="selectedAreaId" (change)="setTopicOfArea()" name="area" id="area">
+                          <option value="" selected disabled hidden>Seleccionar</option>
+                          <option *ngFor="let area of areas" [value]="area.id"> {{area.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-3" for="topic">Tema:</label>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <select class="form-control" [(ngModel)]="selectedTopicId" name="topic" id="topic">
+                                <option value="" selected disabled hidden>Seleccionar</option>
+                                <option *ngFor="let topic of topics" [value]="topic.id"> {{topic.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-3" for="name">Nombre del Tipo:</label>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="text" required class="form-control" pattern=".*[a-zA-Z].*$" id="name" [(ngModel)]="name"
+                            name="name">
+                        </div>
+                    </div>
+                </div>
+                <!--div class="form-group">
+                    <label class="control-label col-xs-3" for="topic">Tipo de campo adicional:</label>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <select class="form-control" [(ngModel)]="fieldType" name="topic" id="topic">
+                                <option value="" selected disabled hidden>Seleccionar</option>
+                                <option value="1">Fecha</option>
+                                <option value="2">Texto</option>
+                                <option value="3">Entero</option>
+                                <option value="4">Bool</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="fieldType != 4 && fieldType != undefined" class="form-group">
+                    <button class="btn btn-info">Definir Rango de valores</button> 
+                </div-->
+                <!--ng-template #content let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="dateOfBirth">Date of birth</label>
+                          <div class="input-group">
+                            <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+                    </div>
+                </ng-template-->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                  Añadir un nuevo campo adicional
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        ...
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <div class="text-center">
+                        <br>
+                        <input type="submit" [disabled]="createTypeForm.invalid" (click)="createType()" class="btn btn-info" value="Confirmar" name="submitButton" data-popup-open="popup-1">
+                    </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

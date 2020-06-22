@@ -13,7 +13,6 @@ export class OptionsMenuComponent implements OnInit {
   userIsLogged: boolean;
 
   ngOnInit(): void {  
-    this.userIsLogged = false;
     this.checkUserLogged();
   }
 
@@ -28,6 +27,7 @@ export class OptionsMenuComponent implements OnInit {
   }
 
   checkUserLogged(){
+    this.userIsLogged = false;
     let tokenInStorage = sessionStorage.getItem("currentUser");
     if(tokenInStorage != null){
       this.userIsLogged = true;

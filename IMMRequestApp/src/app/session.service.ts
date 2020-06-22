@@ -28,7 +28,7 @@ export class SessionService {
   getOptions(){
     const token= sessionStorage.getItem('currentUser');
     let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append('Authorization',token);
+    headers = headers.append('token',token);
     headers = headers.append('Content-Type','application/json');
     return {headers};
   }
