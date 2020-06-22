@@ -1,4 +1,6 @@
+import { ImportationFieldDTO } from './ImportationFieldDTO';
+
 export class ImportInfoDTO{
     importationMethod: string;
-    filePath: string;
+    requiredFields: Array<ImportationFieldDTO>;
 }

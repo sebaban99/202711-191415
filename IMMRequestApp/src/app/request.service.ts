@@ -25,14 +25,14 @@ export class RequestService {
     .pipe(catchError((error: HttpErrorResponse) => throwError(error.error)));
   }
 
-  /*getAreas(): Observable<Array<AreaDTO>> {
+  getAreas(): Observable<Array<AreaDTO>> {
     const options = this.sessionService.getOptions();
     const lista = this.httpService.get<Array<AreaDTO>>(this.areas, options)
     .pipe(
       catchError((error: HttpErrorResponse) => throwError(error.error || 'server error'))
       );
     return lista;
-*/
+  }
   
 
   PutConcrete(request: RequestDTO, reqId: string) {

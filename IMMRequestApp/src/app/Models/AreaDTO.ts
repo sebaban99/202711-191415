@@ -1,7 +1,7 @@
 import { TopicDTO } from './TopicDTO';
 
 export class AreaDTO{
-    Id: string;
-    Name: string;
-    Topics: Array<TopicDTO>;
+    id: string;
+    name: string;
+    topics: Array<TopicDTO>;
 }

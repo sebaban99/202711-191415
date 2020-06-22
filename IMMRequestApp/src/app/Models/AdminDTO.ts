@@ -1,6 +1,6 @@
 export class AdminDTO{
-    Id: string;
-    Name: string;
-    Email: string;
-    Password: string;
+    id: string;
+    name: string;
+    email: string;
+    password: string;
 }

@@ -1,5 +1,5 @@
 export class RangeDTO{
-    Id: string;
-    AdditionalFieldId: string;
-    Value: string;
+    id: string;
+    additionalFieldId: string;
+    value: string;
 }

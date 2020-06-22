@@ -23,10 +23,11 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     
     let loginDTO = new LoginDTO();
-    loginDTO.Password = this.password;
-    loginDTO.Email = this.email;
+    loginDTO.password = this.password;
+    loginDTO.email = this.email;
 
     this.sessionService.Login(loginDTO).subscribe(res => {
+    window.location.reload();
     this.router.navigate(["/home"]);
     },error => {alert(error.error)});
 

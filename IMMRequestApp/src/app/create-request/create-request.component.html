@@ -1,0 +1,96 @@
+<div style="margin-bottom: 80px;">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mx-auto text-center" style="margin-top: 2rem; margin-bottom: 1rem;">
+        <h2 id="title" style="text-transform: uppercase;">nueva solicitud</h2>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 offset-lg-3 mx-auto text-left">
+      <div class="register" style="margin-left: 15px;">
+        <div class="container-request">
+          
+          <div id="fieldsInput" enctype="multipart/form-data" class="form-horizontal">
+            
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="area">Área:</label>
+              <div class="row">
+                <div class="col-lg-12">
+
+                  <!-- <select class="form-control"[(ngModel)]="selectedAdminId"name="id">
+                    <option*ngFor="let admin of admins"[value]="admin.id"> {{admin.email}}</option>
+                  </select> -->
+
+                  <select class="form-control" name="area" id="area">
+                    <option value="" selected disabled hidden>Seleccionar</option>
+                    <option value="Espacios públicos y calles">Espacios públicos y calles</option>
+                    <option value="Limpieza">Limpieza</option>
+                    <option value="Saneamiento">Saneamiento</option>
+                    <option value="Transporte">Transporte</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="topic">Tema:</label>
+              <div class="row">
+                <div class="col-sm-12">
+                  <select class="form-control"  name="topic" id="topic">
+                    <option value="" selected disabled hidden>Seleccionar</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="type">Tipo:</label>
+              <div class="row">
+                <div class="col-sm-12">
+                  <select class="form-control" name="type" id="type">
+                    <option value="" selected disabled hidden>Seleccionar</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="name">Nombre:</label>
+              <div class="row">
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del solicitante">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="email">Email:</label>
+              <div class="row">
+                <div class="col-lg-12">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="phone">Teléfono:</label>
+              <div class="row">
+                <div class="col-lg-12">
+                  <input type="number" class="form-control" id="phone" name="phone" placeholder="Número de teléfono">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="details">Detalles:</label>
+              <div class="row">
+                <div class="col-lg-12">
+                  <textarea type="text" class="form-control" rows="4" id="details" name="details" placeholder="Describa su solicitud en menos de 2000 caracteres"></textarea>
+                </div>
+              </div>
+            </div>
+    
+            <div class="form-group">
+              <div class="text-center">
+                <input type="submit" class="btn btn-info" value="Generar solicitud" name="submitButton" data-popup-open="popup-1">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
