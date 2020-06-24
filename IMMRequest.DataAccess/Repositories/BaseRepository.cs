@@ -72,7 +72,7 @@ namespace IMMRequest.DataAccess
 
         public abstract T Get(Guid id);
 
-        public T GetByCondition(Expression<Func<T, bool>> expression)
+        public virtual T GetByCondition(Expression<Func<T, bool>> expression)
         {
             try
             {

@@ -5,6 +5,10 @@ import { map, catchError } from 'rxjs/operators';
 import { HttpClient,HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import { SessionService } from './session.service';
 import {AdminDTO} from './Models/AdminDTO';
+import { ReportAData } from './Models/ReportAData';
+import { ReportTypeAElement } from './Models/ReportTypeAElement';
+import { ReportBData } from './Models/ReportBData';
+import { ReportTypeBElement } from './Models/ReportTypeBElement';
 
 @Injectable({
   providedIn: 'root'
@@ -48,4 +52,16 @@ export class AdminService {
     .pipe(catchError((error: HttpErrorResponse) => throwError(error.error)));
   }
   
+  generateReportA(reportData: ReportAData): Observable<Array<ReportTypeAElement>>{
+    const options = this.sessionService.getOptions();
+    return this.httpService.post<Array<ReportTypeAElement>>(this.URL + '/ReportA', reportData, options)
+    .pipe(catchError((error: HttpErrorResponse) => throwError(error.error)));
+  }
+
+  generateReportB(reportData: ReportBData): Observable<Array<ReportTypeBElement>>{
+    const options = this.sessionService.getOptions();
+    return this.httpService.get<Array<ReportTypeBElement>>(this.URL + '/ReportB' + reportData, options)
+    .pipe(catchError((error: HttpErrorResponse) => throwError(error.error)));
+  }
 }
+

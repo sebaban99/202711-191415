@@ -10,4 +10,8 @@ export class RequestDTO {
     status: number;
     description: string;
     addFieldValuesDTOs: Array<AFValueDTO>;
+
+    constructor() {
+        this.addFieldValuesDTOs = new Array<AFValueDTO>();
+    }
 }
