@@ -20,9 +20,13 @@ export class RequestService {
 
   constructor(private sessionService: SessionService,private httpService: HttpClient) { }
 
-  CreateRequest(request: RequestDTO){
-    return this.httpService.post(this.URL, request)
-    .pipe(catchError((error: HttpErrorResponse) => throwError(error.error)));
+  CreateRequest(request: RequestDTO): Observable<number>{
+    return this.httpService.post<number>(this.URL, request)
+    .pipe(map(reqNumber => {
+      if (reqNumber != null) {
+        return reqNumber;
+      }
+    }, catchError((error: HttpErrorResponse) => throwError(error.error))));
   }
 
   getAreas(): Observable<Array<AreaDTO>> {

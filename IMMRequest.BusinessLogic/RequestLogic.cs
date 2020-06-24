@@ -15,10 +15,11 @@ namespace IMMRequest.BusinessLogic
         private IRequestRepository requestRepository;
         private IRequestValidatorHelper requestValidator;
 
-        public RequestLogic(IRequestRepository requestRepository, ITypeRepository typeRepository)
+        public RequestLogic(IRequestRepository requestRepository, ITypeRepository typeRepository,
+            IRepository<AdditionalField> afRepository, IRepository<AFRangeItem> rangeRepository)
         {
             this.requestRepository = requestRepository;
-            requestValidator = new RequestValidatorHelper(typeRepository);
+            requestValidator = new RequestValidatorHelper(typeRepository, afRepository, rangeRepository);
         }
 
         private void FormatAFValues(Request request)

@@ -11,6 +11,8 @@ import { UpdateAdminComponent } from './update-admin/update-admin.component';
 import { DeleteTypeComponent } from './delete-type/delete-type.component';
 import { ImportationComponent } from './importation/importation.component';
 import { CreateTypeComponent } from './create-type/create-type.component';
+import { ReportComponent } from './report/report.component';
+import { CheckRequestComponent } from './check-request/check-request.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -22,6 +24,8 @@ const routes: Routes = [
   {path: 'update-admin', component: UpdateAdminComponent}, //canActivate: [IsLoggedGuard]},
   {path: 'delete-type', component: DeleteTypeComponent}, //canActivate: [IsLoggedGuard]},
   {path: 'create-type', component: CreateTypeComponent}, //canActivate: [IsLoggedGuard]},
+  {path: 'report', component: ReportComponent}, //canActivate: [IsLoggedGuard]},
+  {path: 'check-request', component: CheckRequestComponent}, //canActivate: [IsLoggedGuard]},
   {path: 'importation', component: ImportationComponent},
   {path: '**', redirectTo: 'home', pathMatch: 'full'}
 ];

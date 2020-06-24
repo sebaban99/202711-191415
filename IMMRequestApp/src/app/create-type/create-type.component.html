@@ -33,54 +33,12 @@
                     <label class="control-label col-xs-3" for="name">Nombre del Tipo:</label>
                     <div class="row">
                         <div class="col-sm-12">
-                            <input type="text" required class="form-control" pattern=".*[a-zA-Z].*$" id="name" [(ngModel)]="name"
-                            name="name">
+                            <input type="text" required class="form-control" pattern=".*[a-zA-Z0-9].*$" id="email" name="name">
                         </div>
                     </div>
                 </div>
-                <!--div class="form-group">
-                    <label class="control-label col-xs-3" for="topic">Tipo de campo adicional:</label>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <select class="form-control" [(ngModel)]="fieldType" name="topic" id="topic">
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                <option value="1">Fecha</option>
-                                <option value="2">Texto</option>
-                                <option value="3">Entero</option>
-                                <option value="4">Bool</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="fieldType != 4 && fieldType != undefined" class="form-group">
-                    <button class="btn btn-info">Definir Rango de valores</button> 
-                </div-->
-                <!--ng-template #content let-modal>
-                    <div class="modal-header">
-                      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form>
-                        <div class="form-group">
-                          <label for="dateOfBirth">Date of birth</label>
-                          <div class="input-group">
-                            <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-                    </div>
-                </ng-template-->
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
-                  Añadir un nuevo campo adicional
+                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
+                  Añadir nuevo campo adicional
                 </button>
 
                 <!-- Modal -->
@@ -88,17 +46,59 @@
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar Campo Adicional</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        ...
+                        <div class="form-group">
+                          <label class="control-label col-xs-3" for="name">Nombre del Campo Adicional:</label>
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <input type="text" required class="form-control" pattern=".*[a-zA-Z0-9].*$" id="name" [(ngModel)]="afName"
+                                  name="name">
+                              </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label col-xs-3" for="topic">Tipo de campo adicional:</label>
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <select class="form-control" [(ngModel)]="fieldType" name="topic" id="topic">
+                                <option value="" selected disabled hidden>Seleccionar</option>
+                                  <option value="0">Fecha</option>
+                                  <option value="1">Texto</option>
+                                  <option value="2">Entero</option>
+                                  <option value="3">Bool</option>
+                                </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="fieldType != 3 && fieldType != undefined" class="form-group">
+                          <button class="btn btn-info" (click)="hasRange = true">Definir Rango de valores (Opcional)</button> 
+                        </div>
+                        <div *ngIf="hasRange && fieldType == 1" class="form-group">
+                          <label class="control-label col-xs-3" for="topic">Ingrese los valores del rango separados por ; (Valor1;Valor2)</label>
+                          <input type="text" required class="form-control" pattern=".*[a-zA-Z0-9].*$" id="rangeTextValues" name="name">
+                        </div>
+                        <div *ngIf="hasRange && fieldType == 2" class="form-group">
+                          <label class="control-label col-xs-3" for="min">Ingrese valor mínimo del rango:</label>
+                          <input type="number" required class="form-control" id="rangeNumberMinValue" name="name">
+                          <label class="control-label col-xs-3" for="max">Ingrese valor máximo del rango:</label>
+                          <input type="number" required class="form-control" id="rangeNumberMaxValue" name="name">
+                        </div>
+                        <div *ngIf="hasRange && fieldType == 0" class="form-group">
+                          <label class="control-label col-xs-3" for="formato-fecha">Fechas se muestran en formato mm/dd/yyyy </label>
+                          <label class="control-label col-xs-3" for="min">Ingrese valor mínimo del rango: </label>
+                          <input type="date" id="rangeDateMinValue" value="2020-06-18">
+                          <label class="control-label col-xs-3" for="max">Ingrese valor máximo del rango: </label>
+                          <input type="date" id="rangeDateMaxValue" value="2020-06-19">
+                        </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" (click)="createAdditionalField()" data-dismiss="modal">Confirmar</button>
                       </div>
                     </div>
                   </div>

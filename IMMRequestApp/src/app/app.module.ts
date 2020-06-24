@@ -16,6 +16,8 @@ import { DeleteTypeComponent } from './delete-type/delete-type.component';
 import { FooterComponent } from './footer/footer.component';
 import { ImportationComponent } from './importation/importation.component';
 import { CreateTypeComponent } from './create-type/create-type.component';
+import { ReportComponent } from './report/report.component';
+import { CheckRequestComponent } from './check-request/check-request.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { CreateTypeComponent } from './create-type/create-type.component';
     FooterComponent,
     ImportationComponent,
     CreateTypeComponent,
+    ReportComponent,
+    CheckRequestComponent,
   ],
   imports: [
     BrowserModule,
