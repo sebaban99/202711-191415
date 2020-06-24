@@ -6,16 +6,21 @@ using IMMRequest.BusinessLogic.Interfaces;
 using IMMRequest.DataAccess.Interfaces;
 using IMMRequest.Domain;
 using Type = IMMRequest.Domain.Type;
+using System.Linq;
 
 namespace IMMRequest.BusinessLogic
 {
     public class RequestValidatorHelper : IRequestValidatorHelper
     {
-        private IRepository<Type> typeRepository; 
+        private IRepository<Type> typeRepository;
+        private IRepository<AdditionalField> afRepository;
+        private IRepository<AFRangeItem> rangeRepository;
 
-        public RequestValidatorHelper(IRepository<Type> typeRepository)
+        public RequestValidatorHelper(IRepository<Type> typeRepository, IRepository<AdditionalField> afRepository, IRepository<AFRangeItem> rangeRepository)
         {
             this.typeRepository = typeRepository;
+            this.afRepository = afRepository;
+            this.rangeRepository = rangeRepository;
         }
 
         public bool IsValidEmail(string email)
@@ -276,7 +281,7 @@ namespace IMMRequest.BusinessLogic
             AdditionalField addFieldById;
             foreach (AFValue afv in request.AddFieldValues)
             {
-                addFieldById = type.AdditionalFields.Find(x => x.Id == afv.AdditionalField.Id);
+                addFieldById = type.AdditionalFields.Find(x => x.Id == afv.AdditionalFieldID);
                 ValidateAFVObject(afv);
                 if(addFieldById.FieldType == FieldType.Bool)
                 {
@@ -308,6 +313,11 @@ namespace IMMRequest.BusinessLogic
         public void ValidateAFValues(Request request)
         {
             Type typeById = typeRepository.Get(request.TypeId);
+            typeById.AdditionalFields = afRepository.GetAllByCondition(a => a.Type.Id == typeById.Id).ToList();
+            foreach(AdditionalField af in typeById.AdditionalFields)
+            {
+                af.Range = rangeRepository.GetAllByCondition(r => r.AdditionalField.Id == af.Id).ToList();
+            }
             if (typeById.AdditionalFields != null && typeById.AdditionalFields.Count != 0)
             {
                 AreAFValuesEmpty(request.AddFieldValues);

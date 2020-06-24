@@ -5,6 +5,7 @@ using IMMRequest.Domain;
 using IMMRequest.BusinessLogic.Interfaces;
 using IMMRequest.Exceptions;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace IMMRequest.WebApi
 {
@@ -17,6 +18,48 @@ namespace IMMRequest.WebApi
         public AdminController (IAdminLogic adminLogic)
         {
             this.adminLogic = adminLogic;
+        }
+
+        [AuthenticationFilter()]
+        [HttpPost("ReportA")]
+        public IActionResult GetReportA([FromBody] ReportAData reportData)
+        {
+            try
+            {
+                DateTime until = DateTime.Parse(reportData.Until);
+                DateTime from = DateTime.Parse(reportData.From);
+                IEnumerable<ReportTypeAElement> report = adminLogic.GenerateReportA(from, until, reportData.Email);
+                return Ok(report);
+            }
+            catch (BusinessLogicException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        [AuthenticationFilter()]
+        [HttpPost("ReportB")]
+        public IActionResult GetReportB([FromBody] ReportBData reportData)
+        {
+            try
+            {
+                DateTime until = DateTime.Parse(reportData.Until);
+                DateTime from = DateTime.Parse(reportData.From);
+                IEnumerable<ReportTypeBElement> report = adminLogic.GenerateReportB(from, until);
+                return Ok(report);
+            }
+            catch (BusinessLogicException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (DataAccessException e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         [AuthenticationFilter()]

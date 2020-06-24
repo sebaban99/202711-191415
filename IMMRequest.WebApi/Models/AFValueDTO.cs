@@ -18,7 +18,7 @@ namespace IMMRequest.WebApi
         {
             Id = afv.Id;
             RequestId = afv.Request.Id;
-            AdditionalFieldId = afv.AdditionalField.Id;
+            AdditionalFieldId = afv.AdditionalFieldID;
             ValuesItemDTOs = new List<AFValueItemDTO>();
             foreach (AFValueItem afvi in afv.Values)
             {

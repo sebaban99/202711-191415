@@ -6,6 +6,7 @@ using IMMRequest.BusinessLogic.Interfaces;
 using IMMRequest.Exceptions;
 using IMMRequest.Domain;
 using Type = IMMRequest.Domain.Type;
+using System.Linq;
 
 namespace IMMRequest.BusinessLogic
 {
@@ -82,7 +83,7 @@ namespace IMMRequest.BusinessLogic
         {
             List<ReportTypeAElement> report = new List<ReportTypeAElement>();
             List<Status> differentStatus = new List<Status>();
-            List<Request> requestsByCondition = (List<Request>)requestRepository.GetAllByCondition(r => r.CreationDate >= from && r.CreationDate <= until && r.Email.Equals(email));
+            List<Request> requestsByCondition = (List<Request>)requestRepository.GetAllByCondition(r => r.CreationDate >= from && r.CreationDate <= until && r.Email.Equals(email)).ToList();
             if (requestsByCondition.Count != 0)
             {
                 foreach (Request r in requestsByCondition)
@@ -117,7 +118,7 @@ namespace IMMRequest.BusinessLogic
         {
             List<ReportTypeBElement> report = new List<ReportTypeBElement>();
             List<Type> differentTypes = new List<Type>();
-            List<Request> requestsByCondition = (List<Request>)requestRepository.GetAllByCondition(r => r.CreationDate >= from && r.CreationDate <= until);
+            List<Request> requestsByCondition = (List<Request>)requestRepository.GetAllByCondition(r => r.CreationDate >= from && r.CreationDate <= until).ToList();
             if(requestsByCondition.Count != 0)
             {
                 foreach(Request r in requestsByCondition)
