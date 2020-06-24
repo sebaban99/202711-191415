@@ -5,4 +5,6 @@ export class AdditionalFieldDTO{
     fieldType: number;
     type: string;
     rangeDTOs: Array<RangeDTO>;
+
+    constructor() {}
 }

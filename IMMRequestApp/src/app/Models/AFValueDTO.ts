@@ -4,4 +4,8 @@ export class AFValueDTO{
     requestId: string;
     additionalFieldId: string;
     valuesItemDTOs: Array<AFValueItemDTO>;
+
+    constructor() {
+        this.valuesItemDTOs = new Array<AFValueItemDTO>();
+    }
 }

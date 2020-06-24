@@ -4,6 +4,8 @@ import { AreaDTO } from '../Models/AreaDTO';
 import { TopicDTO } from '../Models/TopicDTO';
 import { RangeDTO } from '../Models/RangeDTO';
 import { AdditionalFieldDTO } from '../Models/AdditionalFieldDTO';
+import * as $ from 'jquery';
+import { TypeDTO } from '../Models/TypeDTO';
 
 
 @Component({
@@ -20,15 +22,18 @@ export class CreateTypeComponent implements OnInit {
   topics: Array<TopicDTO>;
   selectedTopicId: string;
 
-  name: string;
+  typeName: string;
+
+  afName: string;
   fieldType: number;
-  range: Array<RangeDTO>;
+  hasRange: boolean;
   aFDTOs: Array<AdditionalFieldDTO>;
   
   constructor(private typeService: TypeService) { }
 
   ngOnInit(): void {
     this.getAreas();
+    this.aFDTOs = new Array<AdditionalFieldDTO>();
   }
 
   getAreas(): void{
@@ -42,7 +47,59 @@ export class CreateTypeComponent implements OnInit {
     this.topics = this.selectedArea.topics;
   }
 
-  createType(): void{
+  cleanModal(){
+    this.afName = undefined;
+    this.fieldType = undefined;
+    this.hasRange = false;
+  }
 
+  createAdditionalField(){
+    let newAdditionalField = new AdditionalFieldDTO();
+    newAdditionalField.name = this.afName;
+    newAdditionalField.fieldType = this.fieldType;
+    let range = new Array<RangeDTO>();
+    if(this.hasRange){
+      if(this.fieldType == 1){
+        let minValue = new RangeDTO();
+        let maxValue = new RangeDTO();
+        minValue.value = $("#rangeDateMinValue").val() as string;
+        maxValue.value = $("#rangeDateMaxValue").val() as string;
+        range.push(minValue);
+        range.push(maxValue);
+      }
+      else if(this.fieldType == 3){
+        let minValue = new RangeDTO();
+        let maxValue = new RangeDTO();
+        minValue.value = $("#rangeNumberMinValue").val() as string;
+        maxValue.value = $("#rangeNumberMaxValue").val() as string;
+        range.push(minValue);
+        range.push(maxValue);
+      }
+      else{
+        let rawValues = $("#rangeTextValues").val() as string;
+        let values = rawValues.split(";")
+        values.forEach(function(val){
+          if(val != ""){
+            let rangeValue = new RangeDTO();
+            rangeValue.value = val;
+            range.push(rangeValue);
+          }
+        })
+      }
+      newAdditionalField.rangeDTOs = range;
+      this.aFDTOs.push(newAdditionalField);
+      this.cleanModal();
+      alert("Campo adicional agregado con éxito!")
+    }
+  }
+
+  createType(): void{
+    let newType = new TypeDTO();
+    newType.name = this.typeName;
+    newType.topicId = this.selectedTopicId;
+    newType.aFDTOs = this.aFDTOs;
+    this.typeService.postType(newType).subscribe(res => {
+      alert("El tipo se a registrado correctamente!");
+      },error => {alert(error)});
   }
 }

@@ -5,4 +5,6 @@ export class TypeDTO{
     topicId: string;
     isActive: boolean;
     aFDTOs: Array<AdditionalFieldDTO>;
+
+    constructor() {}
 }
