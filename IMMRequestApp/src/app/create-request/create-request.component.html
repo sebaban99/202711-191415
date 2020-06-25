@@ -1,13 +1,13 @@
 <div style="margin-bottom: 80px;">
-    <div *ngIf="displayedRequest == null" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mx-auto text-center" style="margin-top: 2rem; margin-bottom: 1rem;">
+    <div *ngIf="displayedRequest == null" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mx-auto text-center" style="margin-top: 2rem; margin-bottom: 1rem;">
         <h2 id="title" style="text-transform: uppercase;">nueva solicitud</h2>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 offset-lg-3 mx-auto text-left">
+    <div class="mx-auto text-left">
       <div class="register" style="margin-left: 15px;">
-        <div class="container-request">
+        <div class="container-request col-lg-8 offset-lg-2">
           <div id="fieldsInput" enctype="multipart/form-data" class="form-horizontal">
            
-            <div *ngIf="displayedRequest == null">
+            <div *ngIf="displayedRequest == null" >
 
               <div class="form-group">
                 <label class="control-label col-xs-3" for="area" style="text-transform: uppercase;">Área:</label>
@@ -53,7 +53,7 @@
               <label class="control-label col-xs-3" for="details" style="font-weight: bold;">{{selectedArea.name}}:{{selectedTopic.name}}:{{selectedType.name}}</label>
             </div>
 
-            <div class="form-group col-xs-12" *ngIf="(selectedType != undefined) && (selectedType.aFDTOs.length != 0)">
+            <div class="form-group" *ngIf="(selectedType != undefined) && (selectedType.aFDTOs.length != 0)">
                 
                 <label class="control-label col-xs-12" for="adfields" style="text-transform: uppercase;">Campos adicionales:</label>
 
@@ -116,7 +116,7 @@
 
                 </ng-container>
             </div>
-
+            
             <div class="form-group">
               <label class="control-label col-xs-3" for="name" style="text-transform: uppercase;">Nombre:</label>
               <div class="row">
@@ -166,7 +166,9 @@
             <div *ngIf="displayedRequest != null" class="form-group">
               <label class="control-label col-xs-3" for="details" style="text-transform: uppercase;">Estado:</label>
               <div class="row">
-                <input type="text" class="form-control" id="status" [(ngModel)]="status" name="name" readonly>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" id="status" [(ngModel)]="status" name="name" readonly>
+                </div>
               </div>
             </div>
 
