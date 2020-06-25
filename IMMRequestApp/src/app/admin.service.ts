@@ -60,7 +60,7 @@ export class AdminService {
 
   generateReportB(reportData: ReportBData): Observable<Array<ReportTypeBElement>>{
     const options = this.sessionService.getOptions();
-    return this.httpService.get<Array<ReportTypeBElement>>(this.URL + '/ReportB' + reportData, options)
+    return this.httpService.post<Array<ReportTypeBElement>>(this.URL + '/ReportB', reportData, options)
     .pipe(catchError((error: HttpErrorResponse) => throwError(error.error)));
   }
 }
