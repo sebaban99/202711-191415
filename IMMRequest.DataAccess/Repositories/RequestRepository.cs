@@ -33,9 +33,9 @@ namespace IMMRequest.DataAccess
             }
         }
 
-        public IEnumerable<Request> GetAllByCondition(Expression<Func<Request, bool>> expression)
+        public override IEnumerable<Request> GetAllByCondition(Expression<Func<Request, bool>> expression)
         {
-            return Context.Set<Request>().Where(expression);
+            return Context.Set<Request>().Include(req => req.Type).Where(expression);
         }
 
         public int GetAmountOfElements()
