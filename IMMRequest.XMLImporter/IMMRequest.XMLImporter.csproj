@@ -1,7 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\IMMRequest.DataAccess\IMMRequest.DataAccess.csproj" />
     <ProjectReference Include="..\IMMRequest.Importer\IMMRequest.Importer.csproj" />
   </ItemGroup>
 

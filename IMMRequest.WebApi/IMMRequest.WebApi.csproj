@@ -7,7 +7,7 @@
     <ProjectReference Include="..\IMMRequest.DataAccess\IMMRequest.DataAccess.csproj" />
     <ProjectReference Include="..\IMMRequest.Domain\IMMRequest.Domain.csproj" />
     <ProjectReference Include="..\IMMRequest.Exceptions\IMMRequest.Exceptions.csproj" />
-    <ProjectReference Include="..\IMMRequest.XMLImporter\IMMRequest.XMLImporter.csproj" />
+    <ProjectReference Include="..\IMMRequest.Importer\IMMRequest.Importer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
