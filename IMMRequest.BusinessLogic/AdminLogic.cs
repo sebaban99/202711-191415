@@ -114,6 +114,18 @@ namespace IMMRequest.BusinessLogic
             return report;
         }
 
+        private bool Exists(List<Type> types, Type type)
+        {
+            for (int i = 0; i < types.Count; i++)
+            {
+                if(types[i].Id == type.Id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public IEnumerable<ReportTypeBElement> GenerateReportB(DateTime from, DateTime until)
         {
             List<ReportTypeBElement> report = new List<ReportTypeBElement>();
@@ -123,7 +135,7 @@ namespace IMMRequest.BusinessLogic
             {
                 foreach(Request r in requestsByCondition)
                 {
-                    if (!differentTypes.Contains(r.Type))
+                    if (!Exists(differentTypes, r.Type))
                     {
                         differentTypes.Add(r.Type);
                         ReportTypeBElement newReportElement = new ReportTypeBElement();
@@ -135,7 +147,7 @@ namespace IMMRequest.BusinessLogic
                     {
                         foreach(ReportTypeBElement rBElement in report)
                         {
-                            if (rBElement.Type.Equals(r.Type))
+                            if (rBElement.Type.Id == (r.TypeId))
                             {
                                 rBElement.Amount++;
                                 break;
