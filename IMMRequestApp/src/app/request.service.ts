@@ -30,8 +30,7 @@ export class RequestService {
   }
 
   getAreas(): Observable<Array<AreaDTO>> {
-    const options = this.sessionService.getOptions();
-    const lista = this.httpService.get<Array<AreaDTO>>(this.areas, options)
+    const lista = this.httpService.get<Array<AreaDTO>>(this.areas)
     .pipe(
       catchError((error: HttpErrorResponse) => throwError(error.error || 'server error'))
       );
@@ -39,7 +38,7 @@ export class RequestService {
   }
   
 
-  PutConcrete(request: RequestDTO, reqId: string) {
+  PutRequest(request: RequestDTO, reqId: string) {
     const options = this.sessionService.getOptions();
     return this.httpService.put(this.URL + '/' + reqId, request, options)
     .pipe(catchError((error: HttpErrorResponse) => throwError(error.error)));
@@ -48,5 +47,14 @@ export class RequestService {
   GetByReqNumber(reqNumber: number): Observable<RequestDTO> {
     return this.httpService.get<RequestDTO>(this.checkReqURL + '/' + reqNumber)
     .pipe(catchError((error: HttpErrorResponse) => throwError(error.error)));
+  }
+
+  getRequests(): Observable<Array<RequestDTO>> {
+    const options = this.sessionService.getOptions();
+    const lista = this.httpService.get<Array<RequestDTO>>(this.URL, options)
+    .pipe(
+      catchError((error: HttpErrorResponse) => throwError(error.error))
+      );
+    return lista;
   }
 }

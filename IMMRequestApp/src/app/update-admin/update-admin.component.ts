@@ -25,14 +25,6 @@ export class UpdateAdminComponent implements OnInit {
     ,error => {alert(error)});
   }
 
-  setSelected(selectedVendor) {
-    this.selectedAdmin = selectedVendor;
-    let newTodo = Object.assign(new AdminDTO(), selectedVendor); 
-    console.log(newTodo);
-    console.log(newTodo.Name);
-    console.log(newTodo["id"]);
-  }
-
   getAdmin(){
     console.log(this.selectedAdminId);
     this.adminService.getById(this.selectedAdminId)

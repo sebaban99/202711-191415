@@ -32,8 +32,6 @@ export class CreateAdminComponent implements OnInit {
     this.adminDisplayed.email = this.email;
     this.adminDisplayed.password = this.password;
     this.modifiedAdminEmitter.emit(this.adminDisplayed);
-    console.log("llegue al emit");
-
   }
 
   onSubmitCreate() {
@@ -41,9 +39,8 @@ export class CreateAdminComponent implements OnInit {
     adminDTO.password = this.password;
     adminDTO.email = this.email;
     adminDTO.name = this.name;
-    console.log("llego aca por lo menos");
     this.adminService.postAdmin(adminDTO).subscribe(res => {
-    alert("Admin has been registered successfully!");
+    alert("Administrador registrado con éxito!");
     },error => {alert(error)});
   }
 }

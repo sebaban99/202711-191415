@@ -9,6 +9,7 @@ export class RequestDTO {
     phone: string;
     status: number;
     description: string;
+    creationDate: string;
     addFieldValuesDTOs: Array<AFValueDTO>;
 
     constructor() {

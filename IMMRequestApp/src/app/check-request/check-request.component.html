@@ -1,4 +1,4 @@
-<div style="margin-bottom: 80px;">
+<div *ngIf="areas != undefined" style="margin-bottom: 80px;">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mx-auto text-center" style="margin-top: 2rem; margin-bottom: 1rem;">
         <h2 class="contentsTitle">Ver Mi Solicitud</h2>
     </div>
@@ -22,7 +22,7 @@
                         </div>
                     </form>
                     <div *ngIf="selectedRequest != undefined">
-                        <app-create-request  [displayedRequest]="selectedRequest"></app-create-request>
+                        <app-create-request  [displayedRequest]="selectedRequest" [areas]="areas"></app-create-request>
                     </div>
                 </div>
             </div>

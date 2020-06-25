@@ -1,0 +1,14 @@
+<div class="header">
+    <br>
+    <h2 class="contentsTitle">Modificar Solicitud</h2>
+</div>
+<div class="form-group">
+    <label>Seleccione una Solicitud:</label>
+    <select class="form-control" [(ngModel)]="selectedRequestId"  (change)="setRequest()" name="id">
+        <option *ngFor="let req of requests" [value]="req.id"> {{req.creationDate}}</option>
+    </select>
+</div>
+<div *ngIf="selectedRequest != undefined">
+    <app-create-request  [displayedRequest]="selectedRequest" [isBeingEdited]="true" (modifiedRequestEmitter)='updateRequest($event)'></app-create-request>
+</div>
+

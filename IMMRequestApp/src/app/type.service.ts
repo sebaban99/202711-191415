@@ -20,7 +20,7 @@ export class TypeService {
 
   postType(type: TypeDTO) {
     const options = this.sessionService.getOptions();
-    return this.httpService.post(this.URL + '/' + type, options)
+    return this.httpService.post(this.URL, type, options)
     .pipe(catchError((error: HttpErrorResponse) => throwError(error.error)));
   }
 
