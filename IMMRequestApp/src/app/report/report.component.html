@@ -80,7 +80,7 @@
                     </div>
                 </form>
                 <div *ngIf="selectedReportType == 'A' && reportA != undefined" class="text-center">
-                    <table class="table">
+                    <table class="table table-bordered">
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">Estado</th>
@@ -96,13 +96,17 @@
                             <td *ngIf="repElem.status == 3">Denegada</td>
                             <td *ngIf="repElem.status == 4">Finalizada</td>
                             <td>{{repElem.amount}}</td>
-                            <td *ngFor="let num of repElem.requestNumbers">{{num}},</td>
+                            <td>
+                                <div class="row">
+                                    <p class="col-sm-1" *ngFor="let num of repElem.requestNumbers">{{num}},</p>
+                                </div>
+                            </td>
                           </tr>
                         </tbody>
                     </table>
                 </div>
                 <div *ngIf="selectedReportType == 'B' && reportB != undefined" class="text-center">
-                    <table class="table">
+                    <table class="table table-bordered">
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">Tipo</th>

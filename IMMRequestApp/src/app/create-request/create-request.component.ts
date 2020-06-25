@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ɵConsole } from '@angular/core';
+import { Component, OnInit, Input, ɵConsole, Output, EventEmitter } from '@angular/core';
 import {RequestService} from '../request.service';
 import {RequestDTO} from '../Models/RequestDTO';
 import {AFValueDTO} from '../Models/AFValueDTO';
@@ -20,7 +20,8 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class CreateRequestComponent implements OnInit {
 
   @Input() displayedRequest: RequestDTO;
-  //@Input() editableRequest: RequestDTO;
+  @Input() isBeingEdited: boolean;
+  @Output() modifiedRequestEmitter = new EventEmitter<RequestDTO>();
 
   id: string;
   requestNumber: number;
@@ -29,10 +30,12 @@ export class CreateRequestComponent implements OnInit {
   email: string;
   phone: string;
   status: string;
+  statusAsNum: number;
   description: string;
+  creationDate: string;
   addFieldValuesDTOs: Array<AFValueDTO>;
 
-  areas: Array<AreaDTO>;
+  @Input() areas: Array<AreaDTO>;
   selectedAreaId: string;
   selectedArea: AreaDTO;
   
@@ -49,9 +52,7 @@ export class CreateRequestComponent implements OnInit {
   constructor(private requestService: RequestService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getAreas();
     if(this.displayedRequest != undefined){
-      console.log(this.displayedRequest);
       this.details = this.displayedRequest.details;
       this.selectedTypeId = this.displayedRequest.typeId
       this.name = this.displayedRequest.name;
@@ -59,6 +60,8 @@ export class CreateRequestComponent implements OnInit {
       this.phone = this.displayedRequest.phone;
       this.description = this.displayedRequest.description;
       this.addFieldValuesDTOs = this.displayedRequest.addFieldValuesDTOs;
+      this.creationDate = this.displayedRequest.creationDate;
+      console.log(this.creationDate);
 
       if(this.displayedRequest.status == 0){
         this.status = "Creada";
@@ -75,13 +78,17 @@ export class CreateRequestComponent implements OnInit {
       else if(this.displayedRequest.status == 4){
         this.status = "Finalizada";
       }
-``
+
+      //$("#status-select").val(this.displayedRequest.status);
+
       this.selectedTypeId = this.displayedRequest.typeId;
+      /*console.log("TypeId:" + this.selectedTypeId)
       if(this.areas != undefined){
         this.areas.forEach(function(area){
+          console.log(area.name);
           area.topics.forEach(function(topic){
             topic.types.forEach(function(type){
-              if(type.id == this.displayedRequest.typeId){
+              if(type.id == this.selectedTypeId){
                 this.selectedArea = area;
                 this.selectedTopic = topic;
                 this.selectedType = type;
@@ -89,8 +96,13 @@ export class CreateRequestComponent implements OnInit {
             })
           })
         })
+        
       }
-
+      */
+      
+    }
+    else{
+      this.getAreas();
     }
   }
 
@@ -119,8 +131,14 @@ export class CreateRequestComponent implements OnInit {
     this.selectedType = undefined;
     this.selectedTopic = undefined;
     this.requestService.getAreas()
-    .subscribe(x => {this.areas = x}
+    .subscribe((x: Array<AreaDTO>) => {this.areas = x}
     ,error => {alert(error)});
+  }
+
+  updateRequest(){
+    this.displayedRequest.status = parseInt(this.statusAsNum + "");
+    this.displayedRequest.description = this.description;
+    this.modifiedRequestEmitter.emit(this.displayedRequest);
   }
 
   createRequest() {

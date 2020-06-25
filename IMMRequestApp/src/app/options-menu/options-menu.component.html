@@ -13,7 +13,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a [routerLink]="['/new-request']" class="dropdown-item" href="#">Nueva Solicitud</a>
                         <a [routerLink]="['/check-request']" class="dropdown-item" href="#">Ver Mi Solicitud</a>
-                        <a *ngIf="userIsLogged" class="dropdown-item" href="#">Actualizar Solicitud</a>
+                        <a [routerLink]="['/update-request']" *ngIf="userIsLogged" class="dropdown-item" href="#">Actualizar Solicitud</a>
                     </div>
                 </li>
                 <li *ngIf="userIsLogged" class="nav-item dropdown">
@@ -30,7 +30,7 @@
                         Opciones Administrador 
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a [routerLink]="['/new-admin']" class="dropdown-item" href="#">Creaar Administrador</a>
+                        <a [routerLink]="['/new-admin']" class="dropdown-item" href="#">Registrar Administrador</a>
                         <a [routerLink]="['/update-admin']" class="dropdown-item" href="#">Modificar Administrador</a>
                         <a [routerLink]="['/delete-admin']" class="dropdown-item" href="#">Eliminar Administrador</a>
                         <a [routerLink]="['/report']" class="dropdown-item" href="#">Generar Reporte</a>

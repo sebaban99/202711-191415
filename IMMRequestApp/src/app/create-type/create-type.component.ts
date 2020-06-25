@@ -56,10 +56,12 @@ export class CreateTypeComponent implements OnInit {
   createAdditionalField(){
     let newAdditionalField = new AdditionalFieldDTO();
     newAdditionalField.name = this.afName;
-    newAdditionalField.fieldType = this.fieldType;
+    newAdditionalField.fieldType = parseInt(this.fieldType + "");
     let range = new Array<RangeDTO>();
-    if(this.hasRange){
-      if(this.fieldType == 1){
+    console.log("esta llegando 1");
+    console.log(this.hasRange);
+    if(this.hasRange != undefined && this.hasRange == true){
+      if(this.fieldType == 0){
         let minValue = new RangeDTO();
         let maxValue = new RangeDTO();
         minValue.value = $("#rangeDateMinValue").val() as string;
@@ -67,7 +69,7 @@ export class CreateTypeComponent implements OnInit {
         range.push(minValue);
         range.push(maxValue);
       }
-      else if(this.fieldType == 3){
+      else if(this.fieldType == 2){
         let minValue = new RangeDTO();
         let maxValue = new RangeDTO();
         minValue.value = $("#rangeNumberMinValue").val() as string;
@@ -78,6 +80,7 @@ export class CreateTypeComponent implements OnInit {
       else{
         let rawValues = $("#rangeTextValues").val() as string;
         let values = rawValues.split(";")
+        console.log(values);
         values.forEach(function(val){
           if(val != ""){
             let rangeValue = new RangeDTO();
@@ -86,15 +89,17 @@ export class CreateTypeComponent implements OnInit {
           }
         })
       }
-      newAdditionalField.rangeDTOs = range;
-      this.aFDTOs.push(newAdditionalField);
-      this.cleanModal();
-      alert("Campo adicional agregado con éxito!")
     }
+    console.log("esta llegando 2")
+    newAdditionalField.rangeDTOs = range;
+    this.aFDTOs.push(newAdditionalField);
+    this.cleanModal();
+    alert("Campo adicional agregado con éxito!")
   }
 
   createType(): void{
     let newType = new TypeDTO();
+    console.log(this.typeName);
     newType.name = this.typeName;
     newType.topicId = this.selectedTopicId;
     newType.aFDTOs = this.aFDTOs;

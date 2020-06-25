@@ -18,6 +18,7 @@ import { ImportationComponent } from './importation/importation.component';
 import { CreateTypeComponent } from './create-type/create-type.component';
 import { ReportComponent } from './report/report.component';
 import { CheckRequestComponent } from './check-request/check-request.component';
+import { UpdateRequestComponent } from './update-request/update-request.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { CheckRequestComponent } from './check-request/check-request.component';
     CreateTypeComponent,
     ReportComponent,
     CheckRequestComponent,
+    UpdateRequestComponent,
   ],
   imports: [
     BrowserModule,

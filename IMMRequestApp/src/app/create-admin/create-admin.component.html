@@ -1,11 +1,11 @@
 <div class="header">
     <br>
-    <h2 *ngIf="adminDisplayed == null" class="contentsTitle">Create Admin</h2>
+    <h2 *ngIf="adminDisplayed == null" class="contentsTitle">Registrar Administrador</h2>
 </div>
 <div id="contentsContainer">
     <form *ngIf = "adminDisplayed == null; else adminUpdate" #adminForm="ngForm" (ngSubmit)="onSubmitCreate()" name="adminForm" role="form" id="adminFormCreate">
         <div class="form-group">
-            <label class="control-label col-lg-2" for="name">Name:</label>
+            <label class="control-label col-lg-2" for="name">Nombre:</label>
             <div class="col-lg-5">
                 <input type="text" required class="form-control" pattern=".*[a-zA-Z].*$" id="name" [(ngModel)]="name"
                 name="name">
@@ -18,18 +18,18 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="password">Password:</label>
+            <label class="control-label col-lg-2" for="password">Contraseña:</label>
             <div class="col-lg-5">
                 <input type="password" required class="form-control" id="password-admin-create" [(ngModel)]="password" name="password">
             </div>
         </div>
       <button (click)="onSubmitCreate()" form="adminForm" [disabled]="adminForm.invalid"
-        class="btn btn-lg btn-success changeBtn">Confirm</button>
+        class="btn btn-lg btn-success changeBtn">Confirmar</button>
     </form>
     <ng-template #adminUpdate>
         <form #adminForm="ngForm" (ngSubmit)="onSubmitUpdate()" name="adminForm" role="form" id="adminFormUpdate">
             <div class="form-group">
-                <label class="control-label col-lg-2" for="name">Name:</label>
+                <label class="control-label col-lg-2" for="name">Nombre:</label>
                 <div class="col-lg-5">
                     <input type="text" required class="form-control" pattern=".*[a-zA-Z].*$" id="name" [(ngModel)]="name"
                     name="name">
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="password">Password:</label>
+                <label class="control-label col-lg-2" for="password">Contraseña:</label>
                 <div class="col-lg-5">
                     <input type="text" required class="form-control" id="password-admin-create" [(ngModel)]="password" name="password">
                 </div>

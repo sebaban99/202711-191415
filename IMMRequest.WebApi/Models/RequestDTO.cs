@@ -16,6 +16,7 @@ namespace IMMRequest.WebApi
         public string Phone { get; set; }
         public Status Status { get; set; }
         public string Description { get; set; }
+        public string CreationDate { get; set; }
         public List<AFValueDTO> AddFieldValuesDTOs { get; set; }
 
         public RequestDTO() { }
@@ -31,6 +32,10 @@ namespace IMMRequest.WebApi
             Phone = req.Phone;
             Status = req.Status;
             Description = req.Description;
+            if(req.CreationDate != null)
+            {
+                CreationDate = req.CreationDate.ToString();
+            }
             AddFieldValuesDTOs = new List<AFValueDTO>();
             if (req.AddFieldValues != null)
             {
@@ -57,6 +62,10 @@ namespace IMMRequest.WebApi
                 Description = this.Description,
                 AddFieldValues = new List<AFValue>()
             };
+            if(CreationDate != null)
+            {
+                reqToReturn.CreationDate = DateTime.Parse(this.CreationDate);
+            }
             if(AddFieldValuesDTOs != null)
             {
                 foreach (AFValueDTO afvDTO in this.AddFieldValuesDTOs)
