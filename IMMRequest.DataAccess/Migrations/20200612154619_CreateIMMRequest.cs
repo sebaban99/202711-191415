@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IMMRequest.DataAccess.Migrations
 {
-    [ExcludeFromCodeCoverage]
     public partial class CreateIMMRequest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -93,6 +91,7 @@ namespace IMMRequest.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     TopicId = table.Column<Guid>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false)
                 },
@@ -139,7 +138,8 @@ namespace IMMRequest.DataAccess.Migrations
                     Email = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    CreationDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -176,9 +176,8 @@ namespace IMMRequest.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    RequestId = table.Column<Guid>(nullable: false),
-                    AdditionalFieldID = table.Column<Guid>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    RequestId = table.Column<Guid>(nullable: true),
+                    AdditionalFieldID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -194,7 +193,26 @@ namespace IMMRequest.DataAccess.Migrations
                         column: x => x.RequestId,
                         principalTable: "Requests",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AFValueItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    AFValueId = table.Column<Guid>(nullable: true),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AFValueItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AFValueItems_AFValues_AFValueId",
+                        column: x => x.AFValueId,
+                        principalTable: "AFValues",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -208,6 +226,11 @@ namespace IMMRequest.DataAccess.Migrations
                 column: "Email",
                 unique: true,
                 filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AFValueItems_AFValueId",
+                table: "AFValueItems",
+                column: "AFValueId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AFValues_AdditionalFieldID",
@@ -248,7 +271,7 @@ namespace IMMRequest.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AFValues");
+                name: "AFValueItems");
 
             migrationBuilder.DropTable(
                 name: "Logs");
@@ -260,13 +283,16 @@ namespace IMMRequest.DataAccess.Migrations
                 name: "Sessions");
 
             migrationBuilder.DropTable(
-                name: "Requests");
+                name: "AFValues");
 
             migrationBuilder.DropTable(
                 name: "Administrators");
 
             migrationBuilder.DropTable(
                 name: "AdditionalFields");
+
+            migrationBuilder.DropTable(
+                name: "Requests");
 
             migrationBuilder.DropTable(
                 name: "Types");

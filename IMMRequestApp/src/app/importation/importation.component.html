@@ -1,0 +1,44 @@
+<div *ngIf="importationMethods != undefined" style="margin-bottom: 80px;">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mx-auto text-center" style="margin-top: 2rem; margin-bottom: 1rem;">
+        <h2 class="contentsTitle">Importar Elementos</h2>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 offset-lg-3 mx-auto text-left">
+      <div class="register" style="margin-left: 15px;">
+        <div class="container-request">
+          <div id="fieldsInput" enctype="multipart/form-data" class="form-horizontal">
+            <form #importForm="ngForm">
+                  <div class="form-group">
+                    <label class="control-label col-xs-3" for="method">Seleccione un método de importación:</label>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <select class="form-control" [(ngModel)]="selectedImpName" (change)="setImporter()" name="area" id="area">
+                          <option value="" selected disabled hidden>Seleccionar</option>
+                          <option *ngFor="let importer of importationMethods" [value]="importer.importerName"> {{importer.importerName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="selectedImporter != undefined" class="form-group">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <ng-container *ngFor="let fieldHelper of requiredFields">
+                          <label class="control-label col-xs-3" for="fieldHelper.field.nameOfField">{{fieldHelper.field.nameOfField}}</label>
+                          <div *ngIf="fieldHelper.field.fieldType == 'string'">
+                            <input type="text" required class="form-control" id="{{fieldHelper.index}}" name="dynamicValue">
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                      
+                  <div class="form-group">
+                    <div class="text-center">
+                      <input type="submit" [disabled]="importForm.invalid" (click)="import()" class="btn btn-info" value="Confirmar" name="submitButton" data-popup-open="popup-1">
+                    </div>
+                  </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

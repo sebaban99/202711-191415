@@ -1,6 +1,6 @@
 ﻿using IMMRequest.Domain;
 using System;
-using Range = IMMRequest.Domain.Range;
+using AFRangeItem = IMMRequest.Domain.AFRangeItem;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics.CodeAnalysis;
@@ -16,16 +16,16 @@ namespace IMMRequest.WebApi
 
         public RangeDTO() { }
 
-        public RangeDTO(Range range)
+        public RangeDTO(AFRangeItem range)
         {
             Id = range.Id;
             AdditionalFieldId = range.AdditionalField.Id;
             Value = range.Value;
         }
         
-        public Range ToEntity()
+        public AFRangeItem ToEntity()
         {
-            Range rangeAsEntity = new Range()
+            AFRangeItem rangeAsEntity = new AFRangeItem()
             {
                 Id = this.Id,
                 AdditionalField = new AdditionalField()

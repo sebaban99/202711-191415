@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IMMRequest.DataAccess.Migrations
 {
     [DbContext(typeof(IMMRequestContext))]
-    [Migration("20200514203554_CreateIMMRequest")]
+    [Migration("20200612154619_CreateIMMRequest")]
     partial class CreateIMMRequest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,25 @@ namespace IMMRequest.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("IMMRequest.Domain.AFRangeItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AdditionalFieldId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdditionalFieldId");
+
+                    b.ToTable("RangeValues");
+                });
+
             modelBuilder.Entity("IMMRequest.Domain.AFValue", b =>
                 {
                     b.Property<Guid>("Id")
@@ -30,11 +49,8 @@ namespace IMMRequest.DataAccess.Migrations
                     b.Property<Guid>("AdditionalFieldID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RequestId")
+                    b.Property<Guid?>("RequestId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -43,6 +59,25 @@ namespace IMMRequest.DataAccess.Migrations
                     b.HasIndex("RequestId");
 
                     b.ToTable("AFValues");
+                });
+
+            modelBuilder.Entity("IMMRequest.Domain.AFValueItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AFValueId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AFValueId");
+
+                    b.ToTable("AFValueItems");
                 });
 
             modelBuilder.Entity("IMMRequest.Domain.AdditionalField", b =>
@@ -130,30 +165,14 @@ namespace IMMRequest.DataAccess.Migrations
                     b.ToTable("Logs");
                 });
 
-            modelBuilder.Entity("IMMRequest.Domain.Range", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AdditionalFieldId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdditionalFieldId");
-
-                    b.ToTable("RangeValues");
-                });
-
             modelBuilder.Entity("IMMRequest.Domain.Request", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -225,6 +244,9 @@ namespace IMMRequest.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -241,6 +263,13 @@ namespace IMMRequest.DataAccess.Migrations
                     b.ToTable("Types");
                 });
 
+            modelBuilder.Entity("IMMRequest.Domain.AFRangeItem", b =>
+                {
+                    b.HasOne("IMMRequest.Domain.AdditionalField", "AdditionalField")
+                        .WithMany("Range")
+                        .HasForeignKey("AdditionalFieldId");
+                });
+
             modelBuilder.Entity("IMMRequest.Domain.AFValue", b =>
                 {
                     b.HasOne("IMMRequest.Domain.AdditionalField", "AdditionalField")
@@ -251,9 +280,14 @@ namespace IMMRequest.DataAccess.Migrations
 
                     b.HasOne("IMMRequest.Domain.Request", "Request")
                         .WithMany("AddFieldValues")
-                        .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RequestId");
+                });
+
+            modelBuilder.Entity("IMMRequest.Domain.AFValueItem", b =>
+                {
+                    b.HasOne("IMMRequest.Domain.AFValue", "AFValue")
+                        .WithMany("Values")
+                        .HasForeignKey("AFValueId");
                 });
 
             modelBuilder.Entity("IMMRequest.Domain.AdditionalField", b =>
@@ -268,13 +302,6 @@ namespace IMMRequest.DataAccess.Migrations
                     b.HasOne("IMMRequest.Domain.Admin", "Admin")
                         .WithMany()
                         .HasForeignKey("AdminId");
-                });
-
-            modelBuilder.Entity("IMMRequest.Domain.Range", b =>
-                {
-                    b.HasOne("IMMRequest.Domain.AdditionalField", "AdditionalField")
-                        .WithMany("Range")
-                        .HasForeignKey("AdditionalFieldId");
                 });
 
             modelBuilder.Entity("IMMRequest.Domain.Request", b =>

@@ -29,7 +29,7 @@ namespace IMMRequest.BusinessLogic
                 af.Type = type;
                 if (af.Range.Count != 0)
                 {
-                    foreach (Range range in af.Range)
+                    foreach (AFRangeItem range in af.Range)
                     {
                         range.Id = Guid.NewGuid();
                         range.AdditionalField = af;
@@ -43,6 +43,7 @@ namespace IMMRequest.BusinessLogic
             Topic realEntity = topicRespository.Get(type.Topic.Id);
             type.Topic = realEntity;
             type.IsActive = true;
+            type.CreationDate = DateTime.Now;
             type.Id = Guid.NewGuid();
         }
 

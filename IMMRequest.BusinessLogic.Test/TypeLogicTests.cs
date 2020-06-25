@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using IMMRequest.Exceptions;
 using Type = IMMRequest.Domain.Type;
-using Range = IMMRequest.Domain.Range;
+using AFRangeItem = IMMRequest.Domain.AFRangeItem;
 using IMMRequest.Domain;
 using IMMRequest.DataAccess.Interfaces;
 using Moq;
@@ -45,8 +45,8 @@ namespace IMMRequest.BusinessLogic.Tests
             var addFieldRepositoryMock = new Mock<IRepository<AdditionalField>>(MockBehavior.Strict);
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
-            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
-            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            var rangeRepositoryMock = new Mock<IRepository<AFRangeItem>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<AFRangeItem>()));
             rangeRepositoryMock.Setup(m => m.SaveChanges());
             topicRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(topic);
             typeRepositoryMock.Setup(m => m.Add(type));
@@ -90,7 +90,7 @@ namespace IMMRequest.BusinessLogic.Tests
                 FieldType = FieldType.Entero,
                 Type = type,
                 Name = "Matricula",
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             af.Type = type;
@@ -105,8 +105,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
            
-            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
-            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            var rangeRepositoryMock = new Mock<IRepository<AFRangeItem>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<AFRangeItem>()));
             rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -146,7 +146,7 @@ namespace IMMRequest.BusinessLogic.Tests
                 FieldType = FieldType.Entero,
                 Type = type,
                 Name = "Matricula",
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             af.Type = type;
@@ -161,8 +161,8 @@ namespace IMMRequest.BusinessLogic.Tests
                 It.IsAny<Expression<Func<Type, bool>>>())).Returns((Type)null);
             typeRepositoryMock.Setup(m => m.SaveChanges());
             
-            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
-            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            var rangeRepositoryMock = new Mock<IRepository<AFRangeItem>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<AFRangeItem>()));
             rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -200,7 +200,7 @@ namespace IMMRequest.BusinessLogic.Tests
                 FieldType = FieldType.Entero,
                 Type = type,
                 Name = "Matricula",
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             af.Type = type;
@@ -217,8 +217,8 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.SaveChanges());
             addFieldRepositoryMock.Setup(a => a.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
-            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
-            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            var rangeRepositoryMock = new Mock<IRepository<AFRangeItem>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<AFRangeItem>()));
             rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -257,7 +257,7 @@ namespace IMMRequest.BusinessLogic.Tests
                 FieldType = FieldType.Entero,
                 Type = type,
                 Name = "Matricula",
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             af.Type = type;
@@ -274,8 +274,8 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.SaveChanges());
             addFieldRepositoryMock.Setup(a => a.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
-            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
-            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            var rangeRepositoryMock = new Mock<IRepository<AFRangeItem>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<AFRangeItem>()));
             rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -314,7 +314,7 @@ namespace IMMRequest.BusinessLogic.Tests
                 FieldType = FieldType.Entero,
                 Type = type,
                 Name = "Matricula",
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             af.Type = type;
@@ -331,8 +331,8 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.SaveChanges());
             addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
-            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
-            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            var rangeRepositoryMock = new Mock<IRepository<AFRangeItem>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<AFRangeItem>()));
             rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -387,8 +387,8 @@ namespace IMMRequest.BusinessLogic.Tests
             typeRepositoryMock.Setup(m => m.SaveChanges());
             addFieldRepositoryMock.Setup(m => m.Add(It.IsAny<AdditionalField>()));
             addFieldRepositoryMock.Setup(m => m.SaveChanges());
-            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
-            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<Range>()));
+            var rangeRepositoryMock = new Mock<IRepository<AFRangeItem>>(MockBehavior.Strict);
+            rangeRepositoryMock.Setup(m => m.Add(It.IsAny<AFRangeItem>()));
             rangeRepositoryMock.Setup(m => m.SaveChanges());
 
 
@@ -426,7 +426,7 @@ namespace IMMRequest.BusinessLogic.Tests
                 FieldType = FieldType.Entero,
                 Type = type,
                 Name = "Matricula",
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             af.Type = type;
@@ -437,7 +437,7 @@ namespace IMMRequest.BusinessLogic.Tests
             var topicRepositoryMock = new Mock<IRepository<Topic>>(MockBehavior.Strict);
             var typeRepositoryMock = new Mock<ITypeRepository>(MockBehavior.Strict);
             typeRepositoryMock.Setup(m => m.Get(It.IsAny<Guid>())).Returns(type);
-            var rangeRepositoryMock = new Mock<IRepository<Range>>(MockBehavior.Strict);
+            var rangeRepositoryMock = new Mock<IRepository<AFRangeItem>>(MockBehavior.Strict);
 
 
             typeLogic = new TypeLogic(typeRepositoryMock.Object, topicRepositoryMock.Object);
@@ -477,7 +477,7 @@ namespace IMMRequest.BusinessLogic.Tests
                 FieldType = FieldType.Entero,
                 Type = type,
                 Name = "Matricula",
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             af.Type = type;
@@ -524,7 +524,7 @@ namespace IMMRequest.BusinessLogic.Tests
                 FieldType = FieldType.Entero,
                 Type = type,
                 Name = "Matricula",
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             af.Type = type;
@@ -575,7 +575,7 @@ namespace IMMRequest.BusinessLogic.Tests
                 FieldType = FieldType.Entero,
                 Type = type,
                 Name = "Matricula",
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             af.Type = type;
@@ -624,7 +624,7 @@ namespace IMMRequest.BusinessLogic.Tests
                 FieldType = FieldType.Entero,
                 Type = type,
                 Name = "Matricula",
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             af.Type = type;
@@ -673,24 +673,24 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Texto,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = "Radio Taxi",
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = "Fono Taxi",
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option3 = new Range()
+            AFRangeItem option3 = new AFRangeItem()
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
@@ -749,24 +749,24 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Texto,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = "Radio Taxi",
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = "Fono Taxi",
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option3 = new Range()
+            AFRangeItem option3 = new AFRangeItem()
             {
                 Value = "Taxi aeropuerto",
                 Id = Guid.NewGuid(),
@@ -823,24 +823,24 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Entero,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = "3",
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option3 = new Range()
+            AFRangeItem option3 = new AFRangeItem()
             {
                 Value = "5",
                 Id = Guid.NewGuid(),
@@ -900,17 +900,17 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Entero,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
@@ -970,10 +970,10 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Entero,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
@@ -1031,17 +1031,17 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Entero,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = "4",
                 Id = Guid.NewGuid(),
@@ -1099,17 +1099,17 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Entero,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = "1",
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = "4",
                 Id = Guid.NewGuid(),
@@ -1167,19 +1167,19 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Fecha,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             DateTime date = DateTime.Today;
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = date.ToShortDateString(),
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = date.ToShortDateString(),
                 Id = Guid.NewGuid(),
@@ -1238,11 +1238,11 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Fecha,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             DateTime date = DateTime.Today;
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = date.ToShortDateString(),
                 Id = Guid.NewGuid(),
@@ -1300,28 +1300,28 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Fecha,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             DateTime date1 = DateTime.Today;
             DateTime date2 = date1.AddDays(+1);
             DateTime date3 = date2.AddDays(+1);
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = date1.ToShortDateString(),
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = date2.ToShortDateString(),
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option3 = new Range()
+            AFRangeItem option3 = new AFRangeItem()
             {
                 Value = date3.ToShortDateString(),
                 Id = Guid.NewGuid(),
@@ -1381,20 +1381,20 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Fecha,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             DateTime date1 = DateTime.Today;
             DateTime date2 = date1.AddDays(-1);
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = date1.ToShortDateString(),
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = date2.ToShortDateString(),
                 Id = Guid.NewGuid(),
@@ -1454,19 +1454,19 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Fecha,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             DateTime date1 = DateTime.Today;
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = date1.ToShortDateString(),
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = "3 de mayo",
                 Id = Guid.NewGuid(),
@@ -1524,20 +1524,20 @@ namespace IMMRequest.BusinessLogic.Tests
                 Type = type,
                 Name = "Empresa de taxi",
                 FieldType = FieldType.Fecha,
-                Range = new List<Range>()
+                Range = new List<AFRangeItem>()
             };
 
             DateTime date1 = DateTime.Today;
             DateTime date2 = date1.AddDays(+1);
 
-            Range option1 = new Range()
+            AFRangeItem option1 = new AFRangeItem()
             {
                 Value = date1.ToShortDateString(),
                 Id = Guid.NewGuid(),
                 AdditionalField = af
             };
 
-            Range option2 = new Range()
+            AFRangeItem option2 = new AFRangeItem()
             {
                 Value = date2.ToShortDateString(),
                 Id = Guid.NewGuid(),

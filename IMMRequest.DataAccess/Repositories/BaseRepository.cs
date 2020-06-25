@@ -72,7 +72,7 @@ namespace IMMRequest.DataAccess
 
         public abstract T Get(Guid id);
 
-        public T GetByCondition(Expression<Func<T, bool>> expression)
+        public virtual T GetByCondition(Expression<Func<T, bool>> expression)
         {
             try
             {
@@ -117,5 +117,16 @@ namespace IMMRequest.DataAccess
             }
         }
 
+        public virtual IEnumerable<T> GetAllByCondition(Expression<Func<T, bool>> expression)
+        {
+            try
+            {
+                return Context.Set<T>().Where(expression);
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: could not retrieve Entity");
+            }
+        }
     }
 }

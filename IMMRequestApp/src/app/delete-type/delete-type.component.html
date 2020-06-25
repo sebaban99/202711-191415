@@ -1,0 +1,53 @@
+<div *ngIf="areas != undefined" style="margin-bottom: 80px;">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mx-auto text-center" style="margin-top: 2rem; margin-bottom: 1rem;">
+        <h2 class="contentsTitle">Eliminar Tipo</h2>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 offset-lg-3 mx-auto text-left">
+      <div class="register" style="margin-left: 15px;">
+        <div class="container-request">
+          <div id="fieldsInput" enctype="multipart/form-data" class="form-horizontal">
+            <form #deleteTypeForm="ngForm">
+                <div class="form-group">
+                    <label class="control-label col-xs-3" for="area">Área:</label>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <select class="form-control" [(ngModel)]="selectedAreaId" (change)="setTopicOfArea()" name="area" id="area">
+                          <option value="" selected disabled hidden>Seleccionar</option>
+                          <option *ngFor="let area of areas" [value]="area.id"> {{area.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-xs-3" for="topic">Tema:</label>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <select class="form-control" [(ngModel)]="selectedTopicId" (change)="setTypesOfTopic()" name="topic" id="topic">
+                          <option value="" selected disabled hidden>Seleccionar</option>
+                          <option *ngFor="let topic of topics" [value]="topic.id"> {{topic.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-xs-3" for="type">Tipo:</label>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <select class="form-control" [(ngModel)]="selectedTypeId" name="type" id="type">
+                          <option value="" selected disabled hidden>Seleccionar</option>
+                          <option *ngFor="let type of types" [value]="type.id"> {{type.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>    
+                  <div class="form-group">
+                    <div class="text-center">
+                      <input type="submit" [disabled]="selectedTypeId == null" (click)="deleteType(); deleteTypeForm.reset()" class="btn btn-info" value="Eliminar Tipo" name="submitButton" data-popup-open="popup-1">
+                    </div>
+                  </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

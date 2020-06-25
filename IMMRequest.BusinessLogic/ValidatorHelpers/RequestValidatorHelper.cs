@@ -6,21 +6,21 @@ using IMMRequest.BusinessLogic.Interfaces;
 using IMMRequest.DataAccess.Interfaces;
 using IMMRequest.Domain;
 using Type = IMMRequest.Domain.Type;
+using System.Linq;
 
 namespace IMMRequest.BusinessLogic
 {
     public class RequestValidatorHelper : IRequestValidatorHelper
     {
-        private IRepository<Request> requestRepository;
-        private IRepository<AFValue> aFValueRepository;
-        private IRepository<Type> typeRepository; 
+        private IRepository<Type> typeRepository;
+        private IRepository<AdditionalField> afRepository;
+        private IRepository<AFRangeItem> rangeRepository;
 
-        public RequestValidatorHelper(IRepository<Request> requestRepository, IRepository<AFValue> aFValueRepository, 
-            IRepository<Type> typeRepository)
+        public RequestValidatorHelper(IRepository<Type> typeRepository, IRepository<AdditionalField> afRepository, IRepository<AFRangeItem> rangeRepository)
         {
-            this.requestRepository = requestRepository;
-            this.aFValueRepository = aFValueRepository;
             this.typeRepository = typeRepository;
+            this.afRepository = afRepository;
+            this.rangeRepository = rangeRepository;
         }
 
         public bool IsValidEmail(string email)
@@ -114,27 +114,44 @@ namespace IMMRequest.BusinessLogic
 
         private void ValidateAFVObject(AFValue afv)
         {
-            if (afv.Value == null || afv.Value.Trim() == string.Empty)
+            if (afv.Values == null || afv.Values.Count == 0)
             {
                 throw new BusinessLogicException("Error: One Request's additional field value was empty");
             }
         }
 
-        private bool IsNumberAFV(string value)
+        private bool IsNumberAFV(List<AFValueItem> values)
         {
-            return Regex.IsMatch(value, @"^[0-9]$");
+            foreach(AFValueItem item in values)
+            {
+                if (!Regex.IsMatch(item.Value, @"^[0-9]$"))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
-        private bool IsDateAFV(string value)
+        private bool IsDateAFV(List<AFValueItem> values)
         {
             bool isDateTime = true;
-            try
+            foreach (AFValueItem item in values)
             {
-                DateTime date = DateTime.Parse(value);
-            }
-            catch (FormatException)
-            {
-                isDateTime = false;
+                if (isDateTime)
+                {
+                    try
+                    {
+                        DateTime date = DateTime.Parse(item.Value);
+                    }
+                    catch (FormatException)
+                    {
+                        isDateTime = false;
+                    }
+                }
+                else
+                {
+                    break;
+                }
             }
             return isDateTime;
         }
@@ -143,12 +160,22 @@ namespace IMMRequest.BusinessLogic
         {
             if (addField.Range.Count != 0)
             {
-                bool isInRange = false;
-                foreach (Range range in addField.Range)
+                bool isInRange = true;
+                bool notFound;
+                foreach (AFValueItem item in afv.Values)
                 {
-                    if (range.Value.Equals(afv.Value))
+                    notFound = true;
+                    foreach(AFRangeItem r in addField.Range)
                     {
-                        isInRange = true;
+                        if(r.Value == item.Value)
+                        {
+                            notFound = false;
+                            break;
+                        }
+                    }
+                    if (notFound)
+                    {
+                        isInRange = false;
                         break;
                     }
                 }
@@ -161,11 +188,11 @@ namespace IMMRequest.BusinessLogic
 
         private void ValidateTextAFV(AdditionalField addFieldById, AFValue afv)
         {
-            if (IsNumberAFV(afv.Value))
+            if (IsNumberAFV(afv.Values))
             {
                 throw new BusinessLogicException("Error: One Request's additional field value was invalid, check data type");
             }
-            if (IsDateAFV(afv.Value))
+            if (IsDateAFV(afv.Values))
             {
                 throw new BusinessLogicException("Error: One Request's additional field value was invalid, check data type");
             }
@@ -178,18 +205,29 @@ namespace IMMRequest.BusinessLogic
             {
                 int minValue = Int32.Parse(addField.Range[0].Value);
                 int maxValue = Int32.Parse(addField.Range[1].Value);
-                bool isInRange = Int32.Parse(afv.Value) >= minValue &&
-                    Int32.Parse(afv.Value) <= maxValue;
+                bool isInRange = true;
+                foreach(AFValueItem item in afv.Values)
+                {
+                    if (isInRange)
+                    {
+                        isInRange = Int32.Parse(item.Value) >= minValue && 
+                            Int32.Parse(item.Value) <= maxValue;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 if (!isInRange)
                 {
-                    throw new BusinessLogicException("Error: One Request's additional field value was invalid, check fields's range");
+                    throw new BusinessLogicException($"Error: One Request's additional field value was invalid, check {addField.Name}'s range");
                 }
             }
         }
 
         private void ValidateIntegerAFV(AdditionalField addField, AFValue afv)
         {
-            if (!IsNumberAFV(afv.Value))
+            if (!IsNumberAFV(afv.Values))
             {
                 throw new BusinessLogicException("Error: One Request's additional field value was invalid, check data type");
             }
@@ -202,18 +240,36 @@ namespace IMMRequest.BusinessLogic
             {
                 DateTime minDate = DateTime.Parse(addField.Range[0].Value);
                 DateTime maxDate = DateTime.Parse(addField.Range[1].Value);
-                DateTime afvDate = DateTime.Parse(afv.Value);
-                bool isInRange = afvDate >= minDate && afvDate <= maxDate;
+                bool isInRange = true;
+                foreach (AFValueItem item in afv.Values)
+                {
+                    if (isInRange)
+                    {
+                        try
+                        {
+                            DateTime afvDate = DateTime.Parse(item.Value);
+                            isInRange = afvDate >= minDate && afvDate <= maxDate;
+                        }
+                        catch (FormatException)
+                        {
+                            isInRange = false;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 if (!isInRange)
                 {
-                    throw new BusinessLogicException("Error: One Request's additional field value was invalid, check fields's range");
+                    throw new BusinessLogicException($"Error: One Request's additional field value was invalid, check {addField.Name}'s range");
                 }
             }
         }
 
         private void ValidateDateAFV(AdditionalField addFieldById, AFValue afv)
         {
-            if (!IsDateAFV(afv.Value))
+            if (!IsDateAFV(afv.Values))
             {
                 throw new BusinessLogicException("Error: One Request's additional field value was invalid, check data type");
             }
@@ -225,8 +281,12 @@ namespace IMMRequest.BusinessLogic
             AdditionalField addFieldById;
             foreach (AFValue afv in request.AddFieldValues)
             {
-                addFieldById = type.AdditionalFields.Find(x => x.Id == afv.AdditionalField.Id);
+                addFieldById = type.AdditionalFields.Find(x => x.Id == afv.AdditionalFieldID);
                 ValidateAFVObject(afv);
+                if(addFieldById.FieldType == FieldType.Bool)
+                {
+                    ValidateBoolAFV(afv);
+                }
                 if (addFieldById.FieldType == FieldType.Texto)
                 {
                     ValidateTextAFV(addFieldById, afv);
@@ -242,9 +302,22 @@ namespace IMMRequest.BusinessLogic
             }
         }
 
+        private void ValidateBoolAFV(AFValue afv)
+        {
+            if(afv.Values.Count != 1 || !afv.Values[0].Value.Equals("True") && !afv.Values[0].Value.Equals("False"))
+            {
+                throw new BusinessLogicException("Error: One boolean Additional Field type value was not valid");
+            }
+        }
+
         public void ValidateAFValues(Request request)
         {
             Type typeById = typeRepository.Get(request.TypeId);
+            typeById.AdditionalFields = afRepository.GetAllByCondition(a => a.Type.Id == typeById.Id).ToList();
+            foreach(AdditionalField af in typeById.AdditionalFields)
+            {
+                af.Range = rangeRepository.GetAllByCondition(r => r.AdditionalField.Id == af.Id).ToList();
+            }
             if (typeById.AdditionalFields != null && typeById.AdditionalFields.Count != 0)
             {
                 AreAFValuesEmpty(request.AddFieldValues);

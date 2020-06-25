@@ -1,0 +1,220 @@
+<div style="margin-bottom: 80px;">
+    <div *ngIf="displayedRequest == null" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mx-auto text-center" style="margin-top: 2rem; margin-bottom: 1rem;">
+        <h2 id="title" style="text-transform: uppercase;">nueva solicitud</h2>
+    </div>
+    <div class="mx-auto text-left">
+      <div class="register" style="margin-left: 15px;">
+        <div class="container-request col-lg-8 offset-lg-2">
+          <div id="fieldsInput" enctype="multipart/form-data" class="form-horizontal">
+           
+            <div *ngIf="displayedRequest == null" >
+
+              <div class="form-group">
+                <label class="control-label col-xs-3" for="area" style="text-transform: uppercase;">Área:</label>
+                <div class="row">
+                  <div class="col-lg-12">
+  
+                      <select class="form-control" [(ngModel)]="selectedAreaId" (change)="setTopicOfArea()" name="area" id="area">
+                          <option value="" selected disabled hidden>Seleccionar</option>
+                          <option *ngFor="let area of areas" [value]="area.id"> {{area.name}}</option>
+                      </select>
+                    
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-group">
+                <label class="control-label col-xs-3" for="topic" style="text-transform: uppercase;">Tema:</label>
+                <div class="row">
+                  <div class="col-sm-12">
+                      <select class="form-control" [(ngModel)]="selectedTopicId" (change)="setTypesOfTopic()" name="topic" id="topic">
+                          <option value="" selected disabled hidden>Seleccionar</option>
+                          <option *ngFor="let topic of topics" [value]="topic.id"> {{topic.name}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-group">
+                <label class="control-label col-xs-3" for="type" style="text-transform: uppercase;">Tipo:</label>
+                <div class="row">
+                  <div class="col-sm-12">
+                      <select class="form-control" [(ngModel)]="selectedTypeId" (change)="setAddFields()" name="type" id="type">
+                          <option value="" selected disabled hidden>Seleccionar</option>
+                          <option *ngFor="let type of types" [value]="type.id"> {{type.name}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!--div *ngIf="areas != undefined && displayedRequest != null" class="form-group">
+              <label class="control-label col-xs-3" for="details" style="font-weight: bold;">{{selectedArea.name}}:{{selectedTopic.name}}:{{selectedType.name}}</label>
+            </div-->
+
+            <div class="form-group" *ngIf="(selectedType != undefined) && (selectedType.aFDTOs.length != 0)">
+                
+                <label class="control-label col-xs-12" for="adfields" style="text-transform: uppercase;">Campos adicionales:</label>
+
+                <ng-container class="col-xs-12" *ngFor="let af of selectedType.aFDTOs">
+                    
+                    <div class="col-xs-12" *ngIf="af.fieldType == 0">
+                        <label class="control-label col-xs-12" for="af.name" name="dynamicValue">{{af.name}}</label>
+                        <div *ngIf="af.rangeDTOs.length != 0" style="font-weight: bold;">Rango:
+                            <ng-container *ngFor="let rv of af.rangeDTOs">
+                                <label  style="font-weight: 100;">{{rv.value}}; &nbsp;</label>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" *ngIf="af.fieldType == 0">
+                      <input type="date" required class="form-control" id="{{af.id}}" placeholder="Ingrese los valores separados por ;" name="dynamicValue">
+                    </div>
+
+                    <div class="col-xs-12" *ngIf="af.fieldType == 1">
+                        <label class="control-label col-xs-12" for="af.name">{{af.name}}</label>
+                        <div *ngIf="af.rangeDTOs.length != 0" style="font-weight: bold;">Rango: 
+                            <ng-container *ngFor="let rv of af.rangeDTOs">
+                                <label  style="font-weight: 100;">{{rv.value}}; &nbsp;</label>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" *ngIf="af.fieldType == 1">
+                        <input type="text" required class="form-control" id="{{af.id}}" placeholder="Ingrese los valores separados por ;" name="dynamicValue">
+                    </div>
+                    
+                    <div class="col-xs-12" *ngIf="af.fieldType == 2">
+                        <label class="control-label col-xs-12" for="af.name">{{af.name}}</label>
+                        <div *ngIf="af.rangeDTOs.length != 0" style="font-weight: bold;">Rango: 
+                            <ng-container *ngFor="let rv of af.rangeDTOs">
+                                <label  style="font-weight: 100;">{{rv.value}}; &nbsp;</label>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" *ngIf="af.fieldType == 2">
+                        <input type="text" required class="form-control" id="{{af.id}}" placeholder="Ingrese los valores separados por ;" name="dynamicValue">
+                    </div>
+
+                    <div class="col-xs-12" *ngIf="af.fieldType == 3">
+                        <label class="control-label col-xs-12" for="af.name">{{af.name}}</label>
+                        <div *ngIf="af.rangeDTOs.length != 0" style="font-weight: bold;">Rango: 
+                            <ng-container *ngFor="let rv of af.rangeDTOs">
+                                <label  style="font-weight: 100;">{{rv.value}}; &nbsp;</label>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" *ngIf="af.fieldType == 3">
+                        <div class="form-check form-check-inline">
+                            <input class="form-control form-check-input" type="radio" name="radioValue" id="{{af.id}}-1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">Verdadero</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-control form-check-input" type="radio" name="radioValue" id="{{af.id}}-2" value="0">
+                            <label class="form-check-label" for="inlineRadio2">Falso</label>
+                        </div>
+                    </div>
+
+                </ng-container>
+            </div>
+
+            <div *ngIf="displayedRequest != null" class="form-group">
+              <label class="control-label col-xs-3" for="name" style="text-transform: uppercase;">Fecha de creación:</label>
+              <div class="row">
+                <div *ngIf="displayedRequest != null" class="col-lg-12">
+                  <input type="text" value="2020-06-19" class="form-control" id="creationDate" [(ngModel)]="creationDate" name="name" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="name" style="text-transform: uppercase;">Nombre:</label>
+              <div class="row">
+                <div *ngIf="displayedRequest == null" class="col-lg-12">
+                  <input type="text" class="form-control" id="name" [(ngModel)]="name" name="name" placeholder="Nombre del solicitante">
+                </div>
+                <div *ngIf="displayedRequest != null" class="col-lg-12">
+                  <input type="text" class="form-control" id="name" [(ngModel)]="name" name="name" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="email" style="text-transform: uppercase;">Email:</label>
+              <div class="row">
+                <div *ngIf="displayedRequest == null" class="col-lg-12">
+                  <input type="email" class="form-control" id="email"  [(ngModel)]="email" name="email" placeholder="Email">
+                </div>
+                <div *ngIf="displayedRequest != null" class="col-lg-12">
+                  <input type="email" class="form-control" id="email"  [(ngModel)]="email" name="email" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="phone" style="text-transform: uppercase;">Teléfono:</label>
+              <div class="row">
+                <div *ngIf="displayedRequest == null" class="col-lg-12">
+                  <input type="number" class="form-control" id="phone" [(ngModel)]="phone" name="phone" placeholder="Número de teléfono">
+                </div>
+                <div *ngIf="displayedRequest != null" class="col-lg-12">
+                  <input type="number" class="form-control" id="phone" [(ngModel)]="phone" name="phone" placeholder="Número de teléfono" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-xs-3" for="details" style="text-transform: uppercase;">Detalles:</label>
+              <div class="row">
+                <div *ngIf="displayedRequest == null"class="col-lg-12">
+                  <textarea type="text" class="form-control" rows="4" id="request-details" [(ngModel)]="details" name="details" placeholder="Describa su solicitud en menos de 2000 caracteres"></textarea>
+                </div>
+                <div *ngIf="displayedRequest != null"class="col-lg-12">
+                  <textarea type="text" class="form-control" rows="4" id="request-details" [(ngModel)]="details" name="details" placeholder="Describa su solicitud en menos de 2000 caracteres" readonly></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="displayedRequest != null" class="form-group">
+              <label class="control-label col-xs-3" for="details" style="text-transform: uppercase;">Estado actual:</label>
+              <div class="row">
+                <div *ngIf="displayedRequest != null" class="col-lg-12">
+                  <input type="text" class="form-control" id="status" [(ngModel)]="status" name="name" readonly>
+                </div>
+                <div *ngIf="isBeingEdited == true" class="col-lg-12">
+                  <label class="control-label col-xs-3" for="details" style="text-transform: uppercase;">Nuevo estado:</label>
+                  <select class="form-control" [(ngModel)]="statusAsNum"  name="status-select" id="status-select">
+                    <option value="0">Creada</option>
+                    <option value="1">En Revisión</option>
+                    <option value="2">Aceptada</option>
+                    <option value="3">Denegada</option>
+                    <option value="4">Finalizada</option>
+                </select>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="displayedRequest != null" class="form-group">
+              <label class="control-label col-xs-3" for="details" style="text-transform: uppercase;">Descripción:</label>
+              <div class="row">
+                <div *ngIf="isBeingEdited == null" class="col-lg-12">
+                  <textarea type="text" class="form-control" rows="4" id="request-descriptio" placeholder="Aún no se ha provisto una descripción por un administrador..." [(ngModel)]="description" name="details" readonly></textarea>
+                </div>
+                <div *ngIf="isBeingEdited == true" class="col-lg-12">
+                  <textarea type="text" class="form-control" rows="4" id="request-descriptio" placeholder="Aún no se ha provisto una descripción por un administrador..." [(ngModel)]="description" name="details"></textarea>
+                </div>
+              </div>
+            </div>            
+            <div class="form-group">
+              <div *ngIf="isBeingEdited == true" class="text-center">
+                <input type="submit" class="btn btn-info" value="Guardar cambios" (click)="updateRequest()" name="submitButton" data-popup-open="popup-1">
+              </div>
+            </div>
+            <div class="form-group">
+              <div *ngIf="displayedRequest == null" class="text-center">
+                <input type="submit" class="btn btn-info" value="Generar solicitud" (click)="createRequest()" name="submitButton" data-popup-open="popup-1">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

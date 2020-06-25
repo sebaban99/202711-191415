@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Range = IMMRequest.Domain.Range;
+using AFRangeItem = IMMRequest.Domain.AFRangeItem;
 
 namespace IMMRequest.DataAccess.Tests
 {
@@ -15,7 +15,7 @@ namespace IMMRequest.DataAccess.Tests
         {
             Id = Guid.NewGuid(),
             FieldType = FieldType.Texto,
-            Range = new List<Range>(),
+            Range = new List<AFRangeItem>(),
             Name = "Tipo de taxi",
             Type = new Domain.Type()
             {
@@ -23,14 +23,14 @@ namespace IMMRequest.DataAccess.Tests
             }
         };
 
-        Range oneRangeAddField = new Range()
+        AFRangeItem oneRangeAddField = new AFRangeItem()
         {
             Id = Guid.NewGuid(),
             AdditionalField = additionalField,
             Value = "Fono taxi"
         };
 
-        Range anotherRangeAddField = new Range()
+        AFRangeItem anotherRangeAddField = new AFRangeItem()
         {
             Id = Guid.NewGuid(),
             AdditionalField = additionalField,
@@ -49,7 +49,7 @@ namespace IMMRequest.DataAccess.Tests
         [TestMethod]
         public void GetRange_InexistentRange_ShouldReturnNull()
         {
-            Range rangeById = rangeRepositoryInMemory.Get(oneRangeAddField.Id);
+            AFRangeItem rangeById = rangeRepositoryInMemory.Get(oneRangeAddField.Id);
             Assert.IsNull(rangeById);
         }
 

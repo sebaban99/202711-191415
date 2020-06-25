@@ -151,6 +151,10 @@ namespace IMMRequest.BusinessLogic
 
         private void ValidateAFRange(AdditionalField af)
         {
+            if(af.FieldType == FieldType.Bool && af.Range.Count != 0)
+            {
+                throw new BusinessLogicException("Error: A boolean type Additional Field's range can't contain values");
+            }
             if (af.Range.Count != 0)
             {
                 if (af.FieldType == FieldType.Texto)

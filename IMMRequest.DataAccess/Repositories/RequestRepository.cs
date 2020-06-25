@@ -5,6 +5,8 @@ using IMMRequest.DataAccess.Interfaces;
 using System.Linq;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace IMMRequest.DataAccess
 {
@@ -31,6 +33,11 @@ namespace IMMRequest.DataAccess
             }
         }
 
+        public IEnumerable<Request> GetAllByCondition(Expression<Func<Request, bool>> expression)
+        {
+            return Context.Set<Request>().Where(expression);
+        }
+
         public int GetAmountOfElements()
         {
             try
@@ -40,6 +47,19 @@ namespace IMMRequest.DataAccess
             catch (DbException)
             {
                 throw new DataAccessException("Error: could not retrieve amount of Requests in DB");
+            }
+        }
+
+        public override Request GetByCondition(Expression<Func<Request, bool>> expression)
+        {
+            try
+            {
+                return Context.Set<Request>().Include(req => req.AddFieldValues)
+                    .ThenInclude(afv => afv.Values).FirstOrDefault(expression);
+            }
+            catch (DbException)
+            {
+                throw new DataAccessException("Error: could not retrieve Entity");
             }
         }
     }

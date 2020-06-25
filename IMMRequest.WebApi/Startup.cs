@@ -39,6 +39,11 @@ namespace IMMRequest.WebApi
             services.AddScoped<ISessionLogic, SessionLogic>();
             services.AddScoped<IAdminLogic, AdminLogic>();
             services.AddScoped<ITypeLogic, TypeLogic>();
+            services.AddScoped<IImpElementParser, ImpElementParser>();
+            services.AddScoped<IImportationLogic,ImportationLogic>();
+            services.AddScoped<IImportProcessing, ImportProcessing>();
+            services.AddScoped<IAreaLogic, AreaLogic>();
+
         
             //AddScoped Repository
             services.AddScoped<IRequestRepository, RequestRepository>();
@@ -49,20 +54,37 @@ namespace IMMRequest.WebApi
             services.AddScoped<IRepository<Admin>, AdminRepository>();
             services.AddScoped<IRepository<Topic>, TopicRepository>();
             services.AddScoped<IRepository<AdditionalField>, AdditionalFieldRepository>();
-            services.AddScoped<IRepository<Range>, RangeRepository>();
+            services.AddScoped<IRepository<AFRangeItem>, RangeRepository>();
+            services.AddScoped<IRepository<Area>, AreaRepository>();
+            services.AddScoped<IRepository<AdditionalField>, AdditionalFieldRepository>();
+            services.AddScoped<IRepository<AFRangeItem>, RangeRepository>();
 
+            //services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader()); });
 
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                    builder.SetIsOriginAllowed(_ => true)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(builder =>
+            //        builder.SetIsOriginAllowed(_ => true)
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader()
+            //        .AllowCredentials());
+            //});
+            //services.AddMvc(option => option.EnableEndpointRouting = false);
 
             services.AddDbContext<DbContext, IMMRequestContext>(
                 o => o.UseSqlServer(Configuration.GetConnectionString("IMMRequest")));
+
+            services.AddCors(
+                options =>
+                {
+                    options.AddPolicy(
+           "CorsPolicy",
+           builder => builder
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+            );
+                });
 
             //services.AddCors(
             //    options =>
@@ -82,6 +104,8 @@ namespace IMMRequest.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -98,7 +122,9 @@ namespace IMMRequest.WebApi
                 endpoints.MapControllers();
             });
 
-            app.UseCors("CorsPolicy");
+            //app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader());
+
+
         }
     }
 }
